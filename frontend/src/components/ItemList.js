@@ -1,10 +1,13 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import ItemCard from './ItemCard';
 
 class ItemList extends Component {
     render() {
         return (
-            <div>
-                <h1>Homepage reached.</h1>
+            <div class="container-flexbox-ItemList">
+                {/* testing card layout*/}
+                <ItemCard /><ItemCard /><ItemCard /><ItemCard /><ItemCard /><ItemCard />
+                <ItemCard /><ItemCard /><ItemCard /><ItemCard /><ItemCard /><ItemCard />
             </div>
         )
     }
