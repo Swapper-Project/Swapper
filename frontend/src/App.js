@@ -1,7 +1,9 @@
+
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import './App.css';
 
+import Nav from './components/Nav';
 import NotFound from './components/NotFound.js';
 import Nav from './components/Nav.js';
 import Dashboard from './components/Dashboard.js';
