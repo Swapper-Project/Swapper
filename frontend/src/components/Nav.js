@@ -1,5 +1,10 @@
 import React from 'react';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import {
+  fade,
+  makeStyles,
+  useTheme,
+  withStyles
+} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,6 +22,11 @@ import DashBoard from '@material-ui/icons/Dashboard';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import InputBase from '@material-ui/core/InputBase';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
 
 const drawerWidth = 240;
 
@@ -52,9 +62,6 @@ const useStyles = makeStyles(theme => ({
   iconColor: {
     color: '#ce881c'
   },
-  whiteText: {
-    color: '#FFFFFF'
-  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -79,25 +86,83 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  textFieldInput: {
+    color: 'white'
+  },
   inputRoot: {
     color: 'inherit'
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch'
     }
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    backgroundColor: '#333333',
+    padding: theme.spacing(2, 4, 3)
+  },
+  textfield: {
+    width: 500,
+    margin: 5
+  },
+  loginButton: {
+    width: 500,
+    backgroundColor: '#ce881c',
+    margin: 5
   }
 }));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#ce881c'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#ce881c'
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#ce881c'
+      },
+      '&:hover fieldset': {
+        borderColor: 'white'
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#ce881c'
+      }
+    },
+    color: '#FFFFFF'
+  }
+})(TextField);
+
+const WhiteTypography = withStyles({
+  root: {
+    color: 'white'
+  }
+})(Typography);
 
 export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -132,10 +197,12 @@ export default function Nav() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <Typography variant='h6' className={classes.title}>
+          <WhiteTypography variant='h6' className={classes.title}>
             Swapper
-          </Typography>
-          <Button color='inherit'>Login</Button>
+          </WhiteTypography>
+          <Button onClick={handleOpen} color='inherit'>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -171,6 +238,69 @@ export default function Nav() {
           </ListItem>
         </List>
       </Drawer>
+      <Modal
+        className={classes.modal}
+        open={modalOpen}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={modalOpen}>
+          <div className={classes.paper}>
+            <WhiteTypography variant='h4' align='center'>
+              Sign In
+            </WhiteTypography>
+            <br />
+            <CssTextField
+              id='signin-email'
+              label='Email'
+              type='email'
+              variant='outlined'
+              className={classes.textfield}
+              InputProps={{
+                className: classes.textFieldInput
+              }}
+            />
+            <br />
+            <CssTextField
+              id='signin-password'
+              label='Password'
+              type='password'
+              variant='outlined'
+              className={classes.textfield}
+              InputProps={{
+                className: classes.textFieldInput
+              }}
+            />
+            <br />
+            <Button variant='contained' className={classes.loginButton}>
+              Login
+            </Button>
+            <br />
+            <Link
+              component='button'
+              variant='body1'
+              style={{ color: '#ce881c' }}
+            >
+              Forgot your password?
+            </Link>
+            <br />
+            <WhiteTypography variant='body1'>
+              Not a member?
+              <Link
+                component='button'
+                variant='body1'
+                style={{ marginLeft: 5, color: '#ce881c' }}
+              >
+                Register
+              </Link>
+            </WhiteTypography>
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 }
