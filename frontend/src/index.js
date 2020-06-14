@@ -9,15 +9,29 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers/rootReducer.js';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#FF5722',
+    },
+    secondary: {
+      main: '#333333',
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

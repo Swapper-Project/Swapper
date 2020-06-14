@@ -9,11 +9,13 @@ import Dashboard from './components/Dashboard.js';
 import ItemPage from './components/ItemPage.js';
 import ItemList from './components/ItemList.js';
 import ChatRoom from './components/ChatRoom.js';
+import Footer from './components/Footer.js';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="page-container">
+        <div className="content-wrap">
           <Nav />
           <Switch>
               <Route exact path="/" component={ItemList}/>
@@ -23,6 +25,8 @@ class App extends Component {
               <Route path="/ChatRoom" component={ChatRoom}/>
               <Route path="*" component={NotFound} />
           </Switch>
+          <Footer />
+        </div>
       </div>
     );
   }

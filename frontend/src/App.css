@@ -7,9 +7,33 @@
   margin: 50px 50px 50px 50px;
 }
 
-.itemCard {
-  border-radius: 15px;
-  background-color: green;
-  width: 20vw;
-  height: 30vw;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.content-wrap {
+  flex: 1;
+}
+
+.container-flexbox-Footer {
+  display: flex;
+  flex-basis: 100%;
+  justify-content: center;
+  align-content: center;
+  min-height: 250px;
+  padding-top: 12px;
+  background-color: #333333;
+  color: #FFFFFF;
+  margin-top: 125px;
+}
+
+.pagination-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
