@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    color: '#ce881c'
+    color: '#FF5722'
   },
   title: {
     flexGrow: 1
@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end'
   },
   iconColor: {
-    color: '#ce881c'
+    color: '#FF5722'
   },
   search: {
     position: 'relative',
