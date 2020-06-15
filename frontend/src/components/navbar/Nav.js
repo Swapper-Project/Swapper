@@ -17,6 +17,11 @@ import DashBoard from '@material-ui/icons/Dashboard';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import InputBase from '@material-ui/core/InputBase';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import FullWidthTabs from './AuthTabs';
+import Paper from '@material-ui/core/Paper';
 
 const drawerWidth = 240;
 
@@ -52,9 +57,6 @@ const useStyles = makeStyles(theme => ({
   iconColor: {
     color: '#ce881c'
   },
-  whiteText: {
-    color: '#FFFFFF'
-  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -84,20 +86,40 @@ const useStyles = makeStyles(theme => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch'
     }
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    backgroundColor: '#333333',
+    padding: theme.spacing(2, 4, 3)
+  },
+  modalTitle: {
+    color: 'white'
   }
 }));
 
-export default function Nav() {
+const Nav = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -135,7 +157,9 @@ export default function Nav() {
           <Typography variant='h6' className={classes.title}>
             Swapper
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button onClick={handleOpen} color='inherit'>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -171,6 +195,32 @@ export default function Nav() {
           </ListItem>
         </List>
       </Drawer>
+      <Modal
+        className={classes.modal}
+        open={modalOpen}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={modalOpen}>
+          <Paper square={false} className={classes.paper}>
+            <Typography
+              className={classes.modalTitle}
+              align='center'
+              variant='h4'
+            >
+              Welcome to Swapper!
+            </Typography>
+            <br />
+            <FullWidthTabs />
+          </Paper>
+        </Fade>
+      </Modal>
     </div>
   );
-}
+};
+
+export default Nav;
