@@ -22,6 +22,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import FullWidthTabs from './AuthTabs';
 import Paper from '@material-ui/core/Paper';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1
+  },
+  linkTitle: {
+    textDecoration: 'none',
+    color: 'white'
   },
   navBar: {
     backgroundColor: '#333333'
@@ -154,9 +159,11 @@ const Nav = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <Typography variant='h6' className={classes.title}>
-            Swapper
-          </Typography>
+          <Link to={'/'} className={classes.linkTitle}>
+            <Typography variant='h6' className={classes.title}>
+              Swapper
+            </Typography>
+          </Link>
           <Button onClick={handleOpen} color='inherit'>
             Login
           </Button>
@@ -182,17 +189,21 @@ const Nav = () => {
         </div>
         <Divider />
         <List>
-          <ListItem button key={'Dashboard'}>
-            <ListItemIcon>
-              <DashBoard className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography style={{ color: '#FFFFFF' }}>Dashboard</Typography>
-              }
-            />
-          </ListItem>
+          <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
+            <ListItem button key={'Dashboard'}>
+              <ListItemIcon>
+                <DashBoard className={classes.iconColor} />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography style={{ color: '#FFFFFF' }}>
+                    Dashboard
+                  </Typography>
+                }
+              />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <Modal
