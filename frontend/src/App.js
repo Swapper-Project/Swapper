@@ -4,7 +4,7 @@ import './App.css';
 
 import NotFound from './components/NotFound.js';
 import Nav from './components/navbar/Nav';
-import Dashboard from './components/Dashboard.js';
+import Dashboard from './components/dashboard/Dashboard.js';
 import ItemPage from './components/ItemPage.js';
 import ItemList from './components/ItemList.js';
 import ChatRoom from './components/ChatRoom.js';
