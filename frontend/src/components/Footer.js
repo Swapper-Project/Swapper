@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function StickyFooter() {
-	
+const Footer = () => {	
   return (
     <div className="container-flexbox-Footer">	
 			<div>
@@ -10,3 +9,5 @@ export default function StickyFooter() {
     </div>
   );
 }
+
+export default Footer;
