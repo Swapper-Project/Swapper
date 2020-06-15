@@ -24,8 +24,8 @@ class App extends Component {
               <Route path="/ChatRoom" component={ChatRoom}/>
               <Route path="*" component={NotFound} />
           </Switch>
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }
