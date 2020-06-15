@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  fade,
-  makeStyles,
-  useTheme,
-  withStyles
-} from '@material-ui/core/styles';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -25,8 +20,8 @@ import InputBase from '@material-ui/core/InputBase';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import FullWidthTabs from './AuthTabs';
+import Paper from '@material-ui/core/Paper';
 
 const drawerWidth = 240;
 
@@ -86,9 +81,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  textFieldInput: {
-    color: 'white'
-  },
   inputRoot: {
     color: 'inherit'
   },
@@ -110,47 +102,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#333333',
     padding: theme.spacing(2, 4, 3)
   },
-  textfield: {
-    width: 500,
-    margin: 5
-  },
-  loginButton: {
-    width: 500,
-    backgroundColor: '#ce881c',
-    margin: 5
+  modalTitle: {
+    color: 'white'
   }
 }));
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#ce881c'
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#ce881c'
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#ce881c'
-      },
-      '&:hover fieldset': {
-        borderColor: 'white'
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#ce881c'
-      }
-    },
-    color: '#FFFFFF'
-  }
-})(TextField);
-
-const WhiteTypography = withStyles({
-  root: {
-    color: 'white'
-  }
-})(Typography);
-
-export default function Nav() {
+const Nav = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -197,9 +154,9 @@ export default function Nav() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <WhiteTypography variant='h6' className={classes.title}>
+          <Typography variant='h6' className={classes.title}>
             Swapper
-          </WhiteTypography>
+          </Typography>
           <Button onClick={handleOpen} color='inherit'>
             Login
           </Button>
@@ -249,58 +206,21 @@ export default function Nav() {
         }}
       >
         <Fade in={modalOpen}>
-          <div className={classes.paper}>
-            <WhiteTypography variant='h4' align='center'>
-              Sign In
-            </WhiteTypography>
-            <br />
-            <CssTextField
-              id='signin-email'
-              label='Email'
-              type='email'
-              variant='outlined'
-              className={classes.textfield}
-              InputProps={{
-                className: classes.textFieldInput
-              }}
-            />
-            <br />
-            <CssTextField
-              id='signin-password'
-              label='Password'
-              type='password'
-              variant='outlined'
-              className={classes.textfield}
-              InputProps={{
-                className: classes.textFieldInput
-              }}
-            />
-            <br />
-            <Button variant='contained' className={classes.loginButton}>
-              Login
-            </Button>
-            <br />
-            <Link
-              component='button'
-              variant='body1'
-              style={{ color: '#ce881c' }}
+          <Paper square={false} className={classes.paper}>
+            <Typography
+              className={classes.modalTitle}
+              align='center'
+              variant='h4'
             >
-              Forgot your password?
-            </Link>
+              Welcome to Swapper!
+            </Typography>
             <br />
-            <WhiteTypography variant='body1'>
-              Not a member?
-              <Link
-                component='button'
-                variant='body1'
-                style={{ marginLeft: 5, color: '#ce881c' }}
-              >
-                Register
-              </Link>
-            </WhiteTypography>
-          </div>
+            <FullWidthTabs />
+          </Paper>
         </Fade>
       </Modal>
     </div>
   );
-}
+};
+
+export default Nav;
