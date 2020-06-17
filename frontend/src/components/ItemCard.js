@@ -56,11 +56,11 @@ const ItemCard = () => {
 				widgetDimensions="20px"
 				widgetSpacings="0px"
 			>
-				<Ratings.Widget widgetRatedColor="orange" />
-				<Ratings.Widget widgetRatedColor="orange" />
-				<Ratings.Widget widgetRatedColor="orange" />
-				<Ratings.Widget widgetRatedColor="orange" />
-				<Ratings.Widget widgetRatedColor="orange" />
+				<Ratings.Widget widgetRatedColor="#FF5722" />
+				<Ratings.Widget widgetRatedColor="#FF5722" />
+				<Ratings.Widget widgetRatedColor="#FF5722" />
+				<Ratings.Widget widgetRatedColor="#FF5722" />
+				<Ratings.Widget widgetRatedColor="#FF5722" />
 			</Ratings>
 	
 		</CardActions>
