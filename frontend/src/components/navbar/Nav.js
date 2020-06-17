@@ -35,7 +35,11 @@ const useStyles = makeStyles(theme => ({
     color: '#FF5722'
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   linkTitle: {
     textDecoration: 'none',
@@ -85,6 +89,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  navContents: {
+    display: 'flex',
+    width: '100%'
+  },
+  auth: {
+    position: 'absolute',
+    right: 5
   },
   inputRoot: {
     color: 'inherit'
@@ -159,14 +171,16 @@ const Nav = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <Link to={'/'} className={classes.linkTitle}>
-            <Typography variant='h6' className={classes.title}>
-              Swapper
-            </Typography>
-          </Link>
-          <Button onClick={handleOpen} color='inherit'>
-            Login
-          </Button>
+          <div className={classes.title}>
+            <Link to={'/'} className={classes.linkTitle}>
+              <Typography variant='h6'>Swapper</Typography>
+            </Link>
+          </div>
+          <div className={classes.auth}>
+            <Button onClick={handleOpen} color='inherit'>
+              Login/Register
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
