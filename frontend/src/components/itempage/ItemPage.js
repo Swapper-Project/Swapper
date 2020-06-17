@@ -4,17 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import ItemImageCard from './ItemImageCard';
 import ItemDetails from './ItemDetails';
 import Paper from '@material-ui/core/Paper';
-const id = null;
+
+//const id = null;
 
 const useStyles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    height: '100%'
   },
   paper: {
     padding: theme.spacing(2),
     margin: 20,
-    backgroundColor: '#F2EFEB',
-    height: 500
+    height: '100%',
+    backgroundColor: '#ededed'
   }
 });
 
