@@ -32,6 +32,11 @@
   margin-top: 125px;
 }
 
+.container-flexbox-userprofile{
+  display: flex;
+  flex-direction: row;
+}
+
 .pagination-container {
   display: flex;
   align-content: center;

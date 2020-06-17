@@ -50,7 +50,10 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100vh',
+    width: '90%',
+    maxWidth: '100%',
+    marginLeft: '5%',
+    marginRight: '5%',
     backgroundColor: theme.palette.background.paper,
     minHeight: 500,
   },
@@ -72,7 +75,7 @@ const DashBoardTabs = () => {
 
   return (
     <div className={classes.root}>
-      <Box mt={20} boxShadow={2}>
+      <Box mt={5} boxShadow={2}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
