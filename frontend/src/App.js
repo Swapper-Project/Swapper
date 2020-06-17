@@ -7,7 +7,7 @@ import Nav from './components/navbar/Nav';
 import Dashboard from './components/dashboard/Dashboard.js';
 import ItemPage from './components/itempage/ItemPage';
 import ItemList from './components/ItemList.js';
-import ChatRoom from './components/ChatRoom.js';
+import ChatRoom from './components/chatroom/ChatRoom.js';
 import Footer from './components/Footer.js';
 
 class App extends Component {
