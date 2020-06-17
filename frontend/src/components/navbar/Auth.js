@@ -3,25 +3,24 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#ce881c'
+      color: '#FF5722'
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#ce881c'
+      borderBottomColor: '#FF5722'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: 'white'
       },
       '&:hover fieldset': {
-        borderColor: '#ce881c'
+        borderColor: '#FF5722'
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#ce881c'
+        borderColor: '#FF5722'
       }
     },
     color: '#FFFFFF'
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   loginButton: {
     width: 500,
-    backgroundColor: '#ce881c',
+    backgroundColor: '#FF5722',
     margin: 5,
     '&:hover': {
       backgroundColor: 'white'
@@ -78,7 +77,7 @@ const Login = () => {
         Sign In
       </Button>
       <br />
-      <Link component='button' variant='body1' style={{ color: '#ce881c' }}>
+      <Link component='button' variant='body1' style={{ color: '#FF5722' }}>
         Forgot your password?
       </Link>
       <br />
