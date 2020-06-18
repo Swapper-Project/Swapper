@@ -28,11 +28,11 @@
   min-height: 250px;
   padding-top: 12px;
   background-color: #333333;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-top: 125px;
 }
 
-.container-flexbox-userprofile{
+.container-flexbox-userprofile {
   display: flex;
   flex-direction: row;
 }
@@ -41,4 +41,10 @@
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.cointainer-flexbox-chatroom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

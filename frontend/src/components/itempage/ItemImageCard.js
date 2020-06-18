@@ -19,7 +19,10 @@ const useStyles = makeStyles(theme => ({
   image: {
     height: '90%',
     width: '90%',
-    margin: 5
+    margin: 5,
+    border: '1px solid #ddd',
+    borderRadius: 4,
+    padding: 5
   },
   conversationButton: {
     width: '90%',
