@@ -43,7 +43,7 @@
   justify-content: center;
 }
 
-.cointainer-flexbox-chatroom {
+.container-flexbox-chatroom {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
