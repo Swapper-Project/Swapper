@@ -10,7 +10,6 @@ import ItemPage from './components/itempage/ItemPage';
 import ItemList from './components/ItemList.js';
 import ChatRoom from './components/chatroom/ChatRoom.js';
 import Footer from './components/Footer.js';
-import Backdrop from '@material-ui/core/Backdrop';
 
 const drawerWidth = 240;
 
@@ -73,10 +72,6 @@ class App extends Component {
               [classes.contentShift]: this.state.drawerOpen
             })}
           >
-            <Backdrop
-              className={classes.backdrop}
-              open={this.state.drawerOpen}
-            ></Backdrop>
             <Switch>
               <Route exact path='/' component={ItemList} />
               <Route path='/dashboard' component={Dashboard} />
