@@ -1,5 +1,6 @@
 import React from 'react';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,7 +23,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import FullWidthTabs from './AuthTabs';
 import Paper from '@material-ui/core/Paper';
-import { Link } from 'react-router-dom';
+import WishIcon from '@material-ui/icons/LocalActivity';
+import CompleteIcon from '@material-ui/icons/DoneOutline';
+import ListedIcon from '@material-ui/icons/ListAlt';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 const drawerWidth = 240;
 
@@ -124,10 +128,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Nav = () => {
+const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -138,14 +141,6 @@ const Nav = () => {
     setModalOpen(false);
   };
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div className={classes.root}>
       <AppBar className={classes.navBar} position='static'>
@@ -153,7 +148,7 @@ const Nav = () => {
           <IconButton
             edge='start'
             className={classes.menuButton}
-            onClick={handleDrawerOpen}
+            onClick={() => handleDrawerOpen()}
             aria-label='menu'
           >
             <MenuIcon />
@@ -182,18 +177,18 @@ const Nav = () => {
             </Button>
           </div>
         </Toolbar>
-      </AppBar>
+      </AppBar>{' '}
       <Drawer
         className={classes.drawer}
         variant='persistent'
         anchor='left'
-        open={open}
+        open={drawerOpen}
         classes={{
           paper: classes.drawerPaper
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => handleDrawerClose()}>
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon className={classes.iconColor} />
             ) : (
@@ -218,6 +213,55 @@ const Nav = () => {
               />
             </ListItem>
           </Link>
+          <Divider />
+          <ListItem button>
+            <ListItemIcon className={classes.iconColor}>
+              <WishIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography style={{ color: '#FFFFFF' }}>Wishlist</Typography>
+              }
+            />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon className={classes.iconColor}>
+              <CompleteIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography style={{ color: '#FFFFFF' }}>
+                  Completed Swaps
+                </Typography>
+              }
+            />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon className={classes.iconColor}>
+              <ListedIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography style={{ color: '#FFFFFF' }}>
+                  ListedSwaps
+                </Typography>
+              }
+            />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon className={classes.iconColor}>
+              <AllInboxIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography style={{ color: '#FFFFFF' }}>Inbox</Typography>
+              }
+            />
+          </ListItem>
         </List>
       </Drawer>
       <Modal
