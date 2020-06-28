@@ -54,7 +54,6 @@ const useStyles = theme => ({
 class Register extends React.Component {
   renderInputField = ({ input, label, meta }) => {
     const { classes } = this.props;
-    console.log(input);
     return (
       <div>
         <CssTextField
@@ -73,7 +72,6 @@ class Register extends React.Component {
 
   renderInputPassword = ({ input, label, meta }) => {
     const { classes } = this.props;
-    console.log(input);
     return (
       <div>
         <CssTextField
