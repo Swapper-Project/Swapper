@@ -14,12 +14,12 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, conn) => {
   if(err) {
-    console.log(err + " " + "ERR-CODE: " + err.code);
+    console.log(err + " " + "ERROR-CODE: " + err.code);
   }
   
   if(conn) {
     conn.release();
-    console.log("DB connection sucessful.")
+    console.log("DB connection successful.")
   }
 });
 
