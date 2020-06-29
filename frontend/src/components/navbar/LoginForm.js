@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 const CssTextField = withStyles({
   root: {
@@ -53,6 +54,12 @@ const useStyles = theme => ({
 });
 
 class LoginForm extends React.Component {
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return <Alert severity='error'>{error}</Alert>;
+    }
+  }
+
   renderInputField = ({ input, label, meta }) => {
     const { classes } = this.props;
     return (
@@ -67,6 +74,7 @@ class LoginForm extends React.Component {
             className: classes.textFieldInput
           }}
         />
+        <div>{this.renderError(meta)}</div>
       </div>
     );
   };
@@ -99,7 +107,16 @@ class LoginForm extends React.Component {
   }
 }
 
-const validate = formVal => {};
+const validate = formVal => {
+  const errors = {};
+  if (!formVal.email) {
+    errors.email = 'You must enter an email';
+  }
+  if (!formVal.password) {
+    errors.password = 'You must enter a password';
+  }
+  return errors;
+};
 
 export default reduxForm({
   form: 'loginForm',
