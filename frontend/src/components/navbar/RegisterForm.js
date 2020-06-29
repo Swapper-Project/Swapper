@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 const CssTextField = withStyles({
   root: {
@@ -52,6 +53,12 @@ const useStyles = theme => ({
 });
 
 class Register extends React.Component {
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return <Alert severity='error'>{error}</Alert>;
+    }
+  }
+
   renderInputField = ({ input, label, meta }) => {
     const { classes } = this.props;
     return (
@@ -66,6 +73,7 @@ class Register extends React.Component {
             className: classes.textFieldInput
           }}
         />
+        {this.renderError(meta)}
       </div>
     );
   };
@@ -84,6 +92,7 @@ class Register extends React.Component {
             className: classes.textFieldInput
           }}
         />
+        {this.renderError(meta)}
       </div>
     );
   };
@@ -127,7 +136,24 @@ class Register extends React.Component {
   }
 }
 
-const validate = formVal => {};
+const validate = formVal => {
+  const errors = {};
+  console.log('FORM VAL');
+  console.log(formVal);
+  if (!formVal.username) {
+    errors.username = 'You must enter a username';
+  }
+  if (!formVal.email) {
+    errors.email = 'You must enter an email';
+  }
+  if (!formVal.password) {
+    errors.password = 'You must enter a password';
+  }
+  if (!formVal.repassword) {
+    errors.repassword = 'You must enter re-enter your password';
+  }
+  return errors;
+};
 
 export default reduxForm({ form: 'registerForm', validate })(
   withStyles(useStyles)(Register)

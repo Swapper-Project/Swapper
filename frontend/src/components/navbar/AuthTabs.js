@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#333333'
   },
   tabPanel: {
-    height: 500
+    height: 600
   },
   indicator: {
     backgroundColor: '#FF5722'
