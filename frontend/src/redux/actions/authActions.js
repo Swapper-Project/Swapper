@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT} from './types';
+import { SIGN_IN, SIGN_OUT } from './types';
 
 export const signIn = values => async (dispatch) => {
   const email = values.email;
@@ -19,11 +19,10 @@ export const signIn = values => async (dispatch) => {
   .then(res => res.json())
   .then(data => {
       if(data.valid) {
-        dispatch({ type: SIGN_IN, payload: values.username });
+        dispatch({ type: SIGN_IN, payload: data.userId });
       }
   }).catch(console.log);
 
-  //console.log("SIGN IN SUCCESS? " + result.data.valid);
 };
 
 export const signOut = userId => async (dispatch, getState) => {
@@ -52,7 +51,7 @@ export const register = values => async (dispatch, getState) => {
   .then(res => res.json())
   .then(data => {
       if(data.valid) {
-        dispatch({ type: SIGN_IN, payload: username });
+        dispatch({ type: SIGN_IN, userId: data.userId });
       }
   }).catch(console.log);
 };

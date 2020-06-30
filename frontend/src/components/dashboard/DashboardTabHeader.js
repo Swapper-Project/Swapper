@@ -27,10 +27,10 @@ class DashboardTabHeader extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<Card className={classes.root} ><h1>Header component</h1>	header text </Card>
 			
-			</div>
+			</React.Fragment>
 		);
 	}
 }

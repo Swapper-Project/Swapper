@@ -1,11 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { register } from '../../redux/actions';
+import { compose } from 'redux'
+import { register } from '../../redux/actions/authActions';
 import RegisterForm from './RegisterForm';
+import { withRouter } from "react-router-dom";
 
 class Register extends React.Component {
   onSubmit = formVals => {
-    this.props.register(formVals);
+    this.props.register(formVals)
+    .then(() => {
+      if(this.props.isSignedIn) {
+        this.props.history.push("/dashboard");
+      }
+    });
   };
 
   render() {
@@ -17,7 +24,14 @@ class Register extends React.Component {
   }
 }
 
-export default connect(
-  null,
+const mapStateToProps = state => ({
+  isSignedIn: state.auth.isSignedIn,
+});
+
+
+export default compose(
+  withRouter,
+  connect(
+    mapStateToProps,
   { register }
-)(Register);
+))(Register);
