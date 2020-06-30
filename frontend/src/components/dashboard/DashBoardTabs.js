@@ -92,9 +92,11 @@ const DashBoardTabs = () => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} className={classes.tabPanel}>
+    
         <DashboardTabHeader />
         <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
         <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
+  
       </TabPanel>
       <TabPanel value={value} index={1} className={classes.tabPanel}>
         <DashboardTabHeader />

@@ -17,30 +17,36 @@ app.use(bodyParser.json());
 
 app.post('/api/login', (req, res) => { 
   console.log("Login hit.");
-  pool.query('SELECT * FROM users WHERE email = ?', [req.body.email], (err, result) => {
-    if(err) {
-      console.log(err);
-      return res.send({
-        valid: false,
-        err: 'That email doesn\'nt have an account associated with it.',
-      });
-    } else {
-      bcrypt.compare(req.body.password, result[0].password, (err, result) => {
-        if(result == true) {
-          console.log("Successful Login.");
-          res.send({
-            valid: true,
-          });
-        } else {
-          console.log("Invalid password.");
-          return res.send({
-            valid: false,
-            err: 'Invalid password entered. Please try again.'
+  	
+  if(req.body.email && req.body.password) {
+    pool.query('SELECT * FROM users WHERE email = ?', [req.body.email], (err, result) => {
+      if(err) {
+        console.log(err);
+        return res.send({
+          valid: false,
+          err: 'That email doesn\'nt have an account associated with it.',
+        });
+      } else {
+        if(result.length > 0) {
+          bcrypt.compare(req.body.password, result[0].password, (err, bCryptResult) => {
+            if(bCryptResult == true) {
+              console.log("Successful Login.");
+              res.send({
+                valid: true,
+                userId: result[0].userId,
+              });
+            } else {
+              console.log("Invalid password.");
+              return res.send({
+                valid: false,
+                err: 'Invalid password entered. Please try again.'
+              });
+            }
           });
         }
-     });
-    }
-  });
+      }
+    });
+  }
 });
 
 app.post('/api/register', (req, res) => {
@@ -53,7 +59,7 @@ app.post('/api/register', (req, res) => {
       });
     }
     bcrypt.hash(req.body.password, salt, (err, hash) => {
-      pool.query('INSERT INTO users SET ?', {username: req.body.username, email : req.body.email, password: hash}, (err) => {	
+      pool.query('INSERT INTO users SET ?', {username: req.body.username, email : req.body.email, password: hash}, (err, insertedRecord) => {	
         if(err) {
           return res.send({
             valid: false,
@@ -61,7 +67,11 @@ app.post('/api/register', (req, res) => {
           });
         }
         console.log("Successful registration.");
-        return res.send({valid: true});
+        console.log(insertedRecord.insertId);
+        return res.send({
+          valid: true,
+          userId: insertedRecord.insertId
+        });
       });		
     })
   });

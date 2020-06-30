@@ -28,10 +28,10 @@ class DashboardTabRow extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<Card className={classes.root} >Row component </Card>
 			
-			</div>
+			</React.Fragment>
 		);
 	}
 }
