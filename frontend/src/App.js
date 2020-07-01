@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Switch, Route } from 'react-router-dom';
 import clsx from 'clsx';
 import './App.css';
-import NotFound from './components/NotFound.js';
+import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
-import Dashboard from './components/dashboard/Dashboard.js';
+import Dashboard from './components/dashboard/Dashboard';
 import ItemPage from './components/itempage/ItemPage';
-import ItemList from './components/ItemList.js';
-import ChatRoom from './components/chatroom/ChatRoom.js';
-import Footer from './components/Footer.js';
+import ItemList from './components/ItemList';
+import ChatRoom from './components/chatroom/ChatRoom';
+import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
+import PostingForm from './components/dashboard/PostingForm';
 
 const drawerWidth = 240;
 
@@ -40,41 +43,23 @@ const useStyles = theme => ({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      drawerOpen: false
-    };
   }
-
-  handleDrawerOpen = () => {
-    this.setState({
-      drawerOpen: true
-    });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({
-      drawerOpen: false
-    });
-  };
 
   render() {
     const { classes } = this.props;
     return (
       <div className='page-container'>
         <div className='content-wrap'>
-          <Nav
-            handleDrawerOpen={this.handleDrawerOpen}
-            handleDrawerClose={this.handleDrawerClose}
-            drawerOpen={this.state.drawerOpen}
-          />
+          <Nav />
           <main
             className={clsx(classes.content, {
-              [classes.contentShift]: this.state.drawerOpen
+              [classes.contentShift]: this.props.drawerOpen
             })}
           >
             <Switch>
               <Route exact path='/' component={ItemList} />
-              <Route path='/dashboard' component={Dashboard} />
+              <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+              <ProtectedRoute exact path='/dashboard/post' component={PostingForm} />
               {/* /listing/?id=N* for individual item page */}
               <Route path='/listing' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />
@@ -88,4 +73,8 @@ class App extends Component {
   }
 }
 
-export default withStyles(useStyles)(App);
+const mapStateToProps = state => ({
+  drawerOpen: state.nav.drawerOpen
+});
+
+export default connect(mapStateToProps)(withStyles(useStyles)(App));

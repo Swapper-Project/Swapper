@@ -4,7 +4,8 @@ const bcrypt= require('bcrypt');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 
-const pool = require('./database');
+
+const pool = require('../database');
 
 const port = process.env.LOGIN_PORT || 4001; 
 var salt = bcrypt.genSaltSync();
@@ -31,6 +32,7 @@ app.post('/api/login', (req, res) => {
           bcrypt.compare(req.body.password, result[0].password, (err, bCryptResult) => {
             if(bCryptResult == true) {
               console.log("Successful Login.");
+
               res.send({
                 valid: true,
                 userId: result[0].userId,

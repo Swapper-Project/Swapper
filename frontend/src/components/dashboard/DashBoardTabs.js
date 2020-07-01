@@ -19,7 +19,7 @@ function TabPanel(props) {
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`scrollable-force-tabpanel-${index}`}
       aria-labelledby={`scrollable-force-tab-${index}`}
@@ -27,7 +27,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'div'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -37,17 +37,17 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-force-tab-${index}`,
-    'aria-controls': `scrollable-force-tabpanel-${index}`,
+    'aria-controls': `scrollable-force-tabpanel-${index}`
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     width: '90%',
@@ -55,13 +55,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
     marginRight: '5%',
     backgroundColor: theme.palette.background.paper,
-    minHeight: 500,
+    minHeight: 500
   },
   tabPanel: {
     backgroundColor: '#ededed',
     paddingLeft: 0,
     marginTop: 6,
-    maxHeight: '50vh', overflowX: 'auto',
+    maxHeight: '50vh',
+    overflowX: 'auto'
   }
 }));
 
@@ -76,43 +77,61 @@ const DashBoardTabs = () => {
   return (
     <div className={classes.root}>
       <Box mt={5} boxShadow={2}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary" 
-        >
-          <Tab label="Wishlist" icon={<WishIcon />} {...a11yProps(0)} />
-          <Tab label="Completed Swaps" icon={<CompleteIcon />} {...a11yProps(1)} />
-          <Tab label="Listed Swaps" icon={<ListedIcon />} {...a11yProps(2)} />
-          <Tab label="Inbox" icon={<AllInboxIcon />} {...a11yProps(3)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0} className={classes.tabPanel}>
-    
-        <DashboardTabHeader />
-        <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
-        <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
-  
-      </TabPanel>
-      <TabPanel value={value} index={1} className={classes.tabPanel}>
-        <DashboardTabHeader />
-        <DashboardTabRow /><DashboardTabRow />
-      </TabPanel>
-      <TabPanel value={value} index={2} className={classes.tabPanel}>
-        <DashboardTabHeader />
-        <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
-      </TabPanel>
-      <TabPanel value={value} index={3} className={classes.tabPanel}>
-        <DashboardTabHeader />
-        <DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow /><DashboardTabRow />
-      </TabPanel>
+        <AppBar position='static' color='default'>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant='scrollable'
+            scrollButtons='on'
+            indicatorColor='primary'
+            textColor='primary'
+          >
+            <Tab label='Wishlist' icon={<WishIcon />} {...a11yProps(0)} />
+            <Tab
+              label='Completed Swaps'
+              icon={<CompleteIcon />}
+              {...a11yProps(1)}
+            />
+            <Tab label='Listed Swaps' icon={<ListedIcon />} {...a11yProps(2)} />
+            <Tab label='Inbox' icon={<AllInboxIcon />} {...a11yProps(3)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0} className={classes.tabPanel}>
+          <DashboardTabHeader />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+        </TabPanel>
+        <TabPanel value={value} index={1} className={classes.tabPanel}>
+          <DashboardTabHeader />
+          <DashboardTabRow />
+          <DashboardTabRow />
+        </TabPanel>
+        <TabPanel value={value} index={2} className={classes.tabPanel}>
+          <DashboardTabHeader />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+        </TabPanel>
+        <TabPanel value={value} index={3} className={classes.tabPanel}>
+          <DashboardTabHeader />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+          <DashboardTabRow />
+        </TabPanel>
       </Box>
     </div>
   );
-}
+};
 
 export default DashBoardTabs;

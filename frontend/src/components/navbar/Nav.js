@@ -1,6 +1,16 @@
 import React from 'react';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { fade, withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {
+  handleDrawerOpen,
+  handleDrawerClose
+} from '../../redux/actions/navActions';
+import {
+  authModalOpen,
+  authModalClose,
+  signOut
+} from '../../redux/actions/authActions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,7 +40,7 @@ import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   root: {
     flexGrow: 1
   },
@@ -40,10 +50,9 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    width: '100%',
-    display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 15
   },
   linkTitle: {
     textDecoration: 'none',
@@ -96,11 +105,7 @@ const useStyles = makeStyles(theme => ({
   },
   navContents: {
     display: 'flex',
-    width: '100%'
-  },
-  auth: {
-    position: 'absolute',
-    right: 5
+    flexDirection: 'row'
   },
   inputRoot: {
     color: 'inherit'
@@ -126,170 +131,184 @@ const useStyles = makeStyles(theme => ({
   modalTitle: {
     color: 'white'
   }
-}));
+});
 
-const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [modalOpen, setModalOpen] = React.useState(false);
+class Nav extends React.Component {
+  render() {
+    const { classes } = this.props;
 
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleClose = () => {
-    setModalOpen(false);
-  };
-
-  return (
-    <div className={classes.root}>
-      <AppBar className={classes.navBar} position='static'>
-        <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            onClick={() => handleDrawerOpen()}
-            aria-label='menu'
-          >
-            <MenuIcon />
-          </IconButton>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    return (
+      <div className={classes.root}>
+        <AppBar className={classes.navBar} position='static'>
+          <Toolbar>
+            <IconButton
+              edge='start'
+              className={classes.menuButton}
+              onClick={() => this.props.handleDrawerOpen()}
+              aria-label='menu'
+            >
+              <MenuIcon />
+            </IconButton>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder='Search…'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.title}>
-            <Link to={'/'} className={classes.linkTitle}>
-              <Typography variant='h6'>Swapper</Typography>
-            </Link>
-          </div>
-          <div className={classes.auth}>
-            <Button onClick={handleOpen} color='inherit'>
-              Login/Register
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>{' '}
-      <Drawer
-        className={classes.drawer}
-        variant='persistent'
-        anchor='left'
-        open={drawerOpen}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={() => handleDrawerClose()}>
-            {theme.direction === 'ltr' ? (
+            <div className={classes.title}>
+              <Link to={'/'} className={classes.linkTitle}>
+                <Typography variant='h6'>Swapper</Typography>
+              </Link>
+            </div>
+            <div>
+              {this.props.isSignedIn && (
+                <Button onClick={() => this.props.signOut()} color='inherit'>
+                  Logout
+                </Button>
+              )}
+              {!this.props.isSignedIn && (
+                <Button
+                  onClick={() => this.props.authModalOpen()}
+                  color='inherit'
+                >
+                  Login/Register
+                </Button>
+              )}
+            </div>
+          </Toolbar>
+        </AppBar>{' '}
+        <Drawer
+          className={classes.drawer}
+          variant='persistent'
+          anchor='left'
+          open={this.props.drawerOpen}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={() => this.props.handleDrawerClose()}>
               <ChevronLeftIcon className={classes.iconColor} />
-            ) : (
-              <ChevronRightIcon className={classes.iconColor} />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
-            <ListItem button key={'Dashboard'}>
-              <ListItemIcon>
-                <DashBoard className={classes.iconColor} />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
+              <ListItem button key={'Dashboard'}>
+                <ListItemIcon>
+                  <DashBoard className={classes.iconColor} />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>
+                      Dashboard
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </Link>
+            <Divider />
+            <ListItem button>
+              <ListItemIcon className={classes.iconColor}>
+                <WishIcon />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography style={{ color: '#FFFFFF' }}>Wishlist</Typography>
+                }
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon className={classes.iconColor}>
+                <CompleteIcon />
               </ListItemIcon>
               <ListItemText
                 disableTypography
                 primary={
                   <Typography style={{ color: '#FFFFFF' }}>
-                    Dashboard
+                    Completed Swaps
                   </Typography>
                 }
               />
             </ListItem>
-          </Link>
-          <Divider />
-          <ListItem button>
-            <ListItemIcon className={classes.iconColor}>
-              <WishIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography style={{ color: '#FFFFFF' }}>Wishlist</Typography>
-              }
-            />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon className={classes.iconColor}>
-              <CompleteIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography style={{ color: '#FFFFFF' }}>
-                  Completed Swaps
-                </Typography>
-              }
-            />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon className={classes.iconColor}>
-              <ListedIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography style={{ color: '#FFFFFF' }}>
-                  ListedSwaps
-                </Typography>
-              }
-            />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon className={classes.iconColor}>
-              <AllInboxIcon />
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography style={{ color: '#FFFFFF' }}>Inbox</Typography>
-              }
-            />
-          </ListItem>
-        </List>
-      </Drawer>
-      <Modal
-        className={classes.modal}
-        open={modalOpen}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={modalOpen}>
-          <Paper square={false} className={classes.paper}>
-            <Typography
-              className={classes.modalTitle}
-              align='center'
-              variant='h4'
-            >
-              Welcome to Swapper!
-            </Typography>
-            <br />
-            <FullWidthTabs />
-          </Paper>
-        </Fade>
-      </Modal>
-    </div>
-  );
-};
+            <ListItem button>
+              <ListItemIcon className={classes.iconColor}>
+                <ListedIcon />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography style={{ color: '#FFFFFF' }}>
+                    ListedSwaps
+                  </Typography>
+                }
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon className={classes.iconColor}>
+                <AllInboxIcon />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography style={{ color: '#FFFFFF' }}>Inbox</Typography>
+                }
+              />
+            </ListItem>
+          </List>
+        </Drawer>
+        <Modal
+          className={classes.modal}
+          open={this.props.modalOpen}
+          onClose={() => this.props.authModalClose()}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <Fade in={this.props.modalOpen}>
+            <Paper square={false} className={classes.paper}>
+              <Typography
+                className={classes.modalTitle}
+                align='center'
+                variant='h4'
+              >
+                Welcome to Swapper!
+              </Typography>
+              <br />
+              <FullWidthTabs />
+            </Paper>
+          </Fade>
+        </Modal>
+      </div>
+    );
+  }
+}
 
-export default Nav;
+const mapStateToProps = state => ({
+  isSignedIn: state.auth.isSignedIn,
+  userId: state.auth.userId,
+  modalOpen: state.auth.authOpen,
+  drawerOpen: state.nav.drawerOpen
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    authModalOpen,
+    authModalClose,
+    handleDrawerOpen,
+    handleDrawerClose,
+    signOut
+  }
+)(withStyles(useStyles)(Nav));

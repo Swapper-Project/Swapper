@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Field, reduxForm } from 'redux-form';
+import { authModalClose } from '../../redux/actions/authActions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
@@ -52,7 +54,7 @@ const useStyles = theme => ({
   }
 });
 
-class Register extends React.Component {
+class RegisterForm extends React.Component {
   renderError({ error, touched }) {
     if (touched && error) {
       return <Alert severity='error'>{error}</Alert>;
@@ -155,6 +157,12 @@ const validate = formVal => {
   return errors;
 };
 
-export default reduxForm({ form: 'registerForm', validate })(
-  withStyles(useStyles)(Register)
-);
+const mapStateToProps = state => ({
+  isSignedIn: state.auth.isSignedIn
+});
+
+RegisterForm = connect(
+  mapStateToProps,
+  { authModalClose }
+)(withStyles(useStyles)(RegisterForm));
+export default reduxForm({ form: 'registerForm', validate })(RegisterForm);
