@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Switch, Route } from 'react-router-dom';
 import clsx from 'clsx';
@@ -41,36 +42,17 @@ const useStyles = theme => ({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      drawerOpen: false
-    };
   }
-
-  handleDrawerOpen = () => {
-    this.setState({
-      drawerOpen: true
-    });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({
-      drawerOpen: false
-    });
-  };
 
   render() {
     const { classes } = this.props;
     return (
       <div className='page-container'>
         <div className='content-wrap'>
-          <Nav
-            handleDrawerOpen={this.handleDrawerOpen}
-            handleDrawerClose={this.handleDrawerClose}
-            drawerOpen={this.state.drawerOpen}
-          />
+          <Nav />
           <main
             className={clsx(classes.content, {
-              [classes.contentShift]: this.state.drawerOpen
+              [classes.contentShift]: this.props.drawerOpen
             })}
           >
             <Switch>
@@ -89,4 +71,8 @@ class App extends Component {
   }
 }
 
-export default withStyles(useStyles)(App);
+const mapStateToProps = state => ({
+  drawerOpen: state.nav.drawerOpen
+});
+
+export default connect(mapStateToProps)(withStyles(useStyles)(App));
