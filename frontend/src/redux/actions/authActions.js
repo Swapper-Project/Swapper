@@ -20,9 +20,7 @@ export const signIn = values => async dispatch => {
     .then(res => res.json())
     .then(data => {
       if (data.valid) {
-        console.log('USERID: ' + data.userId);
         dispatch({ type: SIGN_IN, userId: data.userId });
-        localStorage.setItem('userId', data.userId);
       }
     })
     .catch(console.log);
@@ -31,6 +29,7 @@ export const signIn = values => async dispatch => {
 export const signOut = () => async dispatch => {
   console.log('SIGN OUT HIT');
   dispatch({ type: SIGN_OUT });
+  auth.logout(() => {});
 };
 
 export const register = values => async (dispatch, getState) => {
@@ -55,8 +54,6 @@ export const register = values => async (dispatch, getState) => {
     .then(data => {
       if (data.valid) {
         dispatch({ type: SIGN_IN, userId: data.userId });
-        localStorage.setItem('userId', data.userId);
-        console.log(localStorage.getItem('userId'));
       }
     })
     .catch(console.log);

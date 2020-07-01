@@ -12,6 +12,7 @@ import ItemList from './components/ItemList';
 import ChatRoom from './components/chatroom/ChatRoom';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import PostingForm from './components/dashboard/PostingForm';
 
 const drawerWidth = 240;
 
@@ -58,6 +59,7 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+              <ProtectedRoute exact path='/dashboard/post' component={PostingForm} />
               {/* /listing/?id=N* for individual item page */}
               <Route path='/listing' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />

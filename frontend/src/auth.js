@@ -1,16 +1,15 @@
 class auth {
   constructor() {
-    this.authenticated = localStorage.getItem('userId') || false;
+    this.authenticated = false;
   }
 
   login(callback) {
-    this.authenticated = localStorage.getItem('userId');
+    this.authenticated = true;
     callback();
   }
 
   logout(callback) {
     this.authenticated = false;
-    localStorage.removeItem('userId');
     callback();
   }
 
