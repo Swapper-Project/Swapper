@@ -3,13 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { Switch, Route } from 'react-router-dom';
 import clsx from 'clsx';
 import './App.css';
-import NotFound from './components/NotFound.js';
+import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
-import Dashboard from './components/dashboard/Dashboard.js';
+import Dashboard from './components/dashboard/Dashboard';
 import ItemPage from './components/itempage/ItemPage';
-import ItemList from './components/ItemList.js';
-import ChatRoom from './components/chatroom/ChatRoom.js';
-import Footer from './components/Footer.js';
+import ItemList from './components/ItemList';
+import ChatRoom from './components/chatroom/ChatRoom';
+import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const drawerWidth = 240;
 
@@ -74,7 +75,7 @@ class App extends Component {
           >
             <Switch>
               <Route exact path='/' component={ItemList} />
-              <Route path='/dashboard' component={Dashboard} />
+              <ProtectedRoute exact path='/dashboard' component={Dashboard} />
               {/* /listing/?id=N* for individual item page */}
               <Route path='/listing' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />

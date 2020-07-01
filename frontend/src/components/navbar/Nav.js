@@ -1,6 +1,7 @@
 import React from 'react';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -40,14 +41,13 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    width: '100%',
-    display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 15,
   },
   linkTitle: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'white',
   },
   navBar: {
     backgroundColor: '#333333'
@@ -96,11 +96,7 @@ const useStyles = makeStyles(theme => ({
   },
   navContents: {
     display: 'flex',
-    width: '100%'
-  },
-  auth: {
-    position: 'absolute',
-    right: 5
+    flexDirection: 'row',
   },
   inputRoot: {
     color: 'inherit'
@@ -128,7 +124,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
+const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen, isSignedIn }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -140,6 +136,10 @@ const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
   const handleClose = () => {
     setModalOpen(false);
   };
+
+  const handleOnSubmit = () => {
+    console.log("HANDLE SUBMIT")
+  }
 
   return (
     <div className={classes.root}>
@@ -170,12 +170,18 @@ const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
             <Link to={'/'} className={classes.linkTitle}>
               <Typography variant='h6'>Swapper</Typography>
             </Link>
-          </div>
-          <div className={classes.auth}>
-            <Button onClick={handleOpen} color='inherit'>
-              Login/Register
+          </div> 
+          <div>
+          {isSignedIn && (<Button onSubmit={handleOnSubmit()} color='inherit'>
+              Logout
             </Button>
-          </div>
+          )}
+          {!isSignedIn && ( <Button onClick={handleOpen} color='inherit'>
+              Login/Register
+            </Button>) }
+          </ div>
+            
+      
         </Toolbar>
       </AppBar>{' '}
       <Drawer
@@ -292,4 +298,9 @@ const Nav = ({ handleDrawerOpen, handleDrawerClose, drawerOpen }) => {
   );
 };
 
-export default Nav;
+const mapStateToProps = state => ({
+  isSignedIn: state.auth.isSignedIn,
+  userId: state.auth.userId
+});
+
+export default connect(mapStateToProps)(Nav);

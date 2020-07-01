@@ -1,4 +1,5 @@
 import { SIGN_IN, SIGN_OUT } from './types';
+import auth from '../../auth';
 
 export const signIn = values => async (dispatch) => {
   const email = values.email;
@@ -20,14 +21,15 @@ export const signIn = values => async (dispatch) => {
   .then(data => {
       if(data.valid) {
         dispatch({ type: SIGN_IN, payload: data.userId });
+        localStorage.setItem('userId', data.userId);
       }
   }).catch(console.log);
 
 };
 
-export const signOut = userId => async (dispatch, getState) => {
-  // Put api logic here for sign out
-  // dispatch({ type: SIGN_OUT, payload: response });
+export const signOut = () => async (dispatch) => {
+  console.log("SIGN OUT HIT")
+  dispatch({ type: SIGN_OUT });
 };
 
 export const register = values => async (dispatch, getState) => {
@@ -52,6 +54,8 @@ export const register = values => async (dispatch, getState) => {
   .then(data => {
       if(data.valid) {
         dispatch({ type: SIGN_IN, userId: data.userId });
+        localStorage.setItem('userId', data.userId);
+        console.log(localStorage.getItem('userId'))
       }
   }).catch(console.log);
 };
