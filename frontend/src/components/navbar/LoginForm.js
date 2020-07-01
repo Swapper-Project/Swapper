@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
+import { authModalClose } from '../../redux/actions/authActions';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -118,7 +120,12 @@ const validate = formVal => {
   return errors;
 };
 
+LoginForm = connect(
+  null,
+  { authModalClose }
+)(withStyles(useStyles)(LoginForm));
+
 export default reduxForm({
   form: 'loginForm',
   validate
-})(withStyles(useStyles)(LoginForm));
+})(LoginForm);
