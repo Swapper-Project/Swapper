@@ -6,7 +6,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  isSignedIn: localStorage.getItem('userId') !== null,
+  isSignedIn: false,
   userId: '',
   email: '',
   authOpen: false

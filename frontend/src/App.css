@@ -32,11 +32,6 @@
   margin-top: 125px;
 }
 
-.container-flexbox-userprofile {
-  display: flex;
-  flex-direction: row;
-}
-
 .pagination-container {
   display: flex;
   align-content: center;
@@ -48,3 +43,17 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+.container-flexbox-userprofile {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 800px) {
+  .container-flexbox-userprofile{
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
