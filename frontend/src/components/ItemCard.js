@@ -36,7 +36,7 @@ const ItemCard = () => {
 				component="img"
 				alt="name of image"
 				height="200"
-				image={process.env.PUBLIC_URL + '/img/postImages/image.png'}
+				image={process.env.PUBLIC_URL + '/img/post_images/image.png'}
 				title="title of post"
 			/>
 			<CardContent>

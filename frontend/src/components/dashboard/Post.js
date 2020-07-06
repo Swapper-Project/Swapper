@@ -58,7 +58,8 @@ class Post extends Component {
 }
 
 const mapStateToProps = state => ({
-  isSignedIn: state.auth.isSignedIn
+  isSignedIn: state.auth.isSignedIn,
+  userId: state.auth.userId
 });
 
 Post = withStyles(useStyles)(Post);
