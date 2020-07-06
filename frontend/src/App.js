@@ -12,7 +12,7 @@ import ItemList from './components/ItemList';
 import ChatRoom from './components/chatroom/ChatRoom';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
-import PostingForm from './components/dashboard/PostingForm';
+import Post from './components/dashboard/Post';
 
 const drawerWidth = 240;
 
@@ -41,10 +41,6 @@ const useStyles = theme => ({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -59,7 +55,7 @@ class App extends Component {
             <Switch>
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
-              <ProtectedRoute exact path='/dashboard/post' component={PostingForm} />
+              <ProtectedRoute exact path='/dashboard/post' component={Post} />
               {/* /listing/?id=N* for individual item page */}
               <Route path='/listing' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />

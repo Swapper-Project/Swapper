@@ -22,7 +22,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SearchIcon from '@material-ui/icons/Search';
 import DashBoard from '@material-ui/icons/Dashboard';
 import Divider from '@material-ui/core/Divider';
@@ -183,7 +182,7 @@ class Nav extends React.Component {
               )}
             </div>
           </Toolbar>
-        </AppBar>{' '}
+        </AppBar>
         <Drawer
           className={classes.drawer}
           variant='persistent'
