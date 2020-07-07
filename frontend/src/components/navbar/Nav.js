@@ -41,7 +41,7 @@ const drawerWidth = 240;
 
 const useStyles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -152,7 +152,7 @@ class Nav extends React.Component {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase
+              <InputBase 
                 placeholder='Search…'
                 classes={{
                   root: classes.inputRoot,
@@ -163,7 +163,7 @@ class Nav extends React.Component {
             </div>
             <div className={classes.title}>
               <Link to={'/'} className={classes.linkTitle}>
-                <Typography variant='h6'>Swapper</Typography>
+                <Typography style={{fontFamily: 'Roboto Mono' }} variant='h6'>Swapper</Typography>
               </Link>
             </div>
             <div>
@@ -173,11 +173,11 @@ class Nav extends React.Component {
                 </Button>
               )}
               {!this.props.isSignedIn && (
-                <Button
+                <Button style={{fontFamily: 'Roboto Mono' }}
                   onClick={() => this.props.authModalOpen()}
                   color='inherit'
                 >
-                  Login/Register
+                  Login / Register
                 </Button>
               )}
             </div>
@@ -278,6 +278,7 @@ class Nav extends React.Component {
           <Fade in={this.props.modalOpen}>
             <Paper square={false} className={classes.paper}>
               <Typography
+                style={{fontFamily: 'Roboto Mono'}}
                 className={classes.modalTitle}
                 align='center'
                 variant='h4'

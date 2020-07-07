@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Gravatar from 'react-gravatar';
 import Ratings from 'react-ratings-declarative';
-
-import {makeStyles} from '@material-ui/core/styles';
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -23,12 +23,23 @@ const useStyles = makeStyles({
 	}
 });
 
-const ItemCard = () => {
-	const classes = useStyles();
+const ItemCard = (props) => {
+  const classes = useStyles();
 
-	{/*fetch actual user rating from hook for given card later*/}
-	const [rating, setRating] = React.useState(3.5);
+  const [email, setEmail] = useState('notset');
+  const [rating, setRating] = useState(0);
 
+  useEffect(() => {
+    axios.post(`http://localhost:4002/api/getPosterInfo`, {
+      userId: props.userId
+    }).then(res => {
+      setEmail(res.data.email);
+      setRating(res.data.rating);
+      console.log("RATIUNG "+ rating);
+      console.log("TYPE OR RAING" + typeof(rating))
+    }).catch(err => console.log(err));
+  });
+  
 	return (
 	<Card className={classes.root} elevation={6}>
 		<CardActionArea>
@@ -41,16 +52,16 @@ const ItemCard = () => {
 			/>
 			<CardContent>
 			<Typography gutterBottom variant="h5" component="h2">
-					Title of Post
+					{props.title}
 			</Typography>
 			<Typography variant="body2" color="textSecondary" component="p" display="inline">
-				Date posted: 
+				Date posted: {new Date(props.createTime).toString().substr(0, 24)}
 			</Typography>
 			</CardContent>
 		</CardActionArea>
 
 		<CardActions>
-			<Gravatar email="a-email@example.com" className={`${classes.avatar}`}/>
+			<Gravatar email={email} className={`${classes.avatar}`}/>
 			<Ratings
 				rating={rating}
 				widgetDimensions="20px"
@@ -61,6 +72,7 @@ const ItemCard = () => {
 				<Ratings.Widget widgetRatedColor="#FF5722" />
 				<Ratings.Widget widgetRatedColor="#FF5722" />
 				<Ratings.Widget widgetRatedColor="#FF5722" />
+        
 			</Ratings>
 	
 		</CardActions>
