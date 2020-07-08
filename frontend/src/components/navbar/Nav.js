@@ -147,7 +147,15 @@ class Nav extends React.Component {
               aria-label='menu'
             >
               <MenuIcon />
+              
             </IconButton>
+            
+
+            
+            Category dropdown here
+
+
+
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

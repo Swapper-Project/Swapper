@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const pool = require('../database');
+const path = require('path');
 
 const port = process.env.POST_PORT || 4002; 
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(fileUpload());
 app.use('/uploads', express.static(__dirname + '../uploads'));
+app.use(express.static(__dirname + '/uploads'));
 
 //Post function to make an upload item request to the database
 app.post('/api/post', (req, res) => {

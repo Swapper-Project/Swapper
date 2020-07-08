@@ -23,39 +23,47 @@ const useStyles = makeStyles({
 	}
 });
 
-const ItemCard = (props) => {
+const ItemCard = ({post}) => {
   const classes = useStyles();
 
   const [email, setEmail] = useState('notset');
   const [rating, setRating] = useState(0);
+  const [img, setImg] = useState(null);
 
   useEffect(() => {
     axios.post(`http://localhost:4002/api/getPosterInfo`, {
-      userId: props.userId
+      userId: post.userId
     }).then(res => {
       setEmail(res.data.email);
       setRating(res.data.rating);
-      console.log("RATIUNG "+ rating);
-      console.log("TYPE OR RAING" + typeof(rating))
     }).catch(err => console.log(err));
+
+    // axios.get(`http://localhost:4002/api/getPostImg?filename=${post.filename}`)
+    // .then(res => {
+     
+    //   setImg(res.data);
+
+    //   console.log(img)
+    // });
   });
   
 	return (
 	<Card className={classes.root} elevation={6}>
+    <img src={img} />
 		<CardActionArea>
 			<CardMedia
 				component="img"
 				alt="name of image"
 				height="200"
-				image={process.env.PUBLIC_URL + '/img/post_images/image.png'}
+				image={`http://localhost:4005/api/getPostImg?filename=${post.filename}`}
 				title="title of post"
 			/>
 			<CardContent>
 			<Typography gutterBottom variant="h5" component="h2">
-					{props.title}
+					{post.title}
 			</Typography>
 			<Typography variant="body2" color="textSecondary" component="p" display="inline">
-				Date posted: {new Date(props.createTime).toString().substr(0, 24)}
+				Date posted: {new Date(post.createTime).toString().substr(0, 24)}
 			</Typography>
 			</CardContent>
 		</CardActionArea>
