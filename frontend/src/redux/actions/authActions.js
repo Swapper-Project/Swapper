@@ -1,4 +1,11 @@
-import { SIGN_IN, SIGN_OUT, AUTH_MODAL_OPEN, AUTH_MODAL_CLOSE } from './types';
+import {
+  SIGN_IN,
+  SIGN_OUT,
+  AUTH_MODAL_OPEN,
+  AUTH_MODAL_CLOSE,
+  LOAD_COOKIE
+} from './types';
+import cookie from 'react-cookies';
 import auth from '../../auth';
 
 export const signIn = values => async dispatch => {
@@ -20,6 +27,8 @@ export const signIn = values => async dispatch => {
     .then(res => res.json())
     .then(data => {
       if (data.valid) {
+        cookie.save('userId', data.userId, { path: '/' });
+        console.log(cookie.load('userId'));
         dispatch({ type: SIGN_IN, userId: data.userId });
       }
     })
@@ -28,6 +37,8 @@ export const signIn = values => async dispatch => {
 
 export const signOut = () => async dispatch => {
   console.log('SIGN OUT HIT');
+  cookie.remove('userId', { path: '/' });
+  console.log(cookie.load('userId'));
   dispatch({ type: SIGN_OUT });
   auth.logout(() => {});
 };
@@ -57,6 +68,13 @@ export const register = values => async (dispatch, getState) => {
       }
     })
     .catch(console.log);
+};
+
+export const loadCookie = () => dispatch => {
+  if (cookie.load('userId')) {
+    dispatch({ type: LOAD_COOKIE, userId: cookie.load('userId') });
+    auth.login(() => {});
+  }
 };
 
 export const authModalOpen = () => dispatch => {

@@ -6,3 +6,4 @@ export const AUTH_MODAL_OPEN = 'AUTH_MODAL_OPEN';
 export const DRAWER_CLOSE = 'DRAWER_CLOSE';
 export const DRAWER_OPEN = 'DRAWER_OPEN';
 export const CREATE_SWAP = 'CREATE_SWAP';
+export const LOAD_COOKIE = 'LOAD_COOKIE';
