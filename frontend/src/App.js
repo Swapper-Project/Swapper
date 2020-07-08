@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Switch, Route } from 'react-router-dom';
 import clsx from 'clsx';
 import './App.css';
+import { loadCookie } from './redux/actions/authActions';
 import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
 import Dashboard from './components/dashboard/Dashboard';
@@ -41,6 +42,9 @@ const useStyles = theme => ({
 });
 
 class App extends Component {
+  componentDidMount() {
+    this.props.loadCookie();
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -73,4 +77,7 @@ const mapStateToProps = state => ({
   drawerOpen: state.nav.drawerOpen
 });
 
-export default connect(mapStateToProps)(withStyles(useStyles)(App));
+export default connect(
+  mapStateToProps,
+  { loadCookie }
+)(withStyles(useStyles)(App));

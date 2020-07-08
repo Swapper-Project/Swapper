@@ -1,8 +1,10 @@
+import cookie from 'react-cookies';
 import {
   SIGN_IN,
   SIGN_OUT,
   AUTH_MODAL_OPEN,
-  AUTH_MODAL_CLOSE
+  AUTH_MODAL_CLOSE,
+  LOAD_COOKIE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -27,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, authOpen: true };
     case AUTH_MODAL_CLOSE:
       return { ...state, authOpen: false };
+    case LOAD_COOKIE:
+      return { ...state, userId: action.userId, isSignedIn: true };
     default:
       return state;
   }
