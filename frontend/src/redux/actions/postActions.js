@@ -12,7 +12,6 @@ export const createSwap = values => async (dispatch, getState) => {
   formData.append('description', values.description);
   formData.append('category', values.category);
   
-
   axios.post(url, formData, {
     headers: { 
       Accept: 'application/json',

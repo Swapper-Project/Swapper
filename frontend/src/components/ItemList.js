@@ -20,6 +20,7 @@ class ItemList extends Component {
     axios.get(`http://localhost:4002/api/getAllposts`)
       .then(res => {
         this.setState({posts: res.data.results})
+        console.log(this.state.posts)
       }).catch(err => console.log(err));
   }
 
@@ -31,7 +32,7 @@ class ItemList extends Component {
       <div className="container-flexbox-ItemList">
         {/* testing card layout*/}
         {this.state.posts.map((post, key) => {
-          return <ItemCard key={key} userId={post.userId} postId={post.postId} title={post.title} date={post.date} createTime={post.createTime}/>
+          return <ItemCard key={key} post={post} />
         })}
        
       </div>
