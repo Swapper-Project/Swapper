@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const fileUpload = require('express-fileupload');
-const bcrypt= require('bcrypt');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const pool = require('../database');
@@ -23,7 +22,7 @@ app.post('/api/post', (req, res) => {
 
     const file = req.files.file;
 
-    console.log(req.body);
+    //console.log(req.body);
 
     file.mv(`${__dirname}/../uploads/post_images/${file.name}`, (err) => {
       if(err) {
@@ -44,12 +43,54 @@ app.post('/api/post', (req, res) => {
         });
       }
 
-      console.log("Successful post.");
+      //console.log("Successful post.");
 
       return res.send({
         valid: true,
       });
     });		
+});
+
+app.get('/api/getAllposts', (req, res) => {
+  pool.query('SELECT * FROM posts', (err, results) => {
+    if(err) {
+      console.log(err);
+      return res.send({
+        valid: false,
+        err: 'Could not fetch all posts.',
+      });
+    }
+    console.log("Posts successfully fetched.");
+
+    return res.send({
+      valid: true,
+      results: results
+    });
+  });
+});
+
+app.post('/api/getPosterInfo', (req, res) => {
+  pool.query('SELECT * FROM users WHERE userId=?', [req.body.userId], function(err, result) {
+    if(err) {
+      console.log(err);
+      return res.send({
+        valid: false,
+        err: 'That email doesn\'nt have an account associated with it.',
+      });
+    }
+    if(result.length == 0) {
+      console.log('Invalid userId passed to endpoint.');
+      return res.send({
+        valid: false,
+        err: 'Invalid userId passed to endpoint.',
+      });
+    }
+    res.send({
+      valid: true,
+      email: result[0].email,
+      rating: result[0].rating,
+    });
+  });
 });
 
 app.listen(port, console.log("Post service running."));
