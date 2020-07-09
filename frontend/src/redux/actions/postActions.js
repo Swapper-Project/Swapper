@@ -1,4 +1,4 @@
-import { CREATE_SWAP } from './types';
+import { CREATE_SWAP, SET_TERM, GET_POSTS } from './types';
 import axios from 'axios';
 
 export const createSwap = values => async (dispatch, getState) => {
@@ -18,4 +18,25 @@ export const createSwap = values => async (dispatch, getState) => {
       'Content-Type': 'multipart/form-data' 
     }
   }).then(res => console.log(res)).catch(err => console.log(err));
+};
+
+export const getPosts = () => (dispatch, getState) => {
+    if(getState().posts.term === '') {
+      axios.get(`http://localhost:4006/api/getAllposts`)
+      .then(res => {
+        console.log(res.data)
+        dispatch({ type: GET_POSTS, posts: res.data.results });
+      }).catch(err => console.log(err));
+    } else {
+      axios.get(`http://localhost:4006/api/searchByTerm?term=${getState().posts.term}`)
+      .then(res => {
+        dispatch({ type: GET_POSTS, posts: res.data.results });
+      }).catch(err => console.log(err));
+    }
+    console.log(getState().posts);
+};
+
+export const setTerm = values => async (dispatch, getState) => {
+  dispatch({ type: SET_TERM, term: values });
+  console.log(values);
 };

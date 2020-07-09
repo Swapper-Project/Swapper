@@ -24,8 +24,6 @@ app.post('/api/post', (req, res) => {
 
     const file = req.files.file;
 
-    //console.log(req.body);
-
     file.mv(`${__dirname}/../uploads/post_images/${file.name}`, (err) => {
       if(err) {
         console.log(err);
@@ -45,7 +43,7 @@ app.post('/api/post', (req, res) => {
         });
       }
 
-      //console.log("Successful post.");
+      console.log("Successful post.");
 
       return res.send({
         valid: true,
@@ -62,7 +60,6 @@ app.get('/api/getAllposts', (req, res) => {
         err: 'Could not fetch all posts.',
       });
     }
-    console.log("Posts successfully fetched.");
 
     return res.send({
       valid: true,

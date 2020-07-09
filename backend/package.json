@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "concurrently --kill-others \"node api/auth_service.js\" \"node api/post_service.js\" \"node api/img_service.js\"",
+    "dev": "concurrently --kill-others \"node api/auth_service.js\" \"node api/search_service.js\" \"node api/post_service.js\" \"node api/img_service.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
