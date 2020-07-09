@@ -9,8 +9,9 @@ import {
 import {
   authModalOpen,
   authModalClose,
-  signOut
+  signOut,
 } from '../../redux/actions/authActions';
+import { setTerm } from '../../redux/actions/postActions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -133,6 +134,17 @@ const useStyles = theme => ({
 });
 
 class Nav extends React.Component {
+  state = { term: '' }
+
+  handleOnSubmit = (e) => {
+    e.preventDefault();
+    this.props.setTerm(this.state.term);
+  }
+
+  handleOnChange = (e) => {
+    this.setState({ term: e.target.value });
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -146,12 +158,11 @@ class Nav extends React.Component {
               onClick={() => this.props.handleDrawerOpen()}
               aria-label='menu'
             >
-              <MenuIcon />
-              
+              <MenuIcon />   
             </IconButton>
             
 
-            
+
             Category dropdown here
 
 
@@ -160,14 +171,17 @@ class Nav extends React.Component {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase 
-                placeholder='Search…'
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
+              <form onSubmit={(e) => this.handleOnSubmit(e)}>
+                <InputBase 
+                  placeholder='Search...'
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                  onChange={(e) => this.handleOnChange(e)}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </form>
             </div>
             <div className={classes.title}>
               <Link to={'/'} className={classes.linkTitle}>
@@ -307,7 +321,8 @@ const mapStateToProps = state => ({
   isSignedIn: state.auth.isSignedIn,
   userId: state.auth.userId,
   modalOpen: state.auth.authOpen,
-  drawerOpen: state.nav.drawerOpen
+  drawerOpen: state.nav.drawerOpen,
+  term: state.posts.term,
 });
 
 export default connect(
@@ -317,6 +332,7 @@ export default connect(
     authModalClose,
     handleDrawerOpen,
     handleDrawerClose,
-    signOut
+    signOut,
+    setTerm,
   }
 )(withStyles(useStyles)(Nav));

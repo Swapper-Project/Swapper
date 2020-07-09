@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ItemCard from './ItemCard';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
-import axios from 'axios'
+
+import { getPosts } from '../redux/actions/postActions';
 
 const useStyles = theme => ({
   root: {
@@ -14,14 +15,13 @@ const useStyles = theme => ({
 });
 
 class ItemList extends Component {
-  state = { posts: [] }
-
   componentDidMount() {
-    axios.get(`http://localhost:4002/api/getAllposts`)
-      .then(res => {
-        this.setState({posts: res.data.results})
-        console.log(this.state.posts)
-      }).catch(err => console.log(err));
+    this.props.getPosts();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.term !== this.props.term)
+      this.props.getPosts();
   }
 
   render() {
@@ -29,20 +29,26 @@ class ItemList extends Component {
 
     return (
       <div className={classes.root}>
-      <div className="container-flexbox-ItemList">
-        {/* testing card layout*/}
-        {this.state.posts.map((post, key) => {
-          return <ItemCard key={key} post={post} />
-        })}
-       
+        <div className="container-flexbox-ItemList">
+          {this.props.posts.map((post, key) => {
+            return <ItemCard key={key} post={post} />
+          })}
+        
+        </div>
+        <div className="pagination-container">
+          <Pagination count={10} color="primary" showFirstButton showLastButton />
+        </div>
       </div>
-      <div className="pagination-container">
-        <Pagination count={10} color="primary" showFirstButton showLastButton />
-      </div>
-    </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  posts: state.posts.posts,
+  term: state.posts.term,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
+  { getPosts }
 )(withStyles(useStyles)(ItemList));
