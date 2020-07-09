@@ -22,7 +22,7 @@ app.get('/api/getPostImg', (req, res) => {
         console.log(err)
         return res.json(err);
     } else {
-        console.log('Image at ' + filepath + ' sent to client.');
+        //console.log('Image at ' + filepath + ' sent to client.');
     }
   });
 });
