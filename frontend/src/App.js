@@ -7,6 +7,7 @@ import './App.css';
 import { loadCookie } from './redux/actions/authActions';
 import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
+import Filter from './components/filter/Filter';
 import Dashboard from './components/dashboard/Dashboard';
 import ItemPage from './components/itempage/ItemPage';
 import ItemList from './components/ItemList';
@@ -56,6 +57,7 @@ class App extends Component {
               [classes.contentShift]: this.props.drawerOpen
             })}
           >
+            {/* <Filter /> */}
             <Switch>
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />

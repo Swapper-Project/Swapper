@@ -9,3 +9,4 @@ export const CREATE_SWAP = 'CREATE_SWAP';
 export const SET_TERM = 'SET_TERM';
 export const GET_POSTS = 'GET_POSTS';
 export const LOAD_COOKIE = 'LOAD_COOKIE';
+export const SET_CATEGORY = 'SET_CATEGORY';
