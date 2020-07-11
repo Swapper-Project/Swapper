@@ -1,7 +1,9 @@
 import React from 'react';
+import { categories } from '../Categories';
 import { fade, withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import clsx from 'clsx';
 import {
   handleDrawerOpen,
   handleDrawerClose
@@ -9,9 +11,9 @@ import {
 import {
   authModalOpen,
   authModalClose,
-  signOut,
+  signOut
 } from '../../redux/actions/authActions';
-import { setTerm } from '../../redux/actions/postActions';
+import { setTerm, setCategory } from '../../redux/actions/postActions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ListItem from '@material-ui/core/ListItem';
@@ -37,15 +39,24 @@ import WishIcon from '@material-ui/icons/LocalActivity';
 import CompleteIcon from '@material-ui/icons/DoneOutline';
 import ListedIcon from '@material-ui/icons/ListAlt';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 const drawerWidth = 240;
 
 const useStyles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: '#FF5722'
+  },
+  filterButton: {
     color: '#FF5722'
   },
   title: {
@@ -59,7 +70,19 @@ const useStyles = theme => ({
     color: 'white'
   },
   navBar: {
-    backgroundColor: '#333333'
+    backgroundColor: '#333333',
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  navBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   drawer: {
     width: drawerWidth,
@@ -79,7 +102,18 @@ const useStyles = theme => ({
   iconColor: {
     color: '#FF5722'
   },
+  categoryForm: {
+    minWidth: 120
+  },
+  categorySelect: {
+    maxHeight: 35,
+    backgroundColor: '#636161',
+    minWidth: 65,
+    color: 'white'
+  },
   search: {
+    display: 'flex',
+    flexDirection: 'row',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -87,17 +121,16 @@ const useStyles = theme => ({
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginRight: theme.spacing(2),
-    marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(1),
       width: 'auto'
     }
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
+    paddingTop: 5,
+    paddingRight: 5,
     height: '100%',
-    position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -111,8 +144,7 @@ const useStyles = theme => ({
     color: 'inherit'
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    padding: theme.spacing(1, 1, 1, 2),
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -134,23 +166,32 @@ const useStyles = theme => ({
 });
 
 class Nav extends React.Component {
-  state = { term: '' }
+  state = { term: '' };
 
-  handleOnSubmit = (e) => {
+  handleOnSubmit = e => {
     e.preventDefault();
     this.props.setTerm(this.state.term);
-  }
+  };
 
-  handleOnChange = (e) => {
+  handleOnChange = e => {
     this.setState({ term: e.target.value });
-  }
+  };
+
+  handleCategoryChange = event => {
+    this.props.setCategory(event.target.value);
+  };
 
   render() {
     const { classes } = this.props;
-
+    const categoriesList = categories;
     return (
       <div className={classes.root}>
-        <AppBar className={classes.navBar} position='static'>
+        <AppBar
+          className={clsx(classes.navBar, {
+            [classes.navBarShift]: this.props.drawerOpen
+          })}
+          position='static'
+        >
           <Toolbar>
             <IconButton
               edge='start'
@@ -158,34 +199,52 @@ class Nav extends React.Component {
               onClick={() => this.props.handleDrawerOpen()}
               aria-label='menu'
             >
-              <MenuIcon />   
+              <MenuIcon />
             </IconButton>
-            
-
-
-            Category dropdown here
-
-
-
+            <IconButton className={classes.filterButton}>
+              <ArrowDropDownIcon />
+            </IconButton>
+            {/* SELECT MENU FOR CATEGORIES */}
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <form onSubmit={(e) => this.handleOnSubmit(e)}>
-                <InputBase 
+              <FormControl variant='outlined' className={classes.categoryForm}>
+                <Select
+                  onChange={event => this.handleCategoryChange(event)}
+                  displayEmpty
+                  className={classes.categorySelect}
+                  value={this.props.category}
+                  inputProps={{
+                    classes: {
+                      icon: classes.iconColor
+                    }
+                  }}
+                >
+                  {categoriesList.map(category => (
+                    <MenuItem key={category} value={category}>
+                      {category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <form onSubmit={e => this.handleOnSubmit(e)}>
+                <InputBase
                   placeholder='Search...'
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
                   }}
-                  onChange={(e) => this.handleOnChange(e)}
+                  onChange={e => this.handleOnChange(e)}
                   inputProps={{ 'aria-label': 'search' }}
                 />
               </form>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
             </div>
             <div className={classes.title}>
               <Link to={'/'} className={classes.linkTitle}>
-                <Typography style={{fontFamily: 'Roboto Mono' }} variant='h6'>Swapper</Typography>
+                <Typography style={{ fontFamily: 'Roboto Mono' }} variant='h6'>
+                  Swapper
+                </Typography>
               </Link>
             </div>
             <div>
@@ -195,7 +254,8 @@ class Nav extends React.Component {
                 </Button>
               )}
               {!this.props.isSignedIn && (
-                <Button style={{fontFamily: 'Roboto Mono' }}
+                <Button
+                  style={{ fontFamily: 'Roboto Mono' }}
                   onClick={() => this.props.authModalOpen()}
                   color='inherit'
                 >
@@ -300,7 +360,7 @@ class Nav extends React.Component {
           <Fade in={this.props.modalOpen}>
             <Paper square={false} className={classes.paper}>
               <Typography
-                style={{fontFamily: 'Roboto Mono'}}
+                style={{ fontFamily: 'Roboto Mono' }}
                 className={classes.modalTitle}
                 align='center'
                 variant='h4'
@@ -323,6 +383,7 @@ const mapStateToProps = state => ({
   modalOpen: state.auth.authOpen,
   drawerOpen: state.nav.drawerOpen,
   term: state.posts.term,
+  category: state.posts.category
 });
 
 export default connect(
@@ -334,5 +395,6 @@ export default connect(
     handleDrawerClose,
     signOut,
     setTerm,
+    setCategory
   }
 )(withStyles(useStyles)(Nav));
