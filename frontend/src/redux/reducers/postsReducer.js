@@ -1,9 +1,15 @@
-import { CREATE_SWAP, SET_TERM, GET_POSTS } from '../actions/types';
+import {
+  CREATE_SWAP,
+  SET_TERM,
+  GET_POSTS,
+  SET_CATEGORY
+} from '../actions/types';
 import actions from 'redux-form/lib/actions';
 
 const INITIAL_STATE = {
   posts: [],
-  term: ''
+  term: '',
+  category: 'All'
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,6 +20,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, posts: action.posts };
     case SET_TERM:
       return { ...state, term: action.term };
+    case SET_CATEGORY:
+      return { ...state, category: action.category };
     default:
       return state;
   }

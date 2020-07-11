@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { createPostCategories } from '../Categories';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -109,17 +110,17 @@ class PostingForm extends Component {
 
   renderCategorySelect = ({ input, label, meta }) => {
     const { classes } = this.props;
+    const categoriesList = createPostCategories;
     return (
       <div>
         <FormControl className={classes.select} variant='outlined'>
           <InputLabel>Category</InputLabel>
           <Select label={label} {...input}>
-            <MenuItem value=''>
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={'Book'}>Book</MenuItem>
-            <MenuItem value={'Electronics'}>Electronics</MenuItem>
-            <MenuItem value={'Cooking'}>Cooking</MenuItem>
+            {categoriesList.map(category => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <div className={classes.error}>{this.renderError(meta)}</div>
