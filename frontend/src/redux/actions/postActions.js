@@ -12,8 +12,7 @@ export const createSwap = values => async (dispatch, getState) => {
   formData.append('description', values.description);
   formData.append('category', values.category);
 
-  axios
-    .post(url, formData, {
+  axios.post(url, formData, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data'
@@ -24,33 +23,18 @@ export const createSwap = values => async (dispatch, getState) => {
 };
 
 export const getPosts = () => (dispatch, getState) => {
-  if (getState().posts.term === '') {
-    axios
-      .get(`http://localhost:4006/api/getAllposts`)
-      .then(res => {
-        console.log(res.data);
-        dispatch({ type: GET_POSTS, posts: res.data.results });
-      })
-      .catch(err => console.log(err));
-  } else {
-    axios
-      .get(
-        `http://localhost:4006/api/searchByTerm?term=${getState().posts.term}`
-      )
-      .then(res => {
-        dispatch({ type: GET_POSTS, posts: res.data.results });
-      })
-      .catch(err => console.log(err));
-  }
-  console.log(getState().posts);
+  console.log("HIT")
+  axios.get(`http://localhost:4006/api/searchByTerm?term=${getState().posts.term}&category=${getState().posts.category}`)
+    .then(res => {
+      dispatch({ type: GET_POSTS, posts: res.data.results });
+    })
+    .catch(err => console.log(err));
 };
 
 export const setTerm = values => async (dispatch, getState) => {
   dispatch({ type: SET_TERM, term: values });
-  console.log(values);
 };
 
 export const setCategory = value => dispatch => {
-  console.log(value);
   dispatch({ type: SET_CATEGORY, category: value });
 };

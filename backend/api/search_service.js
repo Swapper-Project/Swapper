@@ -32,19 +32,70 @@ app.get('/api/getAllposts', (req, res) => {
 });
 
 app.get('/api/searchByTerm', (req, res) => {
-  pool.query("SELECT * FROM posts WHERE title like '%" + req.query.term + "%'", (err, results) => {
-    if(err) {
-      console.log(err);
-      return res.send({
-        valid: false,
-        err: err
+  console.log(req.query.category +" " + req.query.term)
+  if(req.query.term === '') {
+    if(req.query.category === 'All') {
+      pool.query("SELECT * FROM posts", (err, results) => {
+        if(err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: err
+          });
+        } 
+        console.log(results)
+        return res.send({
+          valid: true,
+          results: results
+        });
       });
-    } 
-    return res.send({
-      valid: true,
-      results: results
-    });
-  });
+    } else {
+      pool.query("SELECT * FROM posts WHERE category = ?", [req.query.category], (err, results) => {
+        if(err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: err
+          });
+        } 
+        console.log(results)
+        return res.send({
+          valid: true,
+          results: results
+        });
+      });
+    }
+  } else {
+    if(req.query.category === 'All') {
+      pool.query("SELECT * FROM posts WHERE title LIKE CONCAT(?, '%')", [req.query.term], (err, results) => {
+        if(err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: err
+          });
+        } 
+        return res.send({
+          valid: true,
+          results: results
+        });
+      });
+    } else {
+      pool.query("SELECT * FROM posts WHERE category = ? AND title LIKE CONCAT(?, '%')", [req.query.category, req.query.term], (err, results) => {
+        if(err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: err
+          });
+        } 
+        return res.send({
+          valid: true,
+          results: results
+        });
+      });
+    }
+  } 
 });
 
 app.listen(port, console.log("Search service running."));

@@ -1,16 +1,11 @@
 export const categories = [
   'All',
   'Appliances',
-  'Auto',
+  'Furniture',
   'Books',
   'Clothing',
-  'Computer',
   'Electronics',
-  'Gym',
-  'Music',
-  'Toys',
-  'Sports',
-  'Video Games'
+  'Other',
 ];
 
 // Remove 'All' as an option when creating a post.
