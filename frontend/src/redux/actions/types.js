@@ -10,3 +10,4 @@ export const SET_TERM = 'SET_TERM';
 export const GET_POSTS = 'GET_POSTS';
 export const LOAD_COOKIE = 'LOAD_COOKIE';
 export const SET_CATEGORY = 'SET_CATEGORY';
+export const GET_USER_DATA = 'GET_USER_DATA';

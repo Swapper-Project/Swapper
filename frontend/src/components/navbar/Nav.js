@@ -69,6 +69,9 @@ const useStyles = theme => ({
     textDecoration: 'none',
     color: 'white'
   },
+  hide: {
+    display: 'none'
+  },
   navBar: {
     backgroundColor: '#333333',
     transition: theme.transitions.create(['margin', 'width'], {
@@ -195,7 +198,10 @@ class Nav extends React.Component {
           <Toolbar>
             <IconButton
               edge='start'
-              className={classes.menuButton}
+              className={clsx(
+                classes.menuButton,
+                this.props.drawerOpen && classes.hide
+              )}
               onClick={() => this.props.handleDrawerOpen()}
               aria-label='menu'
             >
