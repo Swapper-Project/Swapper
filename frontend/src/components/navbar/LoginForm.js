@@ -10,6 +10,10 @@ import Alert from '@material-ui/lab/Alert';
 
 const CssTextField = withStyles({
   root: {
+    width: '100%',
+    minWidth: 170,
+    marginTop: 10,
+    marginBottom: 10,
     '& label.Mui-focused': {
       color: '#FF5722'
     },
@@ -35,20 +39,17 @@ const useStyles = theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'center'
   },
-  textfield: {
-    width: 500,
-    margin: 10
-  },
+  textfield: { width: '100%' },
   textFieldInput: {
     color: 'white'
   },
   loginButton: {
-    width: 500,
+    width: '100%',
     backgroundColor: '#FF5722',
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 10,
     '&:hover': {
       backgroundColor: 'white'
     }
@@ -65,13 +66,12 @@ class LoginForm extends React.Component {
   renderInputField = ({ input, label, meta }) => {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.textfield}>
         <CssTextField
           label={label}
           type={input.name}
           {...input}
           variant='outlined'
-          className={classes.textfield}
           InputProps={{
             className: classes.textFieldInput
           }}
