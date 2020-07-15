@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = theme => ({
@@ -157,7 +156,7 @@ class PostingForm extends Component {
           <Field
             name='category'
             component={this.renderCategorySelect}
-            lable='Category'
+            label='Category'
           />
           <Button
             className={classes.cancelButton}

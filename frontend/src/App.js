@@ -15,6 +15,7 @@ import ChatRoom from './components/chatroom/ChatRoom';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import Post from './components/dashboard/Post';
+import UpdateProfile from './components/dashboard/UpdateProfile';
 
 const drawerWidth = 240;
 
@@ -62,6 +63,11 @@ class App extends Component {
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
               <ProtectedRoute exact path='/dashboard/post' component={Post} />
+              <ProtectedRoute
+                exact
+                path='/dashboard/update'
+                component={UpdateProfile}
+              />
               {/* /listing/?id=N* for individual item page */}
               <Route path='/listing' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />
