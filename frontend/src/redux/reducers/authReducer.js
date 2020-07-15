@@ -1,4 +1,3 @@
-import cookie from 'react-cookies';
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -10,7 +9,6 @@ import {
 const INITIAL_STATE = {
   isSignedIn: false,
   userId: '',
-  email: '',
   authOpen: false
 };
 

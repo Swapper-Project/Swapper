@@ -28,6 +28,8 @@ const SplitButton = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
     if (selectedIndex === 0) {
       history.push('/dashboard/post');
+    } else if (selectedIndex === 2) {
+      history.push('dashboard/update');
     }
   };
 
