@@ -11,3 +11,4 @@ export const GET_POSTS = 'GET_POSTS';
 export const LOAD_COOKIE = 'LOAD_COOKIE';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_USER_DATA = 'GET_USER_DATA';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

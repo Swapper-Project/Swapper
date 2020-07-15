@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { getUserData } from '../../redux/actions/userActions';
+import { updateUserData } from '../../redux/actions/userActions';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -32,7 +32,8 @@ class UpdateProfile extends Component {
   }
 
   onSubmit = formVals => {
-    this.props.getUserData(formVals).then(() => {
+    console.log(formVals);
+    this.props.updateUserData(formVals, this.props.userId).then(() => {
       if (!this.props.isSignedIn) {
         this.props.history.push('/');
       } else {
@@ -68,6 +69,6 @@ export default compose(
   withRouter,
   connect(
     mapStateToProps,
-    { getUserData }
+    { updateUserData }
   )
 )(UpdateProfile);

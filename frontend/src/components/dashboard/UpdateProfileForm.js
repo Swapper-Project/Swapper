@@ -52,7 +52,8 @@ class UpdateProfileForm extends Component {
         {label === 'Interests' ? (
           <TextField
             className={classes.textfield}
-            {...input}
+            defaultValue={this.props.initialValues.interests}
+            onChange={val => input.onChange(val)}
             label={label}
             variant='outlined'
             multiline
@@ -63,7 +64,8 @@ class UpdateProfileForm extends Component {
           <TextField
             type={input.name}
             className={classes.textfield}
-            {...input}
+            defaultValue={this.props.initialValues.email}
+            onChange={val => input.onChange(val)}
             label={label}
             variant='outlined'
           />
@@ -80,7 +82,10 @@ class UpdateProfileForm extends Component {
         <Multiselect
           options={categories}
           isObject={false}
+          {...input}
+          onRemove={values => input.onChange(values)}
           onSelect={values => input.onChange(values)}
+          selectedValues={this.props.initialValues.category}
           placeholder='Select Categories'
           style={{
             chips: {
@@ -152,10 +157,22 @@ const validate = formVal => {
   return errors;
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  initialValues: {
+    email: state.user.email,
+    interests: state.user.interests,
+    category: state.user.favoriteCategories
+  }
+});
 
-UpdateProfileForm = connect(null)(withStyles(useStyles)(UpdateProfileForm));
+UpdateProfileForm = reduxForm({
+  form: 'updateUserForm',
+  enableReinitialize: true,
+  validate
+})(UpdateProfileForm);
 
-export default reduxForm({ form: 'updateUserForm', validate })(
-  UpdateProfileForm
+UpdateProfileForm = connect(mapStateToProps)(
+  withStyles(useStyles)(UpdateProfileForm)
 );
+
+export default UpdateProfileForm;
