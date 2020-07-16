@@ -10,6 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
+import { withRouter } from 'react-router-dom';
+
 const useStyles = makeStyles({
 	root: {
 		maxWidth: 350,
@@ -23,7 +25,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const ItemCard = ({post}) => {
+const ItemCard = (props) => {
   const classes = useStyles();
 
   const [email, setEmail] = useState('notset');
@@ -32,38 +34,34 @@ const ItemCard = ({post}) => {
 
   useEffect(() => {
     axios.post(`http://localhost:4002/api/getPosterInfo`, {
-      userId: post.userId
+      userId: props.post.userId
     }).then(res => {
       setEmail(res.data.email);
       setRating(res.data.rating);
     }).catch(err => console.log(err));
-
-    // axios.get(`http://localhost:4002/api/getPostImg?filename=${post.filename}`)
-    // .then(res => {
-     
-    //   setImg(res.data);
-
-    //   console.log(img)
-    // });
   });
-  
+
+  const handleCardClick = () => {
+    props.history.push(`/listing/${props.post.postId}`);
+  }
+
 	return (
 	<Card className={classes.root} elevation={6}>
     <img src={img} />
-		<CardActionArea>
+		<CardActionArea onClick={() => handleCardClick()}>
 			<CardMedia
 				component="img"
-				alt="name of image"
+				alt={props.post.title}
 				height="200"
-				image={`http://localhost:4005/api/getPostImg?filename=${post.filename}`}
-				title="title of post"
+				image={`http://localhost:4005/api/getPostImg?filename=${props.post.filename}`}
+				title={props.post.title}
 			/>
 			<CardContent>
 			<Typography gutterBottom variant="h5" component="h2">
-					{post.title}
+					{props.post.title}
 			</Typography>
 			<Typography variant="body2" color="textSecondary" component="p" display="inline">
-				Date posted: {new Date(post.createTime).toString().substr(0, 24)}
+				Date posted: {new Date(props.post.createTime).toString().substr(0, 24)}
 			</Typography>
 			</CardContent>
 		</CardActionArea>
@@ -80,7 +78,6 @@ const ItemCard = ({post}) => {
 				<Ratings.Widget widgetRatedColor="#FF5722" />
 				<Ratings.Widget widgetRatedColor="#FF5722" />
 				<Ratings.Widget widgetRatedColor="#FF5722" />
-        
 			</Ratings>
 	
 		</CardActions>
@@ -88,4 +85,4 @@ const ItemCard = ({post}) => {
 	)
 }
 
-export default ItemCard;
+export default withRouter(ItemCard);

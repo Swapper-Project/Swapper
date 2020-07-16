@@ -1,4 +1,4 @@
-import { CREATE_SWAP, SET_TERM, GET_POSTS, SET_CATEGORY } from './types';
+import { SET_POST, SET_TERM, GET_POSTS, SET_CATEGORY } from './types';
 import axios from 'axios';
 
 export const createSwap = values => async (dispatch, getState) => {
@@ -23,12 +23,24 @@ export const createSwap = values => async (dispatch, getState) => {
 };
 
 export const getPosts = () => (dispatch, getState) => {
-  console.log("HIT")
   axios.get(`http://localhost:4006/api/searchByTerm?term=${getState().posts.term}&category=${getState().posts.category}`)
     .then(res => {
       dispatch({ type: GET_POSTS, posts: res.data.results });
     })
     .catch(err => console.log(err));
+};
+
+export const setCurrentPost = values => async (dispatch, getState) => { 
+  axios.get('http://localhost:4002/api/getPost', {
+    params: {postId: values}
+  })
+  .then(res => {
+    if(res.data.valid) {
+      return dispatch({ type: SET_POST, post: res.data.result[0] });
+    }
+    console.log(res.data.err);
+  })
+  .catch(err => console.log(err));
 };
 
 export const setTerm = values => async (dispatch, getState) => {

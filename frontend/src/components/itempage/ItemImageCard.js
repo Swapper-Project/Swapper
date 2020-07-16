@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -38,14 +39,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ItemImageCard = () => {
+const ItemImageCard = ({ post }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <img
         className={classes.image}
-        src='https://cdn.mos.cms.futurecdn.net/iGoyV8755hauMhq55pVC2J.jpg'
+        //src={`http://localhost:4005/api/getPostImg?filename=${post.filename}`}
+        src={`http://localhost:4005/api/getPostImg?filename=${post.filename}`}
         alt='Logo'
       />
       <br />
@@ -59,4 +61,8 @@ const ItemImageCard = () => {
   );
 };
 
-export default ItemImageCard;
+const mapStateToProps = state => ({
+  post: state.posts.currentPost,
+});
+
+export default connect(mapStateToProps)(ItemImageCard);
