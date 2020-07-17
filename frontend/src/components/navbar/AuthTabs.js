@@ -50,9 +50,7 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     backgroundColor: '#333333'
   },
-  tabPanel: {
-    height: 600
-  },
+  tabPanel: {},
   indicator: {
     backgroundColor: '#FF5722'
   }

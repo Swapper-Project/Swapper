@@ -9,6 +9,10 @@ import Alert from '@material-ui/lab/Alert';
 
 const CssTextField = withStyles({
   root: {
+    width: '100%',
+    minWidth: 170,
+    marginTop: 10,
+    marginBottom: 10,
     '& label.Mui-focused': {
       color: '#FF5722'
     },
@@ -34,20 +38,19 @@ const useStyles = theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'center'
   },
   textfield: {
-    width: 500,
-    margin: 10
+    width: '100%'
   },
   textFieldInput: {
     color: 'white'
   },
   registerButton: {
-    width: 500,
+    width: '100%',
     backgroundColor: '#FF5722',
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 10,
     '&:hover': {
       backgroundColor: 'white'
     }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -10,12 +12,26 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CopyrightIcon from '@material-ui/icons/Copyright';
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#333333',
     paddingTop: 12,
     minHeight: 150,
-    color: '#ffffff'
+    color: '#ffffff',
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  footerShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   footerContainer: {
     display: 'flex',
@@ -32,8 +48,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
   footerItem: {
+    textAlign: 'center',
     height: 100,
-    width: '25%',
+    flex: 1,
     minWidth: 150,
     marginTop: 15
   },
@@ -53,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: 5
   },
   swapperTitle: {
-    width: '25%',
+    flex: 1,
     minWidth: 205,
     textAlign: 'center'
   },
@@ -62,18 +79,23 @@ const useStyles = makeStyles(theme => ({
   },
   contactItemContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   contactText: {
     marginLeft: 5
   }
 }));
 
-const Footer = () => {
+const Footer = ({ drawerOpen }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div
+      className={clsx(classes.root, {
+        [classes.footerShift]: drawerOpen
+      })}
+    >
       <div className={classes.footerContainer}>
         <div className={classes.swapperTitle}>
           <Typography variant='h3'>Swapper</Typography>
@@ -83,36 +105,34 @@ const Footer = () => {
             condimentum. Fusce id turpis fermentum dolor dignissim fermentum.
           </Typography>
         </div>
-        <div className={classes.footerItems}>
-          <div className={classes.footerItem}>
-            <Typography variant='h5'>Support</Typography>
-            <Typography>Terms & Conditions</Typography>
-            <Typography>FAQ</Typography>
-          </div>
-          <div className={classes.footerItem}>
-            <div>
-              <Typography variant='h5'>Contact Us</Typography>
-              <div className={classes.contactItemContainer}>
-                <MailOutlineIcon />
-                <Typography className={classes.contactText}>
-                  swapper@gmail.com
-                </Typography>
-              </div>
-              <div className={classes.contactItemContainer}>
-                <PhoneIcon />
-                <Typography className={classes.contactText}>
-                  +1 XXX XXX XXXX
-                </Typography>
-              </div>
+        <div className={classes.footerItem}>
+          <Typography variant='h5'>Support</Typography>
+          <Typography>Terms & Conditions</Typography>
+          <Typography>FAQ</Typography>
+        </div>
+        <div className={classes.footerItem}>
+          <div>
+            <Typography variant='h5'>Contact Us</Typography>
+            <div className={classes.contactItemContainer}>
+              <MailOutlineIcon />
+              <Typography className={classes.contactText}>
+                swapper@gmail.com
+              </Typography>
+            </div>
+            <div className={classes.contactItemContainer}>
+              <PhoneIcon />
+              <Typography className={classes.contactText}>
+                +1 XXX XXX XXXX
+              </Typography>
             </div>
           </div>
-          <div className={classes.footerItem}>
-            <Typography variant='h5'>Follow Us</Typography>
-            <FacebookIcon className={classes.socialIcon} />
-            <InstagramIcon className={classes.socialIcon} />
-            <TwitterIcon className={classes.socialIcon} />
-            <YouTubeIcon className={classes.socialIcon} />
-          </div>
+        </div>
+        <div className={classes.footerItem}>
+          <Typography variant='h5'>Follow Us</Typography>
+          <FacebookIcon className={classes.socialIcon} />
+          <InstagramIcon className={classes.socialIcon} />
+          <TwitterIcon className={classes.socialIcon} />
+          <YouTubeIcon className={classes.socialIcon} />
         </div>
       </div>
       <div>
@@ -127,4 +147,8 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+const mapStateToProps = state => ({
+  drawerOpen: state.nav.drawerOpen
+});
+
+export default connect(mapStateToProps)(Footer);
