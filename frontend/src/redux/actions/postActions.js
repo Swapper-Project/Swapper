@@ -23,7 +23,12 @@ export const createSwap = values => async (dispatch, getState) => {
 };
 
 export const getPosts = () => (dispatch, getState) => {
-  axios.get(`http://localhost:4006/api/searchByTerm?term=${getState().posts.term}&category=${getState().posts.category}`)
+  axios.get('http://localhost:4006/api/searchByTerm', {
+      params: {
+        term: getState().posts.term,
+        category: getState().posts.category,
+      }
+    })
     .then(res => {
       dispatch({ type: GET_POSTS, posts: res.data.results });
     })
