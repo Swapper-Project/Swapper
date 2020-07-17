@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { setCurrentPost } from '../../redux/actions/postActions';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ItemImageCard from './ItemImageCard';
 import ItemDetails from './ItemDetails';
 import Paper from '@material-ui/core/Paper';
 
-//const id = null;
-
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: '100%'
@@ -18,37 +18,39 @@ const useStyles = theme => ({
     height: '100%',
     backgroundColor: '#ededed'
   }
-});
+}));
 
-class ItemPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { id: -1 };
-  }
+const ItemPage = (props) => {
+  useEffect(() => {
+    props.setCurrentPost(props.match.params.postId);
+  }, []);
 
-  componentDidMount() {
-    const search = window.location.search;
-    const params = new URLSearchParams(search);
-    this.setState({ id: params.get('id') });
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <Paper className={classes.paper}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <ItemImageCard />
-            </Grid>
-            <Grid item xs={8}>
-              <ItemDetails />
-            </Grid>
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            {props.post && (<ItemImageCard />)}
+            {!props.post && (<p>Loading Post Image...</p>)}
           </Grid>
-        </Paper>
-      </div>
-    );
-  }
+          <Grid item xs={8}>
+          {props.post && (<ItemDetails />)}
+          {!props.post && (<p>Loading Post Details...</p>)}
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
+  );
 }
 
-export default withStyles(useStyles)(ItemPage);
+const mapStateToProps = state => ({
+  rating: state.user.rating,
+  completedSwaps: state.user.completedSwaps,
+  post: state.posts.currentPost,
+});
+
+export default connect(
+  mapStateToProps,
+  { setCurrentPost }
+)(ItemPage);

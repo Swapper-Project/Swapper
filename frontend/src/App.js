@@ -69,7 +69,7 @@ class App extends Component {
                 component={UpdateProfile}
               />
               {/* /listing/?id=N* for individual item page */}
-              <Route path='/listing' component={ItemPage} />
+              <Route path='/listing/:postId' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />
               <Route path='*' component={NotFound} />
             </Switch>

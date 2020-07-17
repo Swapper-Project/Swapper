@@ -26,8 +26,7 @@ app.post('/api/post', (req, res) => {
 
   const file = req.files.file;
 
-  file.mv(
-    `${__dirname}/../uploads/post_images/${file.name}`,
+  file.mv(`${__dirname}/../uploads/post_images/${file.name}`,
     err => {
       if (err) {
         console.log(err);
@@ -40,8 +39,7 @@ app.post('/api/post', (req, res) => {
       }
     }
   );
-  pool.query(
-    'INSERT INTO posts SET ?',
+  pool.query('INSERT INTO posts SET ?',
     {
       userId: req.body.userId,
       title: req.body.title,
@@ -66,33 +64,31 @@ app.post('/api/post', (req, res) => {
   );
 });
 
-app.get('/api/getAllposts', (req, res) => {
-  pool.query('SELECT * FROM posts', (err, results) => {
-    if (err) {
-      console.log(err);
+app.get('/api/getPost', (req, res) => {
+  pool.query('SELECT * FROM posts WHERE postId = ?', [req.query.postId], (err, result) => {
+    console.log(result.length)
+    if (err || result.length == 0) {
       return res.send({
         valid: false,
-        err: 'Could not fetch all posts.'
+        err: err || 'Could not fetch post with given ID.'
       });
     }
 
     return res.send({
       valid: true,
-      results: results
+      result: result
     });
   });
 });
 
+
 app.post('/api/getPosterInfo', (req, res) => {
-  pool.query('SELECT * FROM users WHERE userId=?', [req.body.userId], function(
-    err,
-    result
-  ) {
+  pool.query('SELECT * FROM users WHERE userId=?', [req.body.userId], ( err, result) => {
     if (err) {
       console.log(err);
       return res.send({
         valid: false,
-        err: "That email doesn'nt have an account associated with it."
+        err: "That email doesn't have an account associated with it."
       });
     }
     if (result.length == 0) {
@@ -105,7 +101,9 @@ app.post('/api/getPosterInfo', (req, res) => {
     res.send({
       valid: true,
       email: result[0].email,
-      rating: result[0].rating
+      rating: result[0].rating,
+      username: result[0].username,
+      completedSwaps: result[0].completedSwaps
     });
   });
 });

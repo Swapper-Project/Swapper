@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import axios from'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -49,17 +51,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ItemDetails = () => {
+const ItemDetails = ({ post }) => {
   const classes = useStyles();
-  const [rating, setRating] = React.useState(0.5);
+  const [user, setUser] = useState('')
+  const [rating, setRating] = useState(0);
+  const [completedSwaps, setCompletedSwaps] = useState(0);
+
+  useEffect(() => {
+    axios.post(`http://localhost:4002/api/getPosterInfo`, {
+      userId: post.userId
+    }).then(res => {
+      setRating(res.data.rating);
+      setUser(res.data.username);
+      setCompletedSwaps(res.data.completedSwaps);
+    }).catch(err => console.log(err));
+  });
 
   return (
     <div className={classes.root}>
-      <Typography variant='h4'>Xbox Series X</Typography>
+      <Typography variant='h4'>{post.title}</Typography>
+      <br />
       <div className={classes.userDiv}>
         <Gravatar email='a-email@example.com' className={`${classes.avatar}`} />
         <Typography className={classes.username} variant='h6'>
-          Chunkysmalls
+          {user}
         </Typography>
         <div className={classes.ratingDiv}>
           <Ratings rating={rating} widgetDimensions='20px' widgetSpacings='0px'>
@@ -69,22 +84,14 @@ const ItemDetails = () => {
             <Ratings.Widget widgetRatedColor='#FF5722' />
             <Ratings.Widget widgetRatedColor='#FF5722' />
           </Ratings>
-          <Typography>(69)</Typography>
+          <Typography>({Math.floor(rating * completedSwaps)})</Typography>
         </div>
       </div>
-      <Typography variant='h6'>Category: Electronics</Typography>
+      <Typography variant='h6'>Category: {post.category}</Typography>
       <div className={classes.description}>
         <Typography>Description:</Typography>
         <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum
-          nibh, congue in venenatis eu, semper in augue. Morbi varius elit orci,
-          eu auctor nunc pretium eu. Duis sed luctus dolor, in pretium arcu. In
-          efficitur eros sit amet diam vehicula, vel vestibulum lacus venenatis.
-          Vivamus a pellentesque magna. Nunc rutrum bibendum nibh eu efficitur.
-          Aenean ac nibh eget tortor volutpat ultricies. Aenean at pretium
-          lacus. Aenean pretium quam id magna aliquam, sollicitudin efficitur
-          orci auctor. Curabitur faucibus lacus ut dictum lacinia. Nulla
-          facilisi.
+          {post.description}
         </Typography>
       </div>
       <div className={classes.viewed}>
@@ -98,4 +105,8 @@ const ItemDetails = () => {
   );
 };
 
-export default ItemDetails;
+const mapStateToProps = state => ({
+  post: state.posts.currentPost,
+});
+
+export default connect(mapStateToProps)(ItemDetails);
