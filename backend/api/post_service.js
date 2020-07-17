@@ -55,7 +55,7 @@ app.post('/api/post', (req, res) => {
         });
       }
 
-      console.log('Successful post.');
+      //console.log('Successful post.');
 
       return res.send({
         valid: true
@@ -66,7 +66,6 @@ app.post('/api/post', (req, res) => {
 
 app.get('/api/getPost', (req, res) => {
   pool.query('SELECT * FROM posts WHERE postId = ?', [req.query.postId], (err, result) => {
-    console.log(result.length)
     if (err || result.length == 0) {
       return res.send({
         valid: false,

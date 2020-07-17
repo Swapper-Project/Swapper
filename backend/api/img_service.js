@@ -15,7 +15,7 @@ app.use('/uploads', express.static(__dirname + '../uploads'));
 app.use(express.static(__dirname + '/uploads'));
 
 app.get('/api/getPostImg', (req, res) => {
-  console.log(req.query.filename)
+  //console.log(req.query.filename)
   var filepath = path.resolve(`${__dirname}/../uploads/post_images/${req.query.filename}`);
   res.sendFile(filepath, (err) => {
     if(err) {
