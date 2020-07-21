@@ -160,6 +160,8 @@ const useStyles = theme => ({
     justifyContent: 'center'
   },
   paper: {
+    width: '40%',
+    minWidth: 300,
     backgroundColor: '#333333',
     padding: theme.spacing(2, 4, 3)
   },
@@ -182,6 +184,9 @@ class Nav extends React.Component {
 
   handleCategoryChange = event => {
     this.props.setCategory(event.target.value);
+  };
+  handleSignOut = () => {
+    this.props.signOut();
   };
 
   render() {
@@ -255,7 +260,7 @@ class Nav extends React.Component {
             </div>
             <div>
               {this.props.isSignedIn && (
-                <Button onClick={() => this.props.signOut()} color='inherit'>
+                <Button onClick={() => this.handleSignOut()} color='inherit'>
                   Logout
                 </Button>
               )}

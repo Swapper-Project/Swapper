@@ -28,7 +28,6 @@ export const signIn = values => async dispatch => {
     .then(data => {
       if (data.valid) {
         cookie.save('userId', data.userId, { path: '/' });
-        console.log(cookie.load('userId'));
         dispatch({ type: SIGN_IN, userId: data.userId });
       }
     })
@@ -36,9 +35,7 @@ export const signIn = values => async dispatch => {
 };
 
 export const signOut = () => async dispatch => {
-  console.log('SIGN OUT HIT');
   cookie.remove('userId', { path: '/' });
-  console.log(cookie.load('userId'));
   dispatch({ type: SIGN_OUT });
   auth.logout(() => {});
 };

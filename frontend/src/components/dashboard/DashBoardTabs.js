@@ -13,7 +13,10 @@ import Box from '@material-ui/core/Box';
 
 import DashboardTabHeader from './DashboardTabHeader.js';
 import DashboardTabRow from './DashboardTabRow.js';
-import { shadows } from '@material-ui/system';
+
+import ListedSwapsHeader from './ListedSwapsHeader';
+import ListedSwapsList from './ListedSwapsList';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -116,11 +119,8 @@ const DashBoardTabs = () => {
           <DashboardTabRow />
         </TabPanel>
         <TabPanel value={value} index={2} className={classes.tabPanel}>
-          <DashboardTabHeader />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
+          <ListedSwapsHeader />
+          <ListedSwapsList />
         </TabPanel>
         <TabPanel value={value} index={3} className={classes.tabPanel}>
           <DashboardTabHeader />

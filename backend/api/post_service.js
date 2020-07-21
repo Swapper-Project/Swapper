@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pool = require('../database');
+const fs = require('fs');
 const path = require('path');
 
 const port = process.env.POST_PORT || 4002;
@@ -26,7 +27,8 @@ app.post('/api/post', (req, res) => {
 
   const file = req.files.file;
 
-  file.mv(`${__dirname}/../uploads/post_images/${file.name}`,
+  file.mv(
+    `${__dirname}/../uploads/post_images/${file.name}`,
     err => {
       if (err) {
         console.log(err);
@@ -39,7 +41,8 @@ app.post('/api/post', (req, res) => {
       }
     }
   );
-  pool.query('INSERT INTO posts SET ?',
+  pool.query(
+    'INSERT INTO posts SET ?',
     {
       userId: req.body.userId,
       title: req.body.title,
@@ -65,46 +68,105 @@ app.post('/api/post', (req, res) => {
 });
 
 app.get('/api/getPost', (req, res) => {
-  pool.query('SELECT * FROM posts WHERE postId = ?', [req.query.postId], (err, result) => {
-    if (err || result.length == 0) {
+  pool.query(
+    'SELECT * FROM posts WHERE postId = ?',
+    [req.query.postId],
+    (err, result) => {
+      if (err || result.length == 0) {
+        return res.send({
+          valid: false,
+          err: err || 'Could not fetch post with given ID.'
+        });
+      }
+
       return res.send({
-        valid: false,
-        err: err || 'Could not fetch post with given ID.'
+        valid: true,
+        result: result
       });
     }
-
-    return res.send({
-      valid: true,
-      result: result
-    });
-  });
+  );
 });
 
+app.get('/api/getUserPosts', (req, res) => {
+  pool.query(
+    'SELECT * FROM posts where userId = ?',
+    [req.query.userId],
+    (err, result) => {
+      if (err || result.length == 0) {
+        return res.send({
+          valid: false,
+          err: err || 'Could not fetch post with given user ID.'
+        });
+      }
 
-app.post('/api/getPosterInfo', (req, res) => {
-  pool.query('SELECT * FROM users WHERE userId=?', [req.body.userId], ( err, result) => {
+      return res.send({
+        valid: true,
+        result: result
+      });
+    }
+  );
+});
+
+app.get('/api/deletePost', (req, res) => {
+  const filename = req.query.filename;
+  fs.unlink(`${__dirname}/../uploads/post_images/${filename}`, err => {
     if (err) {
       console.log(err);
-      return res.send({
-        valid: false,
-        err: "That email doesn't have an account associated with it."
-      });
     }
-    if (result.length == 0) {
-      console.log('Invalid userId passed to endpoint.');
-      return res.send({
-        valid: false,
-        err: 'Invalid userId passed to endpoint.'
-      });
-    }
-    res.send({
-      valid: true,
-      email: result[0].email,
-      rating: result[0].rating,
-      username: result[0].username,
-      completedSwaps: result[0].completedSwaps
-    });
   });
+
+  pool.query(
+    'DELETE FROM posts WHERE postId = ?',
+    [req.query.postId],
+    (err, result) => {
+      if (err) {
+        return res.send({
+          valid: false,
+          err: err || 'Error deleting post'
+        });
+      }
+
+      console.log(result);
+
+      return res.send({
+        valid: true
+      });
+    }
+  );
+});
+
+app.get('/api/updatePost', (req, res) => {
+  pool.query('UPDATE');
+});
+
+app.post('/api/getPosterInfo', (req, res) => {
+  pool.query(
+    'SELECT * FROM users WHERE userId=?',
+    [req.body.userId],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.send({
+          valid: false,
+          err: "That email doesn't have an account associated with it."
+        });
+      }
+      if (result.length == 0) {
+        console.log('Invalid userId passed to endpoint.');
+        return res.send({
+          valid: false,
+          err: 'Invalid userId passed to endpoint.'
+        });
+      }
+      res.send({
+        valid: true,
+        email: result[0].email,
+        rating: result[0].rating,
+        username: result[0].username,
+        completedSwaps: result[0].completedSwaps
+      });
+    }
+  );
 });
 
 app.listen(port, console.log('Post service running.'));
