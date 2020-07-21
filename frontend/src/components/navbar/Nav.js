@@ -185,6 +185,9 @@ class Nav extends React.Component {
   handleCategoryChange = event => {
     this.props.setCategory(event.target.value);
   };
+  handleSignOut = () => {
+    this.props.signOut();
+  };
 
   render() {
     const { classes } = this.props;
@@ -257,7 +260,7 @@ class Nav extends React.Component {
             </div>
             <div>
               {this.props.isSignedIn && (
-                <Button onClick={() => this.props.signOut()} color='inherit'>
+                <Button onClick={() => this.handleSignOut()} color='inherit'>
                   Logout
                 </Button>
               )}

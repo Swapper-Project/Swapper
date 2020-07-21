@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { createPostCategories } from '../Categories';
@@ -81,19 +82,26 @@ class PostingForm extends Component {
 
   renderInputField = ({ input, label, meta }) => {
     const { classes } = this.props;
+
     return (
       <div>
         {label === 'Title' ? (
           <TextField
+            type={input.name}
             className={classes.field}
-            {...input}
+            defaultValue={this.props.edit && this.props.initialValues.title}
+            onChange={val => input.onChange(val)}
             label={label}
             variant='outlined'
+            multiline
           />
         ) : (
           <TextField
             className={classes.field}
-            {...input}
+            defaultValue={
+              this.props.edit && this.props.initialValues.description
+            }
+            onChange={val => input.onChange(val)}
             label={label}
             variant='outlined'
             multiline
@@ -114,7 +122,11 @@ class PostingForm extends Component {
       <div>
         <FormControl className={classes.select} variant='outlined'>
           <InputLabel>Category</InputLabel>
-          <Select label={label} {...input}>
+          <Select
+            {...input}
+            defaultValue={this.props.initialValues.category}
+            label={label}
+          >
             {categoriesList.map(category => (
               <MenuItem key={category} value={category}>
                 {category}
@@ -133,7 +145,6 @@ class PostingForm extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <form
         className={classes.root}
@@ -143,7 +154,7 @@ class PostingForm extends Component {
           <Field
             name='dropzone'
             component={this.renderDropzone}
-            lable='Dropzone'
+            label='Dropzone'
           />
         </div>
         <div className={classes.rightContainer}>
@@ -195,6 +206,22 @@ const validate = formVal => {
   return errors;
 };
 
-PostingForm = withStyles(useStyles)(PostingForm);
+const mapStateToProps = state => ({
+  initialValues: {
+    filename: state.posts.currentPost.filename,
+    title: state.posts.currentPost.title,
+    description: state.posts.currentPost.description,
+    category: state.posts.currentPost.category
+  },
+  category: state.posts.currentPost.category
+});
 
-export default reduxForm({ form: 'postingForm', validate })(PostingForm);
+PostingForm = reduxForm({
+  form: 'postingForm',
+  enableReinitialize: true,
+  validate
+})(PostingForm);
+
+PostingForm = connect(mapStateToProps)(withStyles(useStyles)(PostingForm));
+
+export default PostingForm;

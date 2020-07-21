@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { resetCurrentPost } from '../../redux/actions/postActions';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -18,7 +21,7 @@ const options = [
   'Delete Account'
 ];
 
-const SplitButton = () => {
+const SplitButton = props => {
   let history = useHistory();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -27,9 +30,10 @@ const SplitButton = () => {
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
     if (selectedIndex === 0) {
-      history.push('/dashboard/post');
+      props.resetCurrentPost();
+      props.history.push('dashboard/post');
     } else if (selectedIndex === 2) {
-      history.push('dashboard/update');
+      props.history.push('dashboard/update');
     }
   };
 
@@ -110,4 +114,7 @@ const SplitButton = () => {
   );
 };
 
-export default SplitButton;
+export default connect(
+  null,
+  { resetCurrentPost }
+)(withRouter(SplitButton));

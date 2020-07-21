@@ -1,4 +1,11 @@
-import { SET_POST, SET_TERM, GET_POSTS, SET_CATEGORY } from './types';
+import {
+  SET_POST,
+  SET_TERM,
+  GET_POSTS,
+  SET_CATEGORY,
+  GET_USER_POSTS,
+  RESET_CURRENT_POST
+} from './types';
 import axios from 'axios';
 
 export const createSwap = values => async (dispatch, getState) => {
@@ -12,7 +19,8 @@ export const createSwap = values => async (dispatch, getState) => {
   formData.append('description', values.description);
   formData.append('category', values.category);
 
-  axios.post(url, formData, {
+  axios
+    .post(url, formData, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data'
@@ -23,10 +31,11 @@ export const createSwap = values => async (dispatch, getState) => {
 };
 
 export const getPosts = () => (dispatch, getState) => {
-  axios.get('http://localhost:4006/api/searchByTerm', {
+  axios
+    .get('http://localhost:4006/api/searchByTerm', {
       params: {
         term: getState().posts.term,
-        category: getState().posts.category,
+        category: getState().posts.category
       }
     })
     .then(res => {
@@ -35,17 +44,54 @@ export const getPosts = () => (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-export const setCurrentPost = values => async (dispatch, getState) => { 
-  axios.get('http://localhost:4002/api/getPost', {
-    params: {postId: values}
-  })
-  .then(res => {
-    if(res.data.valid) {
-      return dispatch({ type: SET_POST, post: res.data.result[0] });
-    }
-    console.log(res.data.err);
-  })
-  .catch(err => console.log(err));
+export const getUserPosts = () => (dispatch, getState) => {
+  axios
+    .get('http://localhost:4002/api/getUserPosts', {
+      params: {
+        userId: getState().auth.userId
+      }
+    })
+    .then(res => {
+      const userPosts = res.data.result;
+      if (userPosts) {
+        dispatch({ type: GET_USER_POSTS, payload: userPosts });
+      } else {
+        dispatch({ type: GET_USER_POSTS, payload: [] });
+      }
+    })
+    .catch(err => console.log(err));
+};
+
+export const deletePost = (postId, filename) => (dispatch, getState) => {
+  console.log(filename);
+  axios
+    .get('http://localhost:4002/api/deletePost', {
+      params: {
+        postId: postId,
+        filename: filename
+      }
+    })
+    .then(res => {
+      console.log('Deleted Post');
+    });
+};
+
+export const setCurrentPost = values => async (dispatch, getState) => {
+  axios
+    .get('http://localhost:4002/api/getPost', {
+      params: { postId: values }
+    })
+    .then(res => {
+      if (res.data.valid) {
+        return dispatch({ type: SET_POST, post: res.data.result[0] });
+      }
+      console.log(res.data.err);
+    })
+    .catch(err => console.log(err));
+};
+
+export const resetCurrentPost = () => dispatch => {
+  dispatch({ type: RESET_CURRENT_POST });
 };
 
 export const setTerm = values => async (dispatch, getState) => {
