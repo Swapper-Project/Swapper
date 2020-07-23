@@ -21,8 +21,10 @@ class Dashboard extends Component {
         <div className='container-flexbox-userprofile'>
           <UserProfileCard />
           <UserDetailsCard />
+        </div >
+        <div className='container-flexbox-dashboard'>
+          <DashBoardTabs />
         </div>
-        <DashBoardTabs />
       </div>
     );
   }

@@ -11,8 +11,8 @@ import AllInboxIcon from '@material-ui/icons/AllInbox';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-import DashboardTabHeader from './DashboardTabHeader.js';
-import DashboardTabRow from './DashboardTabRow.js';
+import WishlistTabList from './wishlist/WishlistTabList';
+import WishlistHeader from './wishlist/WishlistTabHeader';
 
 import ListedSwapsHeader from './ListedSwapsHeader';
 import ListedSwapsList from './ListedSwapsList';
@@ -53,21 +53,19 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    width: '90%',
-    maxWidth: '100%',
-    minWidth: 350,
+    maxWidth: '100vh',
+    minWidth: 460,
     marginLeft: '5%',
     marginRight: '5%',
     backgroundColor: theme.palette.background.paper,
-    minHeight: 500
   },
   tabPanel: {
     backgroundColor: '#ededed',
     paddingLeft: 0,
     marginTop: 6,
     maxHeight: '50vh',
-    overflowX: 'auto'
-  }
+    overflowX: 'auto',
+  },
 }));
 
 const DashBoardTabs = () => {
@@ -101,34 +99,18 @@ const DashBoardTabs = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} className={classes.tabPanel}>
-          <DashboardTabHeader />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
+          <WishlistHeader />
+          <WishlistTabList />
         </TabPanel>
         <TabPanel value={value} index={1} className={classes.tabPanel}>
-          <DashboardTabHeader />
-          <DashboardTabRow />
-          <DashboardTabRow />
+
         </TabPanel>
         <TabPanel value={value} index={2} className={classes.tabPanel}>
           <ListedSwapsHeader />
           <ListedSwapsList />
         </TabPanel>
         <TabPanel value={value} index={3} className={classes.tabPanel}>
-          <DashboardTabHeader />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
-          <DashboardTabRow />
+
         </TabPanel>
       </Box>
     </div>

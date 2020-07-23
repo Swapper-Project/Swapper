@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '5%',
     marginRight: '5%',
     marginTop: 35,
+    marginBottom: 30,
     minHeight: 350,
     backgroundColor: '#ededed'
   },
