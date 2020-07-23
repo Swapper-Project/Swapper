@@ -17,6 +17,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Post from './components/dashboard/Post';
 import EditPost from './components/dashboard/EditPost';
 import UpdateProfile from './components/dashboard/UpdateProfile';
+import WishItemPage from './components/dashboard/wishlist/WishItemPage';
 
 const drawerWidth = 240;
 
@@ -64,17 +65,9 @@ class App extends Component {
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
               <ProtectedRoute exact path='/dashboard/post' component={Post} />
-              <ProtectedRoute
-                exact
-                path='/dashboard/update'
-                component={UpdateProfile}
-              />
-              <ProtectedRoute
-                exact
-                path='/dashboard/editPost/:postId'
-                component={EditPost}
-              />
-              {/* /listing/?id=N* for individual item page */}
+              <ProtectedRoute exact path='/dashboard/addWishItem' component={WishItemPage} />
+              <ProtectedRoute exact path='/dashboard/update' component={UpdateProfile} />
+              <ProtectedRoute exact path='/dashboard/editPost/:postId' component={EditPost} />
               <Route path='/listing/:postId' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />
               <Route path='*' component={NotFound} />

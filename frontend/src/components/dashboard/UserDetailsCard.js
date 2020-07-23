@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     marginTop: 35,
     minHeight: 325,
     marginLeft: '5%',
+    marginBottom: 30,
     backgroundColor: '#ededed'
   },
   headerContainer: {
