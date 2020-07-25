@@ -57,9 +57,6 @@ app.post('/api/post', (req, res) => {
           err: 'Something went wrong when posting your swap! Please try again.'
         });
       }
-
-      //console.log('Successful post.');
-
       return res.send({
         valid: true
       });
@@ -135,8 +132,71 @@ app.get('/api/deletePost', (req, res) => {
   );
 });
 
-app.get('/api/updatePost', (req, res) => {
-  pool.query('UPDATE');
+app.post('/api/updateSwap', (req, res) => {
+  if (req.files === null) {
+    pool.query(
+      'UPDATE posts SET title = ?, description = ?, category = ? WHERE postId = ?',
+      [
+        req.body.title,
+        req.body.description,
+        req.body.category,
+        req.body.postId
+      ],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: 'An error occured update selected post'
+          });
+        }
+      }
+    );
+  } else {
+    const filename = req.body.currentImage;
+    fs.unlink(`${__dirname}/../uploads/post_images/${filename}`, err => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    const file = req.files.file;
+
+    file.mv(
+      `${__dirname}/../uploads/post_images/${file.name}`,
+      err => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send(err);
+        }
+      },
+      err => {
+        if (err) {
+          return console.log(err);
+        }
+      }
+    );
+
+    pool.query(
+      'UPDATE posts SET filename = ?, title = ?, description = ?, category = ? WHERE postId = ?',
+      [
+        `${file.name}`,
+        req.body.title,
+        req.body.description,
+        req.body.category,
+        req.body.postId
+      ],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.send({
+            valid: false,
+            err: 'An error occured update selected post'
+          });
+        }
+      }
+    );
+  }
 });
 
 app.post('/api/getPosterInfo', (req, res) => {
