@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { createSwap, setCurrentPost } from '../../redux/actions/postActions';
+import { updateSwap, setCurrentPost } from '../../redux/actions/postActions';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import PostingForm from './PostingForm';
@@ -32,7 +32,7 @@ class EditPost extends Component {
   }
 
   onSubmit = formVals => {
-    this.props.createSwap(formVals).then(() => {
+    this.props.updateSwap(formVals).then(() => {
       if (!this.props.isSignedIn) {
         this.props.history.push('/');
       } else {
@@ -68,6 +68,6 @@ export default compose(
   withRouter,
   connect(
     mapStateToProps,
-    { createSwap, setCurrentPost }
+    { updateSwap, setCurrentPost }
   )
 )(EditPost);

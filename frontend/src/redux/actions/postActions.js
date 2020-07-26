@@ -30,6 +30,31 @@ export const createSwap = values => async (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
+export const updateSwap = values => async (dispatch, getState) => {
+  const url = `http://localhost:4002/api/updateSwap`;
+
+  let formData = new FormData();
+  if (values.dropzone) {
+    formData.append('file', values.dropzone[0]);
+  }
+
+  formData.append('currentImage', getState().posts.currentPost.filename);
+  formData.append('postId', getState().posts.currentPost.postId);
+  formData.append('title', values.title);
+  formData.append('description', values.description);
+  formData.append('category', values.category);
+
+  axios
+    .post(url, formData, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+};
+
 export const getPosts = () => (dispatch, getState) => {
   axios
     .get('http://localhost:4006/api/searchByTerm', {

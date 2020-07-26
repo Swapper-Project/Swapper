@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import WishlistTabRow from './WishlistTabRow';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = theme => ({
   root: {
     '& > *': {
       marginTop: theme.spacing(2)
     }
+  },
+  wishlist: {
+    minWidth: 600
   }
 });
 
@@ -21,15 +25,34 @@ class WishlistTabList extends Component {
 
     return (
       <div className={classes.root}>
-        <div>
-          <WishlistTabRow />
-          <WishlistTabRow />
-          <WishlistTabRow />
-          <WishlistTabRow />
-          <WishlistTabRow />
-          <WishlistTabRow />
-          <WishlistTabRow />
-        </div>
+        <Grid
+          container
+          className={classes.wishlist}
+          direction='column'
+          justify='space-evenly'
+        >
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+          <Grid item>
+            <WishlistTabRow />
+          </Grid>
+        </Grid>
       </div>
     );
   }
@@ -39,6 +62,4 @@ class WishlistTabList extends Component {
 //  //
 // });
 
-export default connect(
-  null,
-)(withStyles(useStyles)(WishlistTabList));
+export default connect(null)(withStyles(useStyles)(WishlistTabList));

@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
+import { Typography } from '@material-ui/core';
 
 const useStyles = theme => ({
   root: {
@@ -55,6 +56,9 @@ const useStyles = theme => ({
     '&:hover': {
       backgroundColor: 'white'
     }
+  },
+  imageHeader: {
+    textAlign: 'center'
   }
 });
 
@@ -72,6 +76,7 @@ class PostingForm extends Component {
         <DropzoneArea
           {...input}
           acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+          filesLimit={1}
           showPreviews={true}
           showPreviewsInDropzone={false}
           showAlerts={false}
@@ -151,6 +156,11 @@ class PostingForm extends Component {
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
         <div className={classes.leftContainer}>
+          {this.props.edit && (
+            <Typography variant='h6' className={classes.imageHeader}>
+              Upload Replacement Image (Optional)
+            </Typography>
+          )}
           <Field
             name='dropzone'
             component={this.renderDropzone}
@@ -208,12 +218,10 @@ const validate = formVal => {
 
 const mapStateToProps = state => ({
   initialValues: {
-    filename: state.posts.currentPost.filename,
     title: state.posts.currentPost.title,
     description: state.posts.currentPost.description,
     category: state.posts.currentPost.category
-  },
-  category: state.posts.currentPost.category
+  }
 });
 
 PostingForm = reduxForm({

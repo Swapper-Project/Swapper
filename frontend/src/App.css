@@ -55,10 +55,9 @@
 }
 
 @media screen and (max-width: 800px) {
-  .container-flexbox-userprofile{
+  .container-flexbox-userprofile {
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
   }
 }
-

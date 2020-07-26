@@ -49,15 +49,19 @@ const ItemCard = props => {
   const [img, setImg] = useState(null);
 
   useEffect(() => {
+    let mounted = true;
     axios
       .post(`http://localhost:4002/api/getPosterInfo`, {
         userId: props.post.userId
       })
       .then(res => {
-        setEmail(res.data.email);
-        setRating(res.data.rating);
+        if (mounted) {
+          setEmail(res.data.email);
+          setRating(res.data.rating);
+        }
       })
       .catch(err => console.log(err));
+    return () => (mounted = false);
   });
 
   const handleCardClick = () => {
