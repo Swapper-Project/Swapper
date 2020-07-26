@@ -14,9 +14,9 @@ import ItemList from './components/ItemList';
 import ChatRoom from './components/chatroom/ChatRoom';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
-import Post from './components/dashboard/Post';
+import Post from './components/dashboard/dashboardCards/PostHubCard/Post';
 import EditPost from './components/dashboard/EditPost';
-import UpdateProfile from './components/dashboard/UpdateProfile';
+import UpdateProfile from './components/dashboard/dashboardCards/UserDetailsCard/UpdateProfile';
 import WishItemPage from './components/dashboard/wishlist/WishItemPage';
 
 const drawerWidth = 240;

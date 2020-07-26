@@ -14,8 +14,8 @@ import Box from '@material-ui/core/Box';
 import WishlistTabList from './wishlist/WishlistTabList';
 import WishlistHeader from './wishlist/WishlistTabHeader';
 
-import ListedSwapsHeader from './ListedSwapsHeader';
-import ListedSwapsList from './ListedSwapsList';
+import ListedSwapsHeader from './ListedSwaps/ListedSwapsHeader';
+import ListedSwapsList from './ListedSwaps/ListedSwapsList';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

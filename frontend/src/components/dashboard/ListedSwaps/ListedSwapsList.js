@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getUserPosts } from '../../redux/actions/postActions';
-import ItemCard from '../ItemCard';
+import { getUserPosts } from '../../../redux/actions/postActions';
+import ItemCard from '../../ItemCard';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
