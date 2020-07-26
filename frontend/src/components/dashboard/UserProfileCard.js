@@ -15,10 +15,9 @@ const useStyles = makeStyles(theme => ({
     minWidth: 350,
     maxWidth: 350,
     flexGrow: 1,
-    marginLeft: '5%',
-    marginRight: '5%',
     marginTop: 35,
     marginBottom: 30,
+    marginRight: 25,
     minHeight: 350,
     backgroundColor: '#ededed'
   },

@@ -53,19 +53,16 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    maxWidth: '100vh',
     minWidth: 460,
-    marginLeft: '5%',
-    marginRight: '5%',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   tabPanel: {
     backgroundColor: '#ededed',
     paddingLeft: 0,
     marginTop: 6,
     maxHeight: '50vh',
-    overflowX: 'auto',
-  },
+    overflowX: 'auto'
+  }
 }));
 
 const DashBoardTabs = () => {
@@ -102,16 +99,20 @@ const DashBoardTabs = () => {
           <WishlistHeader />
           <WishlistTabList />
         </TabPanel>
-        <TabPanel value={value} index={1} className={classes.tabPanel}>
-
-        </TabPanel>
+        <TabPanel
+          value={value}
+          index={1}
+          className={classes.tabPanel}
+        ></TabPanel>
         <TabPanel value={value} index={2} className={classes.tabPanel}>
           <ListedSwapsHeader />
           <ListedSwapsList />
         </TabPanel>
-        <TabPanel value={value} index={3} className={classes.tabPanel}>
-
-        </TabPanel>
+        <TabPanel
+          value={value}
+          index={3}
+          className={classes.tabPanel}
+        ></TabPanel>
       </Box>
     </div>
   );

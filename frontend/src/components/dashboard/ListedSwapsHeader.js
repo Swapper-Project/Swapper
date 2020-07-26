@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { getUserPosts } from '../../redux/actions/postActions';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +25,16 @@ const useStyles = theme => ({
 });
 
 class ListedSwapHeader extends Component {
+  componentDidMount() {
+    this.props.getUserPosts();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // if (prevProps.userPosts !== this.props.userPosts) {
+    //   console.log('UPDATE');
+    //   this.props.getUserPosts();
+    // }
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -36,7 +47,7 @@ class ListedSwapHeader extends Component {
               className={classes.totalValue}
               variant='h5'
             >
-              20
+              {this.props.userPosts.length}
             </Typography>
             &nbsp; listed swaps!
           </Typography>
@@ -46,4 +57,11 @@ class ListedSwapHeader extends Component {
   }
 }
 
-export default withStyles(useStyles)(ListedSwapHeader);
+const mapStateToProps = state => ({
+  userPosts: state.posts.userPosts
+});
+
+export default connect(
+  mapStateToProps,
+  { getUserPosts }
+)(withStyles(useStyles)(ListedSwapHeader));
