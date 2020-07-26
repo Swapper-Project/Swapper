@@ -72,7 +72,7 @@ class WishlistTabRow extends Component {
             variant='h6'
             style={{paddingLeft: `${(this.state.priorityLevel >= 80) ? 70 : 95}px`}}
           >
-            Playstation 5
+            Item name here
           </Typography>
          <CardActions className={classes.buttonSpacing}>
           <Button

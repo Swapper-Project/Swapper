@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserData } from '../../redux/actions/userActions';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import DashBoardTabs from './DashBoardTabs.js';
-import UserProfileCard from './UserProfileCard.js';
-import UserDetailsCard from './UserDetailsCard.js';
+import DashBoardTabs from './DashBoardTabs';
+import UserProfileCard from './dashboardCards/UserProfileCard';
+import UserDetailsCard from './dashboardCards/UserDetailsCard/UserDetailsCard.js';
+import PostHubCard from './dashboardCards/PostHubCard/PostHubCard';
 
 const useStyles = theme => ({
   root: {
@@ -30,6 +31,7 @@ class Dashboard extends Component {
         <div className='container-flexbox-userprofile'>
           <UserProfileCard />
           <UserDetailsCard />
+          <PostHubCard />
         </div>
         <div className={classes.dashboardTabs}>
           <DashBoardTabs />

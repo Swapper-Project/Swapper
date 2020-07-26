@@ -1,28 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AccountOptions from './AccountOptions';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
-import StarsIcon from '@material-ui/icons/Stars';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CategoryIcon from '@material-ui/icons/Category';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
+import AccountActions from './AccountActions';
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignSelf: 'center',
-    minWidth: 460,
+    minWidth: 350,
+    maxWidth: 450,
     flexGrow: 1,
-    marginRigth: 25,
+    marginRigth: 15,
     marginTop: 35,
-    minHeight: 325,
+    minHeight: 400,
     marginBottom: 30,
+    marginRight: 25,
     backgroundColor: '#ededed'
   },
   headerContainer: {
@@ -67,14 +66,20 @@ const useStyles = makeStyles({
     marginLeft: 5,
     color: 'white',
     backgroundColor: '#FF5722'
+  },
+  attrHeaderText: {
+    fontWeight: 'bold',
+    fontSize: '1.0em'
+  },
+  actionsDropdown: {
+    alignSelf: 'center',
+    marginTop: 5
   }
 });
 
 const UserDetailsCard = ({
   email,
   interests,
-  userRating,
-  completedSwaps,
   favoriteCategories
 }) => {
   const classes = useStyles();
@@ -84,27 +89,24 @@ const UserDetailsCard = ({
   }
   const [rating, setRating] = React.useState(3.5);
   return (
-    <Card className={classes.root} className={classes.root} elevation={6}>
+    <Card className={classes.root} elevation={6}>
       <div className={classes.details}>
         <div className={classes.headerContainer}>
           <Typography className={classes.header} variant='h4'>
             Account Details
           </Typography>
-          <div style={{ marginLeft: 'auto' }}>
-            <AccountOptions />
-          </div>
         </div>
         <Divider variant='middle' />
         <div className={classes.infoContainer}>
           <div className={classes.contentContainer}>
-            <Typography variant='h6'>Email</Typography>
+            <Typography className={classes.attrHeaderText} variant='overline'>Email</Typography><br/>
             <div className={classes.content}>
               <MailOutlineIcon className={classes.icon} color='primary' />
               <Typography className={classes.info}>{email}</Typography>
             </div>
           </div>
           <div className={classes.contentContainer}>
-            <Typography variant='h6'>Interests</Typography>
+            <Typography className={classes.attrHeaderText} variant='overline'>Interests</Typography><br/>
             <div className={classes.content}>
               <SentimentVerySatisfiedIcon color='primary' />
               <Typography className={classes.info}>
@@ -113,7 +115,7 @@ const UserDetailsCard = ({
             </div>
           </div>
           <div className={classes.contentContainer}>
-            <Typography variant='h6'>Favorite Categories</Typography>
+            <Typography className={classes.attrHeaderText} variant='overline'>Favorite Categories</Typography><br/>
             <div className={classes.content}>
               <CategoryIcon color='primary' />
               {favoriteCategories.length === 0 ? (
@@ -129,30 +131,11 @@ const UserDetailsCard = ({
               )}
             </div>
           </div>
-          <Typography className={classes.header} variant='h4'>
-            Statistics
-          </Typography>
           <Divider variant='middle' />
-          <div className={classes.statistics}>
-            <div className={classes.contentContainer}>
-              <Typography variant='h6'>Average Rating</Typography>
-              <div className={classes.content}>
-                <StarsIcon color='primary' />
-                <Typography className={classes.info}>0.69</Typography>
-              </div>
-            </div>
-            <div className={classes.contentContainer}>
-              <Typography variant='h6'>Completed Swaps</Typography>
-              <div className={classes.content}>
-                <CheckBoxIcon color='primary' />
-                <Typography className={classes.info}>
-                  {completedSwaps}
-                </Typography>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+      <div className={classes.actionsDropdown}><AccountActions  className={classes.actionsDropdown} /></div>
+     
     </Card>
   );
 };

@@ -54,10 +54,11 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   .container-flexbox-userprofile {
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
   }
 }
