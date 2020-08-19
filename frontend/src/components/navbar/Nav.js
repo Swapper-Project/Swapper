@@ -26,6 +26,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
 import DashBoard from '@material-ui/icons/Dashboard';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -33,7 +35,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import FullWidthTabs from './AuthTabs';
+import AuthTabs from './AuthTabs';
 import Paper from '@material-ui/core/Paper';
 import WishIcon from '@material-ui/icons/LocalActivity';
 import CompleteIcon from '@material-ui/icons/DoneOutline';
@@ -41,10 +43,8 @@ import ListedIcon from '@material-ui/icons/ListAlt';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 const drawerWidth = 240;
 
@@ -171,7 +171,7 @@ const useStyles = theme => ({
 });
 
 class Nav extends React.Component {
-  state = { term: '' };
+  state = { term: ''};
 
   handleOnSubmit = e => {
     e.preventDefault();
@@ -267,7 +267,7 @@ class Nav extends React.Component {
               {!this.props.isSignedIn && (
                 <Button
                   style={{ fontFamily: 'Roboto Mono' }}
-                  onClick={() => this.props.authModalOpen()}
+                  onClick={() => this.props.authModalOpen(0)}
                   color='inherit'
                 >
                   Login / Register
@@ -290,73 +290,107 @@ class Nav extends React.Component {
               <ChevronLeftIcon className={classes.iconColor} />
             </IconButton>
           </div>
-          <Divider />
-          <List>
-            <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
-              <ListItem button key={'Dashboard'}>
+          <Divider /> 
+          {!this.props.isSignedIn &&
+            <List>   
+              <ListItem button key={'Login'}  onClick={() => this.props.authModalOpen(0)}>
                 <ListItemIcon>
-                  <DashBoard className={classes.iconColor} />
+                  <PersonIcon className={classes.iconColor} />
                 </ListItemIcon>
                 <ListItemText
                   disableTypography
                   primary={
                     <Typography style={{ color: '#FFFFFF' }}>
-                      Dashboard
+                      Login
                     </Typography>
                   }
                 />
               </ListItem>
-            </Link>
-            <Divider />
-            <ListItem button>
-              <ListItemIcon className={classes.iconColor}>
-                <WishIcon />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography style={{ color: '#FFFFFF' }}>Wishlist</Typography>
-                }
-              />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon className={classes.iconColor}>
-                <CompleteIcon />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography style={{ color: '#FFFFFF' }}>
-                    Completed Swaps
-                  </Typography>
-                }
-              />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon className={classes.iconColor}>
-                <ListedIcon />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography style={{ color: '#FFFFFF' }}>
-                    ListedSwaps
-                  </Typography>
-                }
-              />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon className={classes.iconColor}>
-                <AllInboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography style={{ color: '#FFFFFF' }}>Inbox</Typography>
-                }
-              />
-            </ListItem>
-          </List>
+         
+              <ListItem button key={'Register'}  onClick={() => this.props.authModalOpen(1)}>
+                <ListItemIcon>
+                  <AddIcon className={classes.iconColor} />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>
+                      Register
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </List>
+          }
+
+          {this.props.isSignedIn && 
+            <List>
+              <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
+                <ListItem button key={'Dashboard'}>
+                  <ListItemIcon>
+                    <DashBoard className={classes.iconColor} />
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    primary={
+                      <Typography style={{ color: '#FFFFFF' }}>
+                        Dashboard
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </Link>
+              <Divider />
+              <ListItem button>
+                <ListItemIcon className={classes.iconColor}>
+                  <WishIcon />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>Wishlist</Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon className={classes.iconColor}>
+                  <CompleteIcon />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>
+                      Completed Swaps
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon className={classes.iconColor}>
+                  <ListedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>
+                      ListedSwaps
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon className={classes.iconColor}>
+                  <AllInboxIcon />
+                </ListItemIcon>
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography style={{ color: '#FFFFFF' }}>Inbox</Typography>
+                  }
+                />
+              </ListItem> 
+            </List>
+          }
         </Drawer>
         <Modal
           className={classes.modal}
@@ -379,7 +413,7 @@ class Nav extends React.Component {
                 Welcome to Swapper!
               </Typography>
               <br />
-              <FullWidthTabs />
+              <AuthTabs selectedTab={0}/>
             </Paper>
           </Fade>
         </Modal>
