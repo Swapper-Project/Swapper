@@ -3,13 +3,15 @@ import {
   SIGN_OUT,
   AUTH_MODAL_OPEN,
   AUTH_MODAL_CLOSE,
-  LOAD_COOKIE
+  LOAD_COOKIE,
+  SET_TAB
 } from '../actions/types';
 
 const INITIAL_STATE = {
   isSignedIn: false,
   userId: '',
-  authOpen: false
+  authOpen: false,
+  selectedTab: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, authOpen: false };
     case LOAD_COOKIE:
       return { ...state, userId: action.userId, isSignedIn: true };
+    case SET_TAB:
+      return { ...state, selectedTab: action.selectedTab }
     default:
       return state;
   }

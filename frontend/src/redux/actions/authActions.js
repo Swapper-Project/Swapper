@@ -3,7 +3,8 @@ import {
   SIGN_OUT,
   AUTH_MODAL_OPEN,
   AUTH_MODAL_CLOSE,
-  LOAD_COOKIE
+  LOAD_COOKIE,
+  SET_TAB
 } from './types';
 import cookie from 'react-cookies';
 import auth from '../../auth';
@@ -74,8 +75,9 @@ export const loadCookie = () => dispatch => {
   }
 };
 
-export const authModalOpen = () => dispatch => {
+export const authModalOpen = (choice) => dispatch => {
   dispatch({ type: AUTH_MODAL_OPEN });
+  dispatch({ type: SET_TAB, selectedTab: choice });
 };
 
 export const authModalClose = () => dispatch => {

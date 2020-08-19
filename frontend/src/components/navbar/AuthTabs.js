@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -56,13 +57,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AuthTabs = () => {
+const AuthTabs = ({ selectedTab }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(selectedTab);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    console.log(selectedTab)
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -90,5 +95,8 @@ const AuthTabs = () => {
     </div>
   );
 };
+const mapStateToProps = state => ({
+  selectedTab: state.auth.selectedTab,
+});
 
-export default AuthTabs;
+export default connect(mapStateToProps)(AuthTabs);
