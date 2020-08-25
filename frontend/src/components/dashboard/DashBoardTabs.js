@@ -19,7 +19,6 @@ import ListedSwapsList from './ListedSwaps/ListedSwapsList';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role='tabpanel'
@@ -39,8 +38,8 @@ function TabPanel(props) {
 
 TabPanel.propTypes = {
   children: PropTypes.node,
-  index: PropTypes.any.isRequired
-  // value: PropTypes.any.isRequired
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
 
 function a11yProps(index) {
@@ -70,7 +69,7 @@ const DashBoardTabs = props => {
   // const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setDashboardTab(newValue);
+    props.setDashboardTab(newValue);
   };
 
   return (
@@ -130,4 +129,7 @@ const mapStateToProps = state => ({
   selectedTab: state.nav.selectedTab
 });
 
-export default connect(mapStateToProps)(DashBoardTabs);
+export default connect(
+  mapStateToProps,
+  { setDashboardTab }
+)(DashBoardTabs);
