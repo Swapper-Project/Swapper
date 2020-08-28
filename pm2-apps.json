@@ -1,0 +1,24 @@
+{
+  "apps": [
+      {
+          "name": "auth-service",
+          "script": "./backend/api/auth_service.js"
+      },
+      {
+          "name": "img-service",
+          "script": "./backend/api/img_service.js"
+      },
+      {
+          "name": "post-service",
+          "script": "./backend/api/post_service.js"
+      },
+      {
+          "name": "search-service",
+          "script": "./backend/api/search_service.js"
+      },
+      {
+          "name": "user-info-service.js",
+          "script": "./backend/api/user_info_service.js"
+      }
+  ]
+}
