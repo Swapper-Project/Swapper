@@ -7,7 +7,6 @@ import {
   SET_POST,
   RESET_CURRENT_POST
 } from '../actions/types';
-import actions from 'redux-form/lib/actions';
 
 const INITIAL_STATE = {
   posts: [],

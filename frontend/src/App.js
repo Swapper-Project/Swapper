@@ -7,7 +7,6 @@ import './App.css';
 import { loadCookie } from './redux/actions/authActions';
 import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
-import Filter from './components/filter/Filter';
 import Dashboard from './components/dashboard/Dashboard';
 import ItemPage from './components/itempage/ItemPage';
 import ItemList from './components/ItemList';
@@ -60,14 +59,25 @@ class App extends Component {
               [classes.contentShift]: this.props.drawerOpen
             })}
           >
-            {/* <Filter /> */}
             <Switch>
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
               <ProtectedRoute exact path='/dashboard/post' component={Post} />
-              <ProtectedRoute exact path='/dashboard/addWishItem' component={WishItemPage} />
-              <ProtectedRoute exact path='/dashboard/update' component={UpdateProfile} />
-              <ProtectedRoute exact path='/dashboard/editPost/:postId' component={EditPost} />
+              <ProtectedRoute
+                exact
+                path='/dashboard/addWishItem'
+                component={WishItemPage}
+              />
+              <ProtectedRoute
+                exact
+                path='/dashboard/update'
+                component={UpdateProfile}
+              />
+              <ProtectedRoute
+                exact
+                path='/dashboard/editPost/:postId'
+                component={EditPost}
+              />
               <Route path='/listing/:postId' component={ItemPage} />
               <Route path='/ChatRoom' component={ChatRoom} />
               <Route path='*' component={NotFound} />

@@ -1,7 +1,8 @@
-import { DRAWER_OPEN, DRAWER_CLOSE } from '../actions/types';
+import { DRAWER_OPEN, DRAWER_CLOSE, SET_DASHBOARD_TAB } from '../actions/types';
 
 const INITIAL_STATE = {
-  drawerOpen: false
+  drawerOpen: false,
+  selectedTab: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -10,6 +11,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, drawerOpen: true };
     case DRAWER_CLOSE:
       return { ...state, drawerOpen: false };
+    case SET_DASHBOARD_TAB:
+      return { ...state, selectedTab: action.payload };
     default:
       return state;
   }

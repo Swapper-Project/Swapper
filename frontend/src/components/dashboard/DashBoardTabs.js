@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setDashboardTab } from '../../redux/actions/navActions';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,16 +12,13 @@ import WishIcon from '@material-ui/icons/LocalActivity';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
 import WishlistTabList from './wishlist/WishlistTabList';
 import WishlistHeader from './wishlist/WishlistTabHeader';
-
 import ListedSwapsHeader from './ListedSwaps/ListedSwapsHeader';
 import ListedSwapsList from './ListedSwaps/ListedSwapsList';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role='tabpanel'
@@ -65,12 +64,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DashBoardTabs = () => {
+const DashBoardTabs = props => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    props.setDashboardTab(newValue);
   };
 
   return (
@@ -78,7 +77,7 @@ const DashBoardTabs = () => {
       <Box mt={5} boxShadow={2}>
         <AppBar position='static' color='default'>
           <Tabs
-            value={value}
+            value={props.selectedTab}
             onChange={handleChange}
             variant='scrollable'
             scrollButtons='on'
@@ -95,21 +94,29 @@ const DashBoardTabs = () => {
             <Tab label='Inbox' icon={<AllInboxIcon />} {...a11yProps(3)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0} className={classes.tabPanel}>
+        <TabPanel
+          value={props.selectedTab}
+          index={0}
+          className={classes.tabPanel}
+        >
           <WishlistHeader />
           <WishlistTabList />
         </TabPanel>
         <TabPanel
-          value={value}
+          value={props.selectedTab}
           index={1}
           className={classes.tabPanel}
         ></TabPanel>
-        <TabPanel value={value} index={2} className={classes.tabPanel}>
+        <TabPanel
+          value={props.selectedTab}
+          index={2}
+          className={classes.tabPanel}
+        >
           <ListedSwapsHeader />
           <ListedSwapsList />
         </TabPanel>
         <TabPanel
-          value={value}
+          value={props.selectedTab}
           index={3}
           className={classes.tabPanel}
         ></TabPanel>
@@ -118,4 +125,11 @@ const DashBoardTabs = () => {
   );
 };
 
-export default DashBoardTabs;
+const mapStateToProps = state => ({
+  selectedTab: state.nav.selectedTab
+});
+
+export default connect(
+  mapStateToProps,
+  { setDashboardTab }
+)(DashBoardTabs);
