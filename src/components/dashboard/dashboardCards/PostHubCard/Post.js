@@ -9,19 +9,19 @@ import Typography from '@material-ui/core/Typography';
 import PostingForm from './PostingForm';
 import Divider from '@material-ui/core/Divider';
 
-const useStyles = theme => ({
-  root: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
+const useStyles = (theme) => ({
+  post: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   paper: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     width: '60%',
     minWidth: 300,
-    backgroundColor: '#ededed'
+    backgroundColor: '#ededed',
   },
   title: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 class Post extends Component {
@@ -31,7 +31,7 @@ class Post extends Component {
     }
   }
 
-  onSubmit = formVals => {
+  onSubmit = (formVals) => {
     this.props.createSwap(formVals).then(() => {
       if (!this.props.isSignedIn) {
         this.props.history.push('/');
@@ -44,12 +44,12 @@ class Post extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.post}>
         <Paper className={classes.paper} elevation={3}>
-          <Typography className={classes.title} variant='h4'>
+          <Typography className={classes.title} variant="h4">
             Create a Swap
           </Typography>
-          <Divider variant='middle' />
+          <Divider variant="middle" />
           <PostingForm onSubmit={this.onSubmit} />
         </Paper>
       </div>
@@ -57,17 +57,14 @@ class Post extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSignedIn: state.auth.isSignedIn,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 });
 
 Post = withStyles(useStyles)(Post);
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    { createSwap }
-  )
+  connect(mapStateToProps, { createSwap })
 )(Post);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fade, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { authModalClose } from '../../redux/actions/authActions';
 import Modal from '@material-ui/core/Modal';
@@ -9,21 +9,21 @@ import Fade from '@material-ui/core/Fade';
 import AuthTabs from './AuthTabs';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paper: {
     width: '40%',
     minWidth: 300,
     backgroundColor: '#333333',
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
   },
   modalTitle: {
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
 class AuthModal extends Component {
@@ -38,7 +38,7 @@ class AuthModal extends Component {
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
-            timeout: 500
+            timeout: 500,
           }}
         >
           <Fade in={this.props.modalOpen}>
@@ -46,8 +46,8 @@ class AuthModal extends Component {
               <Typography
                 style={{ fontFamily: 'Roboto Mono' }}
                 className={classes.modalTitle}
-                align='center'
-                variant='h4'
+                align="center"
+                variant="h4"
               >
                 Welcome to Swapper!
               </Typography>
@@ -61,11 +61,10 @@ class AuthModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  modalOpen: state.auth.authOpen
+const mapStateToProps = (state) => ({
+  modalOpen: state.auth.authOpen,
 });
 
-export default connect(
-  mapStateToProps,
-  { authModalClose }
-)(withStyles(useStyles)(AuthModal));
+export default connect(mapStateToProps, { authModalClose })(
+  withStyles(useStyles)(AuthModal)
+);

@@ -12,7 +12,6 @@ import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers/rootReducer.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
@@ -22,12 +21,18 @@ const store = createStore(
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FF5722'
+      main: '#FF5722',
     },
     secondary: {
-      main: '#333333'
-    }
-  }
+      main: '#333333',
+    },
+    test: {
+      main: '#ededed',
+    },
+  },
+  typography: {
+    // fontSize: '62.5%',
+  },
 });
 
 ReactDOM.render(

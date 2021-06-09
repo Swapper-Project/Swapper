@@ -16,32 +16,32 @@ import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
     minWidth: 250,
     paddingTop: 12,
     backgroundColor: '#F2EFEB',
-    margin: 15
+    margin: 15,
   },
   avatar: {
-    borderRadius: 50
+    borderRadius: 50,
   },
   editButton: {
     backgroundColor: '#FF5722',
-    color: 'white'
+    color: 'white',
   },
   trashButton: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   listedSwapsActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'center'
-  }
-});
+    alignItems: 'center',
+  },
+}));
 
-const ItemCard = props => {
+const ItemCard = (props) => {
   const classes = useStyles();
 
   const [email, setEmail] = useState('notset');
@@ -52,15 +52,15 @@ const ItemCard = props => {
     let mounted = true;
     axios
       .post(`http://localhost:4002/api/getPosterInfo`, {
-        userId: props.post.userId
+        userId: props.post.userId,
       })
-      .then(res => {
+      .then((res) => {
         if (mounted) {
           setEmail(res.data.email);
           setRating(res.data.rating);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
     return () => (mounted = false);
   });
 
@@ -68,7 +68,7 @@ const ItemCard = props => {
     props.history.push(`/listing/${props.post.postId}`);
   };
 
-  const handleEdit = postId => {
+  const handleEdit = (postId) => {
     props.setCurrentPost(postId).then(() => {
       props.history.push(`/dashboard/editPost/${postId}`);
     });
@@ -81,24 +81,24 @@ const ItemCard = props => {
 
   return (
     <Card className={classes.root} elevation={6}>
-      <img src={img} />
+      <img src={img} alt="" />
       <CardActionArea onClick={() => handleCardClick()}>
         <CardMedia
-          component='img'
+          component="img"
           alt={props.post.title}
-          height='200'
+          height="200"
           image={`http://localhost:4005/api/getPostImg?filename=${props.post.filename}`}
           title={props.post.title}
         />
         <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
+          <Typography gutterBottom variant="h5" component="h2">
             {props.post.title}
           </Typography>
           <Typography
-            variant='body2'
-            color='textSecondary'
-            component='p'
-            display='inline'
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            display="inline"
           >
             Date posted:{' '}
             {new Date(props.post.createTime).toString().substr(0, 24)}
@@ -121,19 +121,19 @@ const ItemCard = props => {
                 handleDelete(props.post.postId, props.post.filename)
               }
             >
-              <DeleteForeverIcon fontSize='large' />
+              <DeleteForeverIcon fontSize="large" />
             </IconButton>
           </div>
         </CardActions>
       ) : (
         <CardActions>
           <Gravatar email={email} className={`${classes.avatar}`} />
-          <Ratings rating={rating} widgetDimensions='20px' widgetSpacings='0px'>
-            <Ratings.Widget widgetRatedColor='#FF5722' />
-            <Ratings.Widget widgetRatedColor='#FF5722' />
-            <Ratings.Widget widgetRatedColor='#FF5722' />
-            <Ratings.Widget widgetRatedColor='#FF5722' />
-            <Ratings.Widget widgetRatedColor='#FF5722' />
+          <Ratings rating={rating} widgetDimensions="20px" widgetSpacings="0px">
+            <Ratings.Widget widgetRatedColor="#FF5722" />
+            <Ratings.Widget widgetRatedColor="#FF5722" />
+            <Ratings.Widget widgetRatedColor="#FF5722" />
+            <Ratings.Widget widgetRatedColor="#FF5722" />
+            <Ratings.Widget widgetRatedColor="#FF5722" />
           </Ratings>
         </CardActions>
       )}
@@ -141,7 +141,6 @@ const ItemCard = props => {
   );
 };
 
-export default connect(
-  null,
-  { deletePost, setCurrentPost }
-)(withRouter(ItemCard));
+export default connect(null, { deletePost, setCurrentPost })(
+  withRouter(ItemCard)
+);

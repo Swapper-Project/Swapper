@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { resetCurrentPost } from '../../../../redux/actions/postActions';
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -25,24 +25,23 @@ const useStyles = makeStyles({
     marginTop: 35,
     minHeight: 325,
     marginBottom: 30,
-    backgroundColor: '#ededed'
+    backgroundColor: theme.test,
   },
   optionsButton: {
-   width: 206,
+    width: 206,
   },
   details: {
-    width: '100%'
+    width: '100%',
   },
-});
+}));
 const options = [
-  'Account Actions',
   'Change primary email',
   'Update profile information',
-  'Delete Account'
+  'Delete Account',
 ];
 
-const PostHubCard = props => {
-  let history = useHistory();
+const PostHubCard = (props) => {
+  // let history = useHistory();
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -51,15 +50,13 @@ const PostHubCard = props => {
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
-    if(selectedIndex === 1) {
+    if (selectedIndex === 0) {
       //update email
-    } 
-    else if(selectedIndex === 2) {
+    } else if (selectedIndex === 1) {
       props.history.push('dashboard/update');
-    }
-    else if(selectedIndex === 3) {
+    } else if (selectedIndex === 2) {
       //delete account
-    } 
+    }
     //etc
   };
 
@@ -69,10 +66,10 @@ const PostHubCard = props => {
   };
 
   const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -80,22 +77,24 @@ const PostHubCard = props => {
     setOpen(false);
   };
 
-  return ( 
+  return (
     <div>
-      <ButtonGroup   
-        variant='contained'
-        size='large'
-        color='primary'
+      <ButtonGroup
+        variant="contained"
+        size="large"
+        color="primary"
         ref={anchorRef}
-        aria-label='split button'
+        aria-label="split button"
       >
-        <Button className={classes.optionsButton} onClick={handleClick}>{options[selectedIndex]}</Button>
+        <Button className={classes.optionsButton} onClick={handleClick}>
+          {options[selectedIndex]}
+        </Button>
         <Button
-          color='primary'
+          color="primary"
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
-          aria-label='select merge strategy'
-          aria-haspopup='menu'
+          aria-label="select merge strategy"
+          aria-haspopup="menu"
           onClick={handleToggle}
         >
           <ArrowDropDownIcon />
@@ -113,17 +112,17 @@ const PostHubCard = props => {
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom'
+                placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList id='split-button-menu'>
-                  {options.slice(1, options.length).map((option, index) => (
+                <MenuList id="split-button-menu">
+                  {options.slice(0, options.length).map((option, index) => (
                     <MenuItem
                       key={option}
                       selected={index === selectedIndex}
-                      onClick={event => handleMenuItemClick(event, index + 1)}
+                      onClick={(event) => handleMenuItemClick(event, index + 1)}
                     >
                       {option}
                     </MenuItem>
@@ -138,7 +137,4 @@ const PostHubCard = props => {
   );
 };
 
-export default connect(
-  null,
-  { resetCurrentPost }
-)(withRouter(PostHubCard));
+export default connect(null, { resetCurrentPost })(withRouter(PostHubCard));
