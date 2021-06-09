@@ -1,4 +1,4 @@
-import React, { setState, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -17,30 +17,30 @@ const useStyles = theme => ({
     paddingLeft: 20,
     paddingTop: 5,
     backgroundColor: '#f5f5f5',
-    margin: 5
+    margin: 5,
   },
   priorityText: {
     minWidth: 150,
-    fontSize: '1.0em'
+    fontSize: '1.0em',
   },
   itemNameText: {
     minWidth: 150,
     marginLeft: 45,
-    fontSize: '1.0em'
+    fontSize: '1.0em',
   },
   buttonSpacing: {
     marginLeft: 'auto',
-    marginRight: 15
+    marginRight: 15,
   },
   editButton: {
-    backgroundColor: '#FF5722',
+    backgroundColor: theme.test.main,
     color: 'white',
     minWidth: 160,
-    marginLeft: 35
+    marginLeft: 35,
   },
   wishlistHeader: {
-    minWidth: 600
-  }
+    minWidth: 600,
+  },
 });
 
 class WishlistTabHeader extends Component {
@@ -63,15 +63,15 @@ class WishlistTabHeader extends Component {
           <Card className={classes.root}>
             <Typography
               className={classes.priorityText}
-              component='span'
-              variant='overline'
+              component="span"
+              variant="overline"
             >
               <b>Priority</b>
             </Typography>
             <Typography
               className={classes.itemNameText}
-              component='span'
-              variant='overline'
+              component="span"
+              variant="overline"
             >
               <b>Wishlist Item</b>
             </Typography>

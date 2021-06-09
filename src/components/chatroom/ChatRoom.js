@@ -2,13 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Message from './Message.js';
 import ChatIcon from '@material-ui/icons/Chat';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Gravatar from 'react-gravatar';
 import Ratings from 'react-ratings-declarative';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   topRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -37,21 +37,21 @@ const useStyles = theme => ({
   },
   userDiv: {
     display: 'flex',
-    float: 'left'
+    float: 'left',
   },
   avatar: {
     borderRadius: 200,
     width: 30,
-    height: 30
+    height: 30,
   },
   username: {
     marginLeft: 10,
-    marginRight: 5
+    marginRight: 5,
   },
   ratingDiv: {
     marginTop: 5,
     display: 'flex',
-    flexWrap:'nowrap',
+    flexWrap: 'nowrap',
     float: 'left',
   },
   topLeft: {
@@ -89,7 +89,7 @@ const useStyles = theme => ({
     justifySelf: 'flex-end',
     width: 135,
     '&:hover': {
-      backgroundColor: 'white'
+      backgroundColor: 'white',
     },
   },
   bottomRow: {
@@ -115,11 +115,11 @@ class ChatRoom extends React.Component {
               That's a fantastic Xbox Series X you have there. What do you want
               to trade it for?
             </p>
-          )
+          ),
         },
         {
           username: 'ChunkySmalls',
-          text: <p>Check my wishlist bro</p>
+          text: <p>Check my wishlist bro</p>,
         },
         {
           username: 'theDuderino25',
@@ -128,11 +128,11 @@ class ChatRoom extends React.Component {
               Ah, I see you desire a saxaphone. It is such a marvelous
               coincidence that I so happen to have one posted here
             </p>
-          )
+          ),
         },
         {
           username: 'ChunkySmalls',
-          text: <p>I'll go check it out</p>
+          text: <p>I'll go check it out</p>,
         },
         {
           username: 'ChunkySmalls',
@@ -141,11 +141,11 @@ class ChatRoom extends React.Component {
               Exactly what I was looking for, here's my phone number, let's
               discuss the exchange deets and seal the deal.
             </p>
-          )
+          ),
         },
         {
           username: 'theDuderino25',
-          text: <p>Great, I'll send a request.</p>
+          text: <p>Great, I'll send a request.</p>,
         },
         {
           username: 'System',
@@ -155,14 +155,14 @@ class ChatRoom extends React.Component {
               <u>Saxaphone</u> for <u>Xbox Series X</u> If agreed upon please
               exchange necessary information to complete the swap.
             </p>
-          )
+          ),
         },
         {
           username: 'System',
           text: (
             <p>theDuderino25 accepted ChunkySmalls's request. Get Swapping!</p>
-          )
-        }
+          ),
+        },
       ],
 
       otherUser: 'theDuderino25',
@@ -172,13 +172,13 @@ class ChatRoom extends React.Component {
     };
   }
 
-  setMessage = event => {
+  setMessage = (event) => {
     this.setState({
-      message: event.target.value
+      message: event.target.value,
     });
   };
 
-  submitMessage = e => {
+  submitMessage = (e) => {
     e.preventDefault();
 
     //websocket stuff here
@@ -189,13 +189,18 @@ class ChatRoom extends React.Component {
         ...this.state.messages,
         {
           username: this.state.user,
-          text: <p>{this.state.message}<br /></p>
-        }
-      ]
+          text: (
+            <p>
+              {this.state.message}
+              <br />
+            </p>
+          ),
+        },
+      ],
     });
     e.target.reset();
     this.setState({
-       message: '',
+      message: '',
     });
   };
 
@@ -203,72 +208,66 @@ class ChatRoom extends React.Component {
     const { otherUser: user, messages, rating } = this.state;
     const { classes } = this.props;
     return (
-      <div className='container-flexbox-chatroom'>
+      <div className="container-flexbox-chatroom">
         <div className={classes.topRow}>
-              <div className={classes.topLeft}>
-                <Typography variant='h5' >Your posted item: </Typography>
-                <Typography variant='h5'>Xbox Series X</Typography>
-                <img
-                  className={classes.itemImage}
-                  src='https://cdn.mos.cms.futurecdn.net/iGoyV8755hauMhq55pVC2J.jpg'
-                  alt='Logo'
-                />          
+          <div className={classes.topLeft}>
+            <Typography variant="h5">Your posted item: </Typography>
+            <Typography variant="h5">Xbox Series X</Typography>
+            <img
+              className={classes.itemImage}
+              src="https://cdn.mos.cms.futurecdn.net/iGoyV8755hauMhq55pVC2J.jpg"
+              alt="Logo"
+            />
+          </div>
+
+          <div className={classes.topMiddle}>
+            <ChatIcon className={classes.chatIcon} />
+          </div>
+          <div className={classes.topRight}>
+            <Typography variant="h5">Chatting with: </Typography>
+            <div className={classes.userDiv}>
+              <Gravatar
+                email="a-email@example.com"
+                className={`${classes.avatar}`}
+              />
+              <Typography className={classes.username} variant="h6">
+                {user}
+              </Typography>
+              <div className={classes.ratingDiv}>
+                <Ratings
+                  rating={rating}
+                  widgetDimensions="20px"
+                  widgetSpacings="0px"
+                >
+                  <Ratings.Widget widgetRatedColor="#FF5722" />
+                  <Ratings.Widget widgetRatedColor="#FF5722" />
+                  <Ratings.Widget widgetRatedColor="#FF5722" />
+                  <Ratings.Widget widgetRatedColor="#FF5722" />
+                  <Ratings.Widget widgetRatedColor="#FF5722" />
+                </Ratings>
+                <Typography>(69)</Typography>
               </div>
-           
-            <div className={classes.topMiddle}>
-              <ChatIcon className={classes.chatIcon} />
             </div>
-            <div className={classes.topRight}>
-                <Typography variant='h5'>Chatting with: </Typography>
-                <div className={classes.userDiv}>
-                  <Gravatar
-                    email='a-email@example.com'
-                    className={`${classes.avatar}`}
-                  />
-                  <Typography className={classes.username} variant='h6'>
-                    {user}
-                  </Typography>
-                  <div className={classes.ratingDiv}>
-                    <Ratings
-                      rating={rating}
-                      widgetDimensions='20px'
-                      widgetSpacings='0px'
-                    >
-                      <Ratings.Widget widgetRatedColor='#FF5722' />
-                      <Ratings.Widget widgetRatedColor='#FF5722' />
-                      <Ratings.Widget widgetRatedColor='#FF5722' />
-                      <Ratings.Widget widgetRatedColor='#FF5722' />
-                      <Ratings.Widget widgetRatedColor='#FF5722' />
-                    </Ratings>
-                    <Typography>(69)</Typography>
-                    </div>   
-                  </div>
-                  <Button className={classes.wishlistButton}>
-                    View Wishlist
-                  </Button>
-               
-             
-            </div>
-    </div>
+            <Button className={classes.wishlistButton}>View Wishlist</Button>
+          </div>
+        </div>
 
         <ul>
           {messages.length <= 7 &&
-            messages.slice().map(msg => <Message message={msg} />)}
+            messages.slice().map((msg) => <Message message={msg} />)}
           {messages.length > 7 &&
             messages
               .slice(messages.length - 7)
-              .map(msg => <Message message={msg} />)}
+              .map((msg) => <Message message={msg} />)}
         </ul>
         <form
-          id='message-form'
-          className='input'
-          onSubmit={e => this.submitMessage(e)}
+          id="message-form"
+          className="input"
+          onSubmit={(e) => this.submitMessage(e)}
         >
-          <input type='text' onChange={this.setMessage} />
-          <input type='submit' value='Submit' />
+          <input type="text" onChange={this.setMessage} />
+          <input type="submit" value="Submit" />
         </form>
-
-        
       </div>
     );
   }

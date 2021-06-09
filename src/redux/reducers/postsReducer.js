@@ -5,7 +5,7 @@ import {
   GET_USER_POSTS,
   SET_CATEGORY,
   SET_POST,
-  RESET_CURRENT_POST
+  RESET_CURRENT_POST,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,13 +13,14 @@ const INITIAL_STATE = {
   userPosts: [],
   term: '',
   category: 'All',
-  currentPost: {}
+  currentPost: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_SWAP:
-    // update posts state
+      // update posts state
+      break;
     case GET_POSTS:
       return { ...state, posts: action.posts };
     case GET_USER_POSTS:

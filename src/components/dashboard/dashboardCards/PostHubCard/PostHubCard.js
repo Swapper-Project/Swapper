@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { resetCurrentPost } from '../../../../redux/actions/postActions';
 import Grid from '@material-ui/core/Grid';
@@ -23,117 +23,125 @@ const useStyles = makeStyles({
     marginTop: 35,
     minHeight: 325,
     marginBottom: 30,
-    backgroundColor: '#ededed'
+    backgroundColor: '#ededed',
   },
   optionsButton: {
-   width: 206,
+    width: 206,
   },
   details: {
-    width: '100%'
+    width: '100%',
   },
   content: {
     display: 'flex',
-    float: 'left'
+    float: 'left',
   },
   contentContainer: {
     margin: 5,
     paddingLeft: 20,
     maxWidth: 500,
-    minWidth: 300
+    minWidth: 300,
   },
   statistics: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   header: {
     paddingTop: 7,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   swapDescription: {
     paddingTop: 7,
     paddingLeft: 20,
     paddingRight: 20,
-    fontWeight: 80
+    fontWeight: 80,
   },
   attrHeaderText: {
     fontWeight: 'bold',
-    fontSize: '1.0em'
+    fontSize: '1.0em',
   },
   info: {
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   swapButton: {
     alignSelf: 'center',
     marginTop: 10,
     marginLeft: 15,
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 });
 
-const PostHubCard = props => {
-  let history = useHistory();
+const PostHubCard = (props) => {
+  // let history = useHistory();
   const classes = useStyles();
 
   const handleClick = () => {
-      props.resetCurrentPost();
-      props.history.push('dashboard/post');
+    props.resetCurrentPost();
+    props.history.push('dashboard/post');
   };
 
   return (
-    <Card className={classes.root} className={classes.root} elevation={6}>
-    <Grid container direction='row' alignItems='center'>
-      <Grid item sm={12}>
-        <Typography className={classes.header} variant='h4'>
-          Swap Hub
-        </Typography>  
-        <Divider variant='middle' />
-        <Typography className={classes.swapDescription} variant='h6'>
-          Got something worth trading? List it on the site here!
-        </Typography>  
-      </Grid>
-      <div className={classes.swapButton}>    
-        <Button
-          variant='contained'
-          size='large'
-          color='primary'
-          onClick={handleClick}
-        >Create a Swap</Button>
-      </div>
-      <Typography className={classes.header} variant='h6'>
-            Statistics
-      </Typography>
-      <div className={classes.statistics}>
-        <div className={classes.contentContainer}>
-        <Divider />
-          <Typography className={classes.attrHeaderText} variant='overline'>Average Rating</Typography><br />
-          <div className={classes.content}>
-            <StarsIcon color='primary' />
-            <Typography className={classes.info}>{props.rating}</Typography>
-          </div>
-        </div><br />
-        <div className={classes.contentContainer}>
-          <Typography className={classes.attrHeaderText} variant='overline'>Completed Swaps</Typography><br />
-          <div className={classes.content}>
-            <CheckBoxIcon color='primary' />
-            <Typography className={classes.info}>
-              {props.completedSwaps}
+    <Card className={classes.root} elevation={6}>
+      <Grid container direction="row" alignItems="center">
+        <Grid item sm={12}>
+          <Typography className={classes.header} variant="h4">
+            Swap Hub
+          </Typography>
+          <Divider variant="middle" />
+          <Typography className={classes.swapDescription} variant="h6">
+            Got something worth trading? List it on the site here!
+          </Typography>
+        </Grid>
+        <div className={classes.swapButton}>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={handleClick}
+          >
+            Create a Swap
+          </Button>
+        </div>
+        <Typography className={classes.header} variant="h6">
+          Statistics
+        </Typography>
+        <div className={classes.statistics}>
+          <div className={classes.contentContainer}>
+            <Divider />
+            <Typography className={classes.attrHeaderText} variant="overline">
+              Average Rating
             </Typography>
+            <br />
+            <div className={classes.content}>
+              <StarsIcon color="primary" />
+              <Typography className={classes.info}>{props.rating}</Typography>
+            </div>
+          </div>
+          <br />
+          <div className={classes.contentContainer}>
+            <Typography className={classes.attrHeaderText} variant="overline">
+              Completed Swaps
+            </Typography>
+            <br />
+            <div className={classes.content}>
+              <CheckBoxIcon color="primary" />
+              <Typography className={classes.info}>
+                {props.completedSwaps}
+              </Typography>
+            </div>
           </div>
         </div>
-      </div>
-    </Grid>
+      </Grid>
     </Card>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   completedSwaps: state.user.completedSwaps,
   rating: state.user.rating,
 });
 
-export default connect(
-  mapStateToProps,
-  { resetCurrentPost }
-)(withRouter(PostHubCard));
+export default connect(mapStateToProps, { resetCurrentPost })(
+  withRouter(PostHubCard)
+);

@@ -22,106 +22,110 @@ const useStyles = makeStyles({
     minHeight: 400,
     marginBottom: 30,
     marginRight: 25,
-    backgroundColor: '#ededed'
+    backgroundColor: '#ededed',
   },
   headerContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   header: {
     paddingTop: 7,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   content: {
     display: 'flex',
-    float: 'left'
+    float: 'left',
   },
   contentContainer: {
     margin: 5,
     paddingLeft: 20,
     maxWidth: 500,
-    minWidth: 300
+    minWidth: 300,
   },
   infoContainer: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   info: {
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   details: {
-    width: '100%'
+    width: '100%',
   },
   updateDetails: {
     alignSelf: 'flex-end',
-    width: '25%'
+    width: '25%',
   },
   statistics: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   chip: {
     marginLeft: 5,
     color: 'white',
-    backgroundColor: '#FF5722'
+    backgroundColor: '#FF5722',
   },
   attrHeaderText: {
     fontWeight: 'bold',
-    fontSize: '1.0em'
+    fontSize: '1.0em',
   },
   actionsDropdown: {
     alignSelf: 'center',
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
 });
 
-const UserDetailsCard = ({
-  email,
-  interests,
-  favoriteCategories
-}) => {
+const UserDetailsCard = ({ email, interests, favoriteCategories }) => {
   const classes = useStyles();
 
-  {
-    /*fetch actual user rating from hook for given card later*/
-  }
-  const [rating, setRating] = React.useState(3.5);
+  /*fetch actual user rating from hook for given card later*/
+
+  // const [rating, setRating] = React.useState(3.5);
   return (
     <Card className={classes.root} elevation={6}>
       <div className={classes.details}>
         <div className={classes.headerContainer}>
-          <Typography className={classes.header} variant='h4'>
+          <Typography className={classes.header} variant="h4">
             Account Details
           </Typography>
         </div>
-        <Divider variant='middle' />
+        <Divider variant="middle" />
         <div className={classes.infoContainer}>
           <div className={classes.contentContainer}>
-            <Typography className={classes.attrHeaderText} variant='overline'>Email</Typography><br/>
+            <Typography className={classes.attrHeaderText} variant="overline">
+              Email
+            </Typography>
+            <br />
             <div className={classes.content}>
-              <MailOutlineIcon className={classes.icon} color='primary' />
+              <MailOutlineIcon className={classes.icon} color="primary" />
               <Typography className={classes.info}>{email}</Typography>
             </div>
           </div>
           <div className={classes.contentContainer}>
-            <Typography className={classes.attrHeaderText} variant='overline'>Interests</Typography><br/>
+            <Typography className={classes.attrHeaderText} variant="overline">
+              Interests
+            </Typography>
+            <br />
             <div className={classes.content}>
-              <SentimentVerySatisfiedIcon color='primary' />
+              <SentimentVerySatisfiedIcon color="primary" />
               <Typography className={classes.info}>
                 {interests === '' ? ' N/A ' : interests}
               </Typography>
             </div>
           </div>
           <div className={classes.contentContainer}>
-            <Typography className={classes.attrHeaderText} variant='overline'>Favorite Categories</Typography><br/>
+            <Typography className={classes.attrHeaderText} variant="overline">
+              Favorite Categories
+            </Typography>
+            <br />
             <div className={classes.content}>
-              <CategoryIcon color='primary' />
+              <CategoryIcon color="primary" />
               {favoriteCategories.length === 0 ? (
                 <Typography className={classes.info}> N/A </Typography>
               ) : (
-                favoriteCategories.map(category => (
+                favoriteCategories.map((category) => (
                   <Chip
                     className={classes.chip}
                     key={category}
@@ -131,21 +135,22 @@ const UserDetailsCard = ({
               )}
             </div>
           </div>
-          <Divider variant='middle' />
+          <Divider variant="middle" />
         </div>
       </div>
-      <div className={classes.actionsDropdown}><AccountActions  className={classes.actionsDropdown} /></div>
-     
+      <div className={classes.actionsDropdown}>
+        <AccountActions className={classes.actionsDropdown} />
+      </div>
     </Card>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   email: state.user.email,
   interests: state.user.interests,
   rating: state.user.rating,
   completedSwaps: state.user.completedSwaps,
-  favoriteCategories: state.user.favoriteCategories
+  favoriteCategories: state.user.favoriteCategories,
 });
 
 export default connect(mapStateToProps)(UserDetailsCard);

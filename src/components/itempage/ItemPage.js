@@ -7,17 +7,17 @@ import ItemImageCard from './ItemImageCard';
 import ItemDetails from './ItemDetails';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    height: '100%'
+    height: '100%',
   },
   paper: {
     padding: theme.spacing(2),
     margin: 20,
     height: '100%',
-    backgroundColor: '#ededed'
-  }
+    backgroundColor: '#ededed',
+  },
 }));
 
 const ItemPage = (props) => {
@@ -31,26 +31,23 @@ const ItemPage = (props) => {
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            {props.post && (<ItemImageCard />)}
-            {!props.post && (<p>Loading Post Image...</p>)}
+            {props.post && <ItemImageCard />}
+            {!props.post && <p>Loading Post Image...</p>}
           </Grid>
           <Grid item xs={8}>
-          {props.post && (<ItemDetails />)}
-          {!props.post && (<p>Loading Post Details...</p>)}
+            {props.post && <ItemDetails />}
+            {!props.post && <p>Loading Post Details...</p>}
           </Grid>
         </Grid>
       </Paper>
     </div>
   );
-}
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   rating: state.user.rating,
   completedSwaps: state.user.completedSwaps,
   post: state.posts.currentPost,
 });
 
-export default connect(
-  mapStateToProps,
-  { setCurrentPost }
-)(ItemPage);
+export default connect(mapStateToProps, { setCurrentPost })(ItemPage);

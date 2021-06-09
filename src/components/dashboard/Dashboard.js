@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserData } from '../../redux/actions/userActions';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import DashBoardTabs from './DashBoardTabs';
 import UserProfileCard from './dashboardCards/UserProfileCard';
 import UserDetailsCard from './dashboardCards/UserDetailsCard/UserDetailsCard.js';
 import PostHubCard from './dashboardCards/PostHubCard/PostHubCard';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    minWidth: 460
+    minWidth: 460,
   },
-  dashboardTabs: {}
+  dashboardTabs: {},
 });
 
 class Dashboard extends Component {
@@ -28,7 +28,7 @@ class Dashboard extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div className='container-flexbox-userprofile'>
+        <div className="container-flexbox-userprofile">
           <UserProfileCard />
           <UserDetailsCard />
           <PostHubCard />
@@ -41,12 +41,11 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSignedIn: state.auth.isSignedIn,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 });
 
-export default connect(
-  mapStateToProps,
-  { getUserData }
-)(withStyles(useStyles)(Dashboard));
+export default connect(mapStateToProps, { getUserData })(
+  withStyles(useStyles)(Dashboard)
+);

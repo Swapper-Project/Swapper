@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -19,32 +19,31 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 30,
     marginRight: 25,
     minHeight: 350,
-    backgroundColor: '#ededed'
+    backgroundColor: '#ededed',
   },
   avatar: {
     paddingTop: 15,
     marginTop: -50,
     borderRadius: 200,
     width: 200,
-    height: 200
+    height: 200,
   },
   username: {
     paddingTop: 15,
     paddingBottom: 3,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rating: {
     paddingLeft: 3,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 }));
 
 const UserProfileCard = ({ username, email, userRating, totalRating }) => {
   const classes = useStyles();
 
-  {
-    /*fetch actual user rating from hook for given card later*/
-  }
+  /*fetch actual user rating from hook for given card later*/
+
   const [rating, setRating] = React.useState(userRating);
 
   return (
@@ -52,16 +51,16 @@ const UserProfileCard = ({ username, email, userRating, totalRating }) => {
       <div>
         <Gravatar email={email} className={`${classes.avatar}`} />
       </div>
-      <Typography variant='h5' className={classes.username}>
+      <Typography variant="h5" className={classes.username}>
         {username}
       </Typography>
       <div>
-        <Ratings rating={rating} widgetDimensions='30px' widgetSpacings='0px'>
-          <Ratings.Widget widgetRatedColor='#FF5722' />
-          <Ratings.Widget widgetRatedColor='#FF5722' />
-          <Ratings.Widget widgetRatedColor='#FF5722' />
-          <Ratings.Widget widgetRatedColor='#FF5722' />
-          <Ratings.Widget widgetRatedColor='#FF5722' />
+        <Ratings rating={rating} widgetDimensions="30px" widgetSpacings="0px">
+          <Ratings.Widget widgetRatedColor="#FF5722" />
+          <Ratings.Widget widgetRatedColor="#FF5722" />
+          <Ratings.Widget widgetRatedColor="#FF5722" />
+          <Ratings.Widget widgetRatedColor="#FF5722" />
+          <Ratings.Widget widgetRatedColor="#FF5722" />
         </Ratings>
         <span className={classes.rating}>({totalRating})</span>
       </div>
@@ -69,11 +68,11 @@ const UserProfileCard = ({ username, email, userRating, totalRating }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   username: state.user.username,
   rating: state.user.rating,
   email: state.user.email,
-  totalRating: state.user.totalRating
+  totalRating: state.user.totalRating,
 });
 
 export default connect(mapStateToProps)(UserProfileCard);
