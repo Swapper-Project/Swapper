@@ -59,6 +59,7 @@ class App extends Component {
               [classes.contentShift]: this.props.drawerOpen
             })}
           >
+            
             <Switch>
               <Route exact path='/' component={ItemList} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
 import { getPosts } from '../redux/actions/postActions';
 import Typography from '@material-ui/core/Typography';
+import HomeCarousel from './HomeCarousel';
 
 const useStyles = (theme) => ({
   root: {
@@ -58,6 +59,7 @@ class ItemList extends Component {
 
     return (
       <div className={classes.root}>
+        <HomeCarousel />
         {this.props.posts.length === 1 && (
           <Typography variant="h6" color="textSecondary" display="inline">
             Showing 1 result.
