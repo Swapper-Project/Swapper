@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
+
 const useStyles = (theme) => ({
   root: {
     display: 'flex',
@@ -33,7 +34,7 @@ const useStyles = (theme) => ({
     marginRight: 15,
   },
   editButton: {
-    backgroundColor: theme.test.main,
+    //backgroundColor: theme.test.main,
     color: 'white',
     minWidth: 160,
     marginLeft: 35,
