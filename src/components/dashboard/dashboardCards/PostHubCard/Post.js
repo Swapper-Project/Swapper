@@ -15,9 +15,9 @@ const useStyles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '60%',
-    minWidth: 300,
-    backgroundColor: '#ededed',
+    width: '60vw',
+    minWidth: '19rem',
+    backgroundColor: theme.palette.offWhite.main,
   },
   title: {
     textAlign: 'center',

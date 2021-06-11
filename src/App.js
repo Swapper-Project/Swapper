@@ -20,28 +20,28 @@ import WishItemPage from './components/dashboard/wishlist/WishItemPage';
 
 const drawerWidth = 240;
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: 'grey'
+    color: 'grey',
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: 0
+    marginLeft: 0,
   },
   contentShift: {
     backdropFilter: 'blur(10px)',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: drawerWidth
-  }
+    marginLeft: drawerWidth,
+  },
 });
 
 class App extends Component {
@@ -51,37 +51,37 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className='page-container'>
-        <div className='content-wrap'>
+      <div className="page-container">
+        <div className="content-wrap">
           <Nav />
           <main
             className={clsx(classes.content, {
-              [classes.contentShift]: this.props.drawerOpen
+              [classes.contentShift]: this.props.drawerOpen,
             })}
           >
             
             <Switch>
-              <Route exact path='/' component={ItemList} />
-              <ProtectedRoute exact path='/dashboard' component={Dashboard} />
-              <ProtectedRoute exact path='/dashboard/post' component={Post} />
+              <Route exact path="/" component={ItemList} />
+              <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+              <ProtectedRoute exact path="/dashboard/post" component={Post} />
               <ProtectedRoute
                 exact
-                path='/dashboard/addWishItem'
+                path="/dashboard/addWishItem"
                 component={WishItemPage}
               />
               <ProtectedRoute
                 exact
-                path='/dashboard/update'
+                path="/dashboard/update"
                 component={UpdateProfile}
               />
               <ProtectedRoute
                 exact
-                path='/dashboard/editPost/:postId'
+                path="/dashboard/editPost/:postId"
                 component={EditPost}
               />
-              <Route path='/listing/:postId' component={ItemPage} />
-              <Route path='/ChatRoom' component={ChatRoom} />
-              <Route path='*' component={NotFound} />
+              <Route path="/listing/:postId" component={ItemPage} />
+              <Route path="/ChatRoom" component={ChatRoom} />
+              <Route path="*" component={NotFound} />
             </Switch>
           </main>
         </div>
@@ -91,11 +91,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  drawerOpen: state.nav.drawerOpen
+const mapStateToProps = (state) => ({
+  drawerOpen: state.nav.drawerOpen,
 });
 
-export default connect(
-  mapStateToProps,
-  { loadCookie }
-)(withStyles(useStyles)(App));
+export default connect(mapStateToProps, { loadCookie })(
+  withStyles(useStyles)(App)
+);

@@ -11,6 +11,13 @@ const useStyles = (theme) => ({
   root: {
     minWidth: 460,
   },
+  cardContainer: {
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    display: 'grid',
+    gridTemplateColumns: '1fr 2fr 1fr',
+  },
   dashboardTabs: {},
 });
 
@@ -28,7 +35,7 @@ class Dashboard extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div className="container-flexbox-userprofile">
+        <div className={classes.cardContainer}>
           <UserProfileCard />
           <UserDetailsCard />
           <PostHubCard />

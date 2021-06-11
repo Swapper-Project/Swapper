@@ -8,19 +8,19 @@ import Typography from '@material-ui/core/Typography';
 import WishItemForm from './WishItemForm';
 import Divider from '@material-ui/core/Divider';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   paper: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     width: '60%',
-    minWidth: 300,
-    backgroundColor: '#ededed'
+    minWidth: '19rem',
+    backgroundColor: theme.palette.offWhite.main,
   },
   title: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 class WishItemPage extends Component {
@@ -30,7 +30,7 @@ class WishItemPage extends Component {
     }
   }
 
-  onSubmit = formVals => {
+  onSubmit = (formVals) => {
     this.props.createSwap(formVals).then(() => {
       if (!this.props.isSignedIn) {
         this.props.history.push('/');
@@ -45,28 +45,22 @@ class WishItemPage extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.paper} elevation={3}>
-          <Typography className={classes.title} variant='h4'>
+          <Typography className={classes.title} variant="h4">
             Add an item to your wishlist
           </Typography>
-          <Divider variant='middle' />
+          <Divider variant="middle" />
           <WishItemForm />
         </Paper>
- 
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSignedIn: state.auth.isSignedIn,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 });
 
 WishItemPage = withStyles(useStyles)(WishItemPage);
 
-export default compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-  )
-)(WishItemPage);
+export default compose(withRouter, connect(mapStateToProps))(WishItemPage);
