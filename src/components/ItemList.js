@@ -10,9 +10,15 @@ import HomeCarousel from './HomeCarousel';
 const useStyles = (theme) => ({
   root: {
     '& > *': {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(-7)
     },
   },
+  postlessRoot: {
+    marginTop: theme.spacing(-3)
+  },
+  itemList: {
+    marginTop: "55rem"
+  }
 });
 
 class ItemList extends Component {
@@ -58,8 +64,7 @@ class ItemList extends Component {
       });
 
     return (
-      <div className={classes.root}>
-        <HomeCarousel />
+      <div className={this.props.posts.length !== 0 ? classes.root : classes.postlessRoot}>
         {this.props.posts.length === 1 && (
           <Typography variant="h6" color="textSecondary" display="inline">
             Showing 1 result.
@@ -72,6 +77,7 @@ class ItemList extends Component {
             {this.props.posts.length}.
           </Typography>
         )}
+        <HomeCarousel />
         <div className="container-flexbox-ItemList">{postsToRender}</div>
         <div className="pagination-container">
           {this.props.posts.length > this.state.postsPerPage && (
