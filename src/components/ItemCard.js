@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 12,
     backgroundColor: '#F2EFEB',
     margin: 15,
+    marginTop: "5rem"
   },
   avatar: {
     borderRadius: 50,
