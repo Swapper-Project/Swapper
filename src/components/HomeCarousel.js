@@ -68,7 +68,7 @@ const slides = [
 },
 ]
 
-const HomeCarousel = (props)=> {
+const HomeCarousel = (props) => {
   return (
     <Carousel>
       {

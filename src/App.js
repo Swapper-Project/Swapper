@@ -9,7 +9,7 @@ import NotFound from './components/NotFound';
 import Nav from './components/navbar/Nav';
 import Dashboard from './components/dashboard/Dashboard';
 import ItemPage from './components/itempage/ItemPage';
-import ItemList from './components/ItemList';
+import MainContent from './components/MainContent';
 import ChatRoom from './components/chatroom/ChatRoom';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -61,7 +61,7 @@ class App extends Component {
           >
             
             <Switch>
-              <Route exact path='/' component={ItemList} />
+              <Route exact path='/' component={MainContent} />
               <ProtectedRoute exact path='/dashboard' component={Dashboard} />
               <ProtectedRoute exact path='/dashboard/post' component={Post} />
               <ProtectedRoute

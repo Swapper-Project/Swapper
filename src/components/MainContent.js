@@ -6,22 +6,26 @@ import Pagination from '@material-ui/lab/Pagination';
 import { getPosts } from '../redux/actions/postActions';
 import Typography from '@material-ui/core/Typography';
 import HomeCarousel from './HomeCarousel';
+import NoteablePosts from './NotablePosts/NotablePosts';
+import SwapperHeader from './SwapperHeader';
 
 const useStyles = (theme) => ({
   root: {
     '& > *': {
-      marginTop: theme.spacing(-7)
+      marginTop: theme.spacing(-3)
     },
-  },
-  postlessRoot: {
-    marginTop: theme.spacing(-3)
   },
   itemList: {
     marginTop: "55rem"
-  }
+  },
+  topContainer: {
+    display: "flex",
+    flexWrap: "row",
+    justifyContent: "center"
+  },
 });
 
-class ItemList extends Component {
+class MainContent extends Component {
   state = {
     selectedPage: 1,
     postsPerPage: 4,
@@ -64,20 +68,12 @@ class ItemList extends Component {
       });
 
     return (
-      <div className={this.props.posts.length !== 0 ? classes.root : classes.postlessRoot}>
-        {this.props.posts.length === 1 && (
-          <Typography variant="h6" color="textSecondary" display="inline">
-            Showing 1 result.
-          </Typography>
-        )}
-        {this.props.posts.length > 1 && (
-          <Typography variant="h6" color="textSecondary" display="inline">
-            Showing results {this.state.startIndex + 1}-
-            {Math.min(this.state.endIndex, this.props.posts.length)} of{' '}
-            {this.props.posts.length}.
-          </Typography>
-        )}
-        <HomeCarousel />
+      <div className={classes.root}>
+        <SwapperHeader />
+        <div className={classes.topContainer}>
+          <NoteablePosts />
+          <HomeCarousel /> 
+        </div> 
         <div className="container-flexbox-ItemList">{postsToRender}</div>
         <div className="pagination-container">
           {this.props.posts.length > this.state.postsPerPage && (
@@ -105,6 +101,18 @@ class ItemList extends Component {
             </Typography>
           )}
         </div>
+        {this.props.posts.length === 1 && (
+          <Typography variant="h6" color="textSecondary" display="inline">
+            Showing 1 result.
+          </Typography>
+        )}
+        {this.props.posts.length > 1 && (
+          <Typography variant="h6" color="textSecondary" display="inline">
+            Showing results {this.state.startIndex + 1}-
+            {Math.min(this.state.endIndex, this.props.posts.length)} of{' '}
+            {this.props.posts.length}.
+          </Typography>
+        )} 
       </div>
     );
   }
@@ -117,5 +125,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getPosts })(
-  withStyles(useStyles)(ItemList)
+  withStyles(useStyles)(MainContent)
 );
