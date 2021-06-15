@@ -10,15 +10,16 @@ import HomeCarousel from './HomeCarousel';
 const useStyles = (theme) => ({
   root: {
     '& > *': {
-      marginTop: theme.spacing(-7)
+      marginTop: theme.spacing(-7),
     },
+    padding: theme.spacing(3),
   },
   postlessRoot: {
-    marginTop: theme.spacing(-3)
+    marginTop: theme.spacing(-3),
   },
   itemList: {
-    marginTop: "55rem"
-  }
+    marginTop: '55rem',
+  },
 });
 
 class ItemList extends Component {
@@ -64,7 +65,11 @@ class ItemList extends Component {
       });
 
     return (
-      <div className={this.props.posts.length !== 0 ? classes.root : classes.postlessRoot}>
+      <div
+        className={
+          this.props.posts.length !== 0 ? classes.root : classes.postlessRoot
+        }
+      >
         {this.props.posts.length === 1 && (
           <Typography variant="h6" color="textSecondary" display="inline">
             Showing 1 result.

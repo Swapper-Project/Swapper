@@ -16,12 +16,13 @@ import WishlistTabList from './wishlist/WishlistTabList';
 import WishlistHeader from './wishlist/WishlistTabHeader';
 import ListedSwapsHeader from './ListedSwaps/ListedSwapsHeader';
 import ListedSwapsList from './ListedSwaps/ListedSwapsList';
+import Inbox from './inbox/Inbox';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
     <div
-      role='tabpanel'
+      role="tabpanel"
       hidden={value !== index}
       id={`scrollable-force-tabpanel-${index}`}
       aria-labelledby={`scrollable-force-tab-${index}`}
@@ -39,32 +40,32 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-force-tab-${index}`,
-    'aria-controls': `scrollable-force-tabpanel-${index}`
+    'aria-controls': `scrollable-force-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 460,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   tabPanel: {
     backgroundColor: '#ededed',
     paddingLeft: 0,
     marginTop: 6,
     maxHeight: '50vh',
-    overflowX: 'auto'
-  }
+    overflowX: 'auto',
+  },
 }));
 
-const DashBoardTabs = props => {
+const DashBoardTabs = (props) => {
   const classes = useStyles();
   // const [value, setValue] = React.useState(0);
 
@@ -75,23 +76,23 @@ const DashBoardTabs = props => {
   return (
     <div className={classes.root}>
       <Box mt={5} boxShadow={2}>
-        <AppBar position='static' color='default'>
+        <AppBar position="static" color="default">
           <Tabs
             value={props.selectedTab}
             onChange={handleChange}
-            variant='scrollable'
-            scrollButtons='on'
-            indicatorColor='primary'
-            textColor='primary'
+            variant="scrollable"
+            scrollButtons="on"
+            indicatorColor="primary"
+            textColor="primary"
           >
-            <Tab label='Wishlist' icon={<WishIcon />} {...a11yProps(0)} />
+            <Tab label="Wishlist" icon={<WishIcon />} {...a11yProps(0)} />
             <Tab
-              label='Completed Swaps'
+              label="Completed Swaps"
               icon={<CompleteIcon />}
               {...a11yProps(1)}
             />
-            <Tab label='Listed Swaps' icon={<ListedIcon />} {...a11yProps(2)} />
-            <Tab label='Inbox' icon={<AllInboxIcon />} {...a11yProps(3)} />
+            <Tab label="Listed Swaps" icon={<ListedIcon />} {...a11yProps(2)} />
+            <Tab label="Inbox" icon={<AllInboxIcon />} {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <TabPanel
@@ -119,17 +120,16 @@ const DashBoardTabs = props => {
           value={props.selectedTab}
           index={3}
           className={classes.tabPanel}
-        ></TabPanel>
+        >
+          <Inbox />
+        </TabPanel>
       </Box>
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  selectedTab: state.nav.selectedTab
+const mapStateToProps = (state) => ({
+  selectedTab: state.nav.selectedTab,
 });
 
-export default connect(
-  mapStateToProps,
-  { setDashboardTab }
-)(DashBoardTabs);
+export default connect(mapStateToProps, { setDashboardTab })(DashBoardTabs);

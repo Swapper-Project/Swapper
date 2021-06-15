@@ -9,46 +9,51 @@ import CategoryIcon from '@material-ui/icons/Category';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
 import AccountActions from './AccountActions';
+import { CenterFocusStrong } from '@material-ui/icons';
+import { autofill } from 'redux-form';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: 350,
-    maxWidth: 450,
+    minWidth: '22rem',
+    maxWidth: '60rem',
     flexGrow: 1,
-    marginRigth: 15,
-    marginTop: 35,
-    minHeight: 400,
-    marginBottom: 30,
-    marginRight: 25,
-    backgroundColor: '#ededed',
+    marginRigth: '1rem',
+    marginTop: '2rem',
+    minHeight: '25rem',
+    marginBottom: '2rem',
+    marginRight: '1.6rem',
+    backgroundColor: theme.palette.offWhite.main,
   },
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   header: {
-    paddingTop: 7,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingTop: '1.5rem',
+    paddingLeft: '1.25rem',
+    paddingRight: '1.25rem',
   },
   content: {
     display: 'flex',
     float: 'left',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
   contentContainer: {
-    margin: 5,
-    paddingLeft: 20,
-    maxWidth: 500,
-    minWidth: 300,
+    margin: '0.3rem',
+    paddingLeft: '1.25rem',
+    maxWidth: '100%',
+    minWidth: '18.75rem',
   },
   infoContainer: {
     display: 'flex',
     flexDirection: 'column',
   },
   info: {
-    paddingLeft: 5,
+    paddingLeft: '0.3rem',
   },
   details: {
     width: '100%',
@@ -62,8 +67,11 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  categoryIcon: {
+    margin: '0.3rem',
+  },
   chip: {
-    marginLeft: 5,
+    margin: '0.3rem',
     color: 'white',
     backgroundColor: '#FF5722',
   },
@@ -72,10 +80,12 @@ const useStyles = makeStyles({
     fontSize: '1.0em',
   },
   actionsDropdown: {
-    alignSelf: 'center',
-    marginTop: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '0.5rem',
   },
-});
+}));
 
 const UserDetailsCard = ({ email, interests, favoriteCategories }) => {
   const classes = useStyles();
@@ -90,6 +100,9 @@ const UserDetailsCard = ({ email, interests, favoriteCategories }) => {
           <Typography className={classes.header} variant="h4">
             Account Details
           </Typography>
+          <div className={classes.actionsDropdown}>
+            <AccountActions className={classes.actionsDropdown} />
+          </div>
         </div>
         <Divider variant="middle" />
         <div className={classes.infoContainer}>
@@ -107,7 +120,6 @@ const UserDetailsCard = ({ email, interests, favoriteCategories }) => {
             <Typography className={classes.attrHeaderText} variant="overline">
               Interests
             </Typography>
-            <br />
             <div className={classes.content}>
               <SentimentVerySatisfiedIcon color="primary" />
               <Typography className={classes.info}>
@@ -135,11 +147,7 @@ const UserDetailsCard = ({ email, interests, favoriteCategories }) => {
               )}
             </div>
           </div>
-          <Divider variant="middle" />
         </div>
-      </div>
-      <div className={classes.actionsDropdown}>
-        <AccountActions className={classes.actionsDropdown} />
       </div>
     </Card>
   );

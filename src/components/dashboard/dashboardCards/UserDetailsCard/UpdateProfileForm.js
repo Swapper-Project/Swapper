@@ -9,39 +9,39 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import { Multiselect } from 'multiselect-react-dropdown';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    margin: 10
+    margin: '0.6rem',
   },
   fieldContainer: {
-    margin: 10
+    margin: '0.6rem',
   },
   textfield: {
-    width: '100%'
+    width: '100%',
   },
   buttons: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cancelButton: {
-    margin: 10
+    margin: '0.6rem',
   },
   updateButton: {
-    margin: 10,
-    backgroundColor: '#FF5722',
+    margin: '0.6rem',
+    backgroundColor: theme.palette.primary.main,
     '&:hover': {
-      backgroundColor: 'white'
-    }
+      backgroundColor: theme.palette.white.main,
+    },
   },
   error: {
     width: '90%',
-    marginLeft: 10
-  }
+    marginLeft: '0.6rem',
+  },
 });
 
 class UpdateProfileForm extends Component {
   renderError({ error, touched }) {
     if (touched && error) {
-      return <Alert severity='error'>{error}</Alert>;
+      return <Alert severity="error">{error}</Alert>;
     }
   }
 
@@ -53,9 +53,9 @@ class UpdateProfileForm extends Component {
           <TextField
             className={classes.textfield}
             defaultValue={this.props.initialValues.interests}
-            onChange={val => input.onChange(val)}
+            onChange={(val) => input.onChange(val)}
             label={label}
-            variant='outlined'
+            variant="outlined"
             multiline
             rows={3}
             rowsMax={4}
@@ -65,9 +65,9 @@ class UpdateProfileForm extends Component {
             type={input.name}
             className={classes.textfield}
             defaultValue={this.props.initialValues.email}
-            onChange={val => input.onChange(val)}
+            onChange={(val) => input.onChange(val)}
             label={label}
-            variant='outlined'
+            variant="outlined"
           />
         )}
         <div className={classes.error}>{this.renderError(meta)}</div>
@@ -83,17 +83,17 @@ class UpdateProfileForm extends Component {
           options={categories}
           isObject={false}
           {...input}
-          onRemove={values => input.onChange(values)}
-          onSelect={values => input.onChange(values)}
+          onRemove={(values) => input.onChange(values)}
+          onSelect={(values) => input.onChange(values)}
           selectedValues={this.props.initialValues.category}
-          placeholder='Select Categories'
+          placeholder="Select Categories"
           style={{
             chips: {
-              background: '#FF5722'
+              background: '#FF5722',
             },
             searchBox: {
-              margin: 10
-            }
+              margin: 10,
+            },
           }}
         />
         {/* <div className={classes.error}>{this.renderError(meta)}</div> */}
@@ -101,7 +101,7 @@ class UpdateProfileForm extends Component {
     );
   };
 
-  onSubmit = formVals => {
+  onSubmit = (formVals) => {
     this.props.onSubmit(formVals);
   };
 
@@ -113,16 +113,16 @@ class UpdateProfileForm extends Component {
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
         <div>
-          <Field name='email' component={this.renderInputField} label='Email' />
+          <Field name="email" component={this.renderInputField} label="Email" />
           <Field
-            name='interests'
+            name="interests"
             component={this.renderInputField}
-            label='Interests'
+            label="Interests"
           />
           <Field
-            name='category'
+            name="category"
             component={this.renderCategoryField}
-            label='Category'
+            label="Category"
           />
         </div>
 
@@ -130,16 +130,16 @@ class UpdateProfileForm extends Component {
           <Button
             className={classes.cancelButton}
             component={Link}
-            to='/dashboard'
-            type='submit'
-            variant='contained'
+            to="/dashboard"
+            type="submit"
+            variant="contained"
           >
             Cancel
           </Button>
           <Button
             className={classes.updateButton}
-            type='submit'
-            variant='contained'
+            type="submit"
+            variant="contained"
           >
             Update
           </Button>
@@ -149,7 +149,7 @@ class UpdateProfileForm extends Component {
   }
 }
 
-const validate = formVal => {
+const validate = (formVal) => {
   const errors = {};
   if (!formVal.email) {
     errors.email = 'You must enter a valid email';
@@ -157,18 +157,18 @@ const validate = formVal => {
   return errors;
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   initialValues: {
     email: state.user.email,
     interests: state.user.interests,
-    category: state.user.favoriteCategories
-  }
+    category: state.user.favoriteCategories,
+  },
 });
 
 UpdateProfileForm = reduxForm({
   form: 'updateUserForm',
   enableReinitialize: true,
-  validate
+  validate,
 })(UpdateProfileForm);
 
 UpdateProfileForm = connect(mapStateToProps)(
