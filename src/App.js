@@ -27,7 +27,7 @@ const useStyles = (theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -59,7 +59,6 @@ class App extends Component {
               [classes.contentShift]: this.props.drawerOpen,
             })}
           >
-            
             <Switch>
               <Route exact path="/" component={ItemList} />
               <ProtectedRoute exact path="/dashboard" component={Dashboard} />
