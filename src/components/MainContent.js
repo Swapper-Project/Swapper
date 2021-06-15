@@ -12,9 +12,15 @@ import SwapperHeader from './SwapperHeader';
 const useStyles = (theme) => ({
   root: {
     '& > *': {
+<<<<<<< HEAD:src/components/MainContent.js
       marginTop: theme.spacing(-3)
+=======
+      marginTop: theme.spacing(-7),
+>>>>>>> d795eeecf881c85e2dfd6eab5a2d8d1f25ebf59f:src/components/ItemList.js
     },
+    padding: theme.spacing(3),
   },
+<<<<<<< HEAD:src/components/MainContent.js
   itemList: {
     marginTop: "55rem"
   },
@@ -22,6 +28,13 @@ const useStyles = (theme) => ({
     display: "flex",
     flexWrap: "row",
     justifyContent: "center"
+=======
+  postlessRoot: {
+    marginTop: theme.spacing(-3),
+  },
+  itemList: {
+    marginTop: '55rem',
+>>>>>>> d795eeecf881c85e2dfd6eab5a2d8d1f25ebf59f:src/components/ItemList.js
   },
 });
 
@@ -68,12 +81,33 @@ class MainContent extends Component {
       });
 
     return (
+<<<<<<< HEAD:src/components/MainContent.js
       <div className={classes.root}>
         <SwapperHeader />
         <div className={classes.topContainer}>
           <NoteablePosts />
           <HomeCarousel /> 
         </div> 
+=======
+      <div
+        className={
+          this.props.posts.length !== 0 ? classes.root : classes.postlessRoot
+        }
+      >
+        {this.props.posts.length === 1 && (
+          <Typography variant="h6" color="textSecondary" display="inline">
+            Showing 1 result.
+          </Typography>
+        )}
+        {this.props.posts.length > 1 && (
+          <Typography variant="h6" color="textSecondary" display="inline">
+            Showing results {this.state.startIndex + 1}-
+            {Math.min(this.state.endIndex, this.props.posts.length)} of{' '}
+            {this.props.posts.length}.
+          </Typography>
+        )}
+        <HomeCarousel />
+>>>>>>> d795eeecf881c85e2dfd6eab5a2d8d1f25ebf59f:src/components/ItemList.js
         <div className="container-flexbox-ItemList">{postsToRender}</div>
         <div className="pagination-container">
           {this.props.posts.length > this.state.postsPerPage && (

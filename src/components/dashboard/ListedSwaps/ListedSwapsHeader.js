@@ -5,23 +5,23 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    minWidth: 250,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-    margin: 5,
+    minWidth: '15.6rem',
+    padding: '1.25rem',
+    backgroundColor: theme.palette.offWhite.secondary,
+    margin: '0.3rem',
     textAlign: 'center',
-    verticalAlign: 'text-bottom'
+    verticalAlign: 'text-bottom',
   },
   totalPostsTitle: {
-    width: '100%'
+    width: '100%',
   },
   totalValue: {
-    color: '#FF5722'
-  }
+    color: theme.palette.primary.main,
+  },
 });
 
 class ListedSwapHeader extends Component {
@@ -40,12 +40,12 @@ class ListedSwapHeader extends Component {
     return (
       <div>
         <Paper className={classes.root}>
-          <Typography className={classes.totalPostsTitle} variant='h5'>
+          <Typography className={classes.totalPostsTitle} variant="h5">
             You have a total of &nbsp;
             <Typography
-              component='span'
+              component="span"
               className={classes.totalValue}
-              variant='h5'
+              variant="h5"
             >
               {this.props.userPosts.length}
             </Typography>
@@ -57,11 +57,10 @@ class ListedSwapHeader extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  userPosts: state.posts.userPosts
+const mapStateToProps = (state) => ({
+  userPosts: state.posts.userPosts,
 });
 
-export default connect(
-  mapStateToProps,
-  { getUserPosts }
-)(withStyles(useStyles)(ListedSwapHeader));
+export default connect(mapStateToProps, { getUserPosts })(
+  withStyles(useStyles)(ListedSwapHeader)
+);

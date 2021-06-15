@@ -26,12 +26,13 @@ const theme = createMuiTheme({
     secondary: {
       main: '#333333',
     },
-    test: {
+    offWhite: {
       main: '#ededed',
+      secondary: '#f5f5f5',
     },
-  },
-  typography: {
-    // fontSize: '62.5%',
+    white: {
+      main: '#fff',
+    },
   },
 });
 

@@ -12,34 +12,28 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Divider from '@material-ui/core/Divider';
 import { Typography } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: 200,
-    maxWidth: 274,
+    minWidth: '12.5rem',
+    maxWidth: '100%',
     flexGrow: 1,
-    marginRigth: 25,
-    marginTop: 35,
-    minHeight: 325,
-    marginBottom: 30,
-    backgroundColor: '#ededed',
-  },
-  optionsButton: {
-    width: 206,
-  },
-  details: {
-    width: '100%',
+    marginRigth: '1.5rem',
+    marginTop: '2rem',
+    minHeight: '20rem',
+    marginBottom: '2rem',
+    backgroundColor: theme.palette.offWhite.main,
   },
   content: {
     display: 'flex',
     float: 'left',
   },
   contentContainer: {
-    margin: 5,
-    paddingLeft: 20,
-    maxWidth: 500,
-    minWidth: 300,
+    margin: '0.3rem',
+    paddingLeft: '1.2rem',
+    maxWidth: '31rem',
+    minWidth: '18.75rem',
   },
   statistics: {
     display: 'flex',
@@ -47,15 +41,15 @@ const useStyles = makeStyles({
     flexWrap: 'wrap',
   },
   header: {
-    paddingTop: 7,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingTop: '0.5rem',
+    paddingLeft: '1.2rem',
+    paddingRight: '1.2rem',
   },
   swapDescription: {
-    paddingTop: 7,
-    paddingLeft: 20,
-    paddingRight: 20,
-    fontWeight: 80,
+    paddingTop: '0.5rem',
+    paddingLeft: '1.2rem',
+    paddingRight: '1.2rem',
+    fontWeight: 1,
   },
   attrHeaderText: {
     fontWeight: 'bold',
@@ -66,11 +60,11 @@ const useStyles = makeStyles({
   },
   swapButton: {
     alignSelf: 'center',
-    marginTop: 10,
-    marginLeft: 15,
-    marginBottom: 15,
+    marginTop: '0.6rem',
+    marginLeft: '1rem',
+    marginBottom: '1rem',
   },
-});
+}));
 
 const PostHubCard = (props) => {
   // let history = useHistory();

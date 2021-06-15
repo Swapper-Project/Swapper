@@ -9,19 +9,19 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import UpdateProfileForm from './UpdateProfileForm';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   paper: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '40%',
-    minWidth: 300,
-    backgroundColor: '#ededed'
+    width: '50%',
+    minWidth: '19rem',
+    backgroundColor: theme.palette.offWhite.main,
   },
   title: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 class UpdateProfile extends Component {
@@ -31,7 +31,7 @@ class UpdateProfile extends Component {
     }
   }
 
-  onSubmit = formVals => {
+  onSubmit = (formVals) => {
     console.log(formVals);
     this.props.updateUserData(formVals, this.props.userId).then(() => {
       if (!this.props.isSignedIn) {
@@ -47,10 +47,10 @@ class UpdateProfile extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.paper} elevation={3}>
-          <Typography className={classes.title} variant='h4'>
+          <Typography className={classes.title} variant="h4">
             Update Profile Details
           </Typography>
-          <Divider variant='middle' />
+          <Divider variant="middle" />
           <UpdateProfileForm onSubmit={this.onSubmit} />
         </Paper>
       </div>
@@ -58,17 +58,14 @@ class UpdateProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSignedIn: state.auth.isSignedIn,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 });
 
 UpdateProfile = withStyles(useStyles)(UpdateProfile);
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    { updateUserData }
-  )
+  connect(mapStateToProps, { updateUserData })
 )(UpdateProfile);
