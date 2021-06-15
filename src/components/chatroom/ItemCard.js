@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
@@ -25,4 +25,4 @@ const ItemCard = ({ title, src }) => {
   );
 };
 
-export default withStyles(useStyles)(ItemCard);
+export default ItemCard;

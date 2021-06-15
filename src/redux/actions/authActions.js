@@ -68,7 +68,7 @@ export const register = (values) => async (dispatch, getState) => {
     .catch(console.log);
 };
 
-export const loadCookie = () => (dispatch) => {
+export const loadCookie = () => async (dispatch) => {
   if (cookie.load('userId')) {
     dispatch({ type: LOAD_COOKIE, userId: cookie.load('userId') });
     auth.login(() => {});

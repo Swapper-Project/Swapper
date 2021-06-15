@@ -1,9 +1,7 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Gravatar from 'react-gravatar';
-import Typography from '@material-ui/core/Typography';
-import { findByLabelText } from '@testing-library/dom';
 
 const useStyles = makeStyles((theme) => ({
   currentUserContainer: {
@@ -44,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatBubble = ({ currentUser, text }) => {
   const classes = useStyles();
-  console.log(currentUser);
   return (
     <div>
       {currentUser === true ? (
@@ -72,4 +69,4 @@ const ChatBubble = ({ currentUser, text }) => {
   );
 };
 
-export default withStyles(useStyles)(ChatBubble);
+export default ChatBubble;

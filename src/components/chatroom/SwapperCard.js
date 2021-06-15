@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Gravatar from 'react-gravatar';
 import Typography from '@material-ui/core/Typography';
@@ -37,4 +37,4 @@ const SwapperCard = () => {
   );
 };
 
-export default withStyles(useStyles)(SwapperCard);
+export default SwapperCard;

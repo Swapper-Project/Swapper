@@ -35,7 +35,6 @@ const useStyles = (theme) => ({
     marginLeft: 0,
   },
   contentShift: {
-    backdropFilter: 'blur(10px)',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -78,8 +77,8 @@ class App extends Component {
                 path="/dashboard/editPost/:postId"
                 component={EditPost}
               />
+              <ProtectedRoute exact path="/chatroom" component={ChatRoom} />
               <Route path="/listing/:postId" component={ItemPage} />
-              <Route path="/ChatRoom" component={ChatRoom} />
               <Route path="*" component={NotFound} />
             </Switch>
           </main>

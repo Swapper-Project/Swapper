@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SwapperCard from './SwapperCard';
 import ItemCard from './ItemCard';
 import ChatBubble from './ChatBubble';
+import { ioConnect } from '../../redux/actions/chatActions';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -196,6 +197,10 @@ class ChatRoom extends React.Component {
       message: '',
       rating: 0.5,
     };
+  }
+
+  componentDidMount() {
+    ioConnect();
   }
 
   setMessage = (event) => {
