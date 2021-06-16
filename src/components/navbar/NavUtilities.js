@@ -18,6 +18,7 @@ import InputBase from '@material-ui/core/InputBase';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import HomeIcon from '@material-ui/icons/Home';;
 
 const useStyles = theme => ({
   menuButton: {
@@ -86,9 +87,9 @@ const useStyles = theme => ({
     alignItems: 'center',
     marginRight: 15
   },
-  linkTitle: {
+  homeIcon: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'white',
   }
 });
 
@@ -167,10 +168,8 @@ class NavUtilities extends Component {
             </div>
           </div>
           <div className={classes.title}>
-            <Link to={'/'} className={classes.linkTitle}>
-              <Typography style={{ fontFamily: 'Roboto Mono' }} variant='h6'>
-                Swapper
-              </Typography>
+            <Link to={'/'} className={classes.homeIcon}>            
+              <HomeIcon />
             </Link>
           </div>
           <div>

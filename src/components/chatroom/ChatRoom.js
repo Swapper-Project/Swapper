@@ -1,104 +1,125 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Message from './Message.js';
-import ChatIcon from '@material-ui/icons/Chat';
-// import Grid from '@material-ui/core/Grid';
+import SwapperCard from './SwapperCard';
+import ItemCard from './ItemCard';
+import ChatBubble from './ChatBubble';
+import { ioConnect } from '../../redux/actions/chatActions';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Gravatar from 'react-gravatar';
 import Ratings from 'react-ratings-declarative';
 
 const useStyles = (theme) => ({
-  topRow: {
+  chatroom: {
+    display: 'grid',
+    gridTemplateRows: '10vh 30vh 30vh 10vh 10vh',
+    gridTemplateColumns: '1fr 3fr 1fr',
+  },
+  swapperList: {
+    backgroundColor: theme.palette.white.main,
+    borderRight: '1px solid #ddd',
+    padding: '1rem',
+    gridRow: '1 / -1',
+    gridColumn: '1 / 2',
+  },
+  swapper: {
+    borderBottom: '1px solid #ddd',
+    backgroundColor: theme.palette.white.main,
+    gridRow: '1 / 2',
+    gridColumn: '2 / 3',
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignContent: 'center',
-    justifyContent: 'center',
-    height: '25%',
-    width: '100%',
-    minHeight: 200,
-    borderBottom: '1px solid grey',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '1rem',
   },
-  itemImage: {
-    height: 200,
-    width: 250,
-    border: '1px solid #ddd',
-    borderRadius: 4,
-    padding: 5,
-  },
-  chatIcon: {
-    height: 100,
-    width: 150,
-    padding: 5,
-    backgroundColor: '#FF5722',
-    border: '4px solid #ddd',
-    borderRadius: 20,
-  },
-  userDiv: {
+  swapperInfo: {
     display: 'flex',
-    float: 'left',
   },
   avatar: {
-    borderRadius: 200,
-    width: 30,
-    height: 30,
+    borderRadius: '12.5rem',
+    width: '2rem',
+    height: '2rem',
   },
   username: {
-    marginLeft: 10,
-    marginRight: 5,
+    margin: '0 0.5rem',
   },
   ratingDiv: {
-    marginTop: 5,
     display: 'flex',
     flexWrap: 'nowrap',
-    float: 'left',
+    marginLeft: '2.3rem',
   },
-  topLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minWidth: '20%',
-    marginTop: 30,
-    marginBottom: 20,
-  },
-  topRight: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    minWidth: '20%',
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  topMiddle: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '40%',
-  },
-  topLeftText: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  wishlistButton: {
-    marginLeft: 40,
+  wishlistBtn: {
     backgroundColor: '#FF5722',
-    justifySelf: 'flex-end',
-    width: 135,
+    color: 'white',
+    width: '8rem',
     '&:hover': {
-      backgroundColor: 'white',
+      backgroundColor: theme.palette.offWhite.main,
+    },
+    float: 'right',
+  },
+  messages: {
+    backgroundColor: theme.palette.offWhite.main,
+    overflow: 'scroll',
+    gridRow: '2 / 5',
+    gridColumn: '2 / 3',
+  },
+  textArea: {
+    backgroundColor: theme.palette.white.main,
+    borderTop: '1px solid #ddd',
+    gridRow: '5/ -1',
+    gridColumn: '2 / 3',
+    padding: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  textField: {
+    width: '85%',
+  },
+  sendBtn: {
+    backgroundColor: '#FF5722',
+    color: 'white',
+    width: '5rem',
+    '&:hover': {
+      backgroundColor: theme.palette.offWhite.main,
     },
   },
-  bottomRow: {
+  swapperItem: {
+    backgroundColor: theme.palette.white.main,
+    borderLeft: '1px solid #ddd',
+    borderBottom: '1px solid #ddd',
+    padding: '0.5rem',
+    gridRow: '1 / 3',
+    gridColumn: '3 / -1',
+  },
+  myItem: {
+    backgroundColor: theme.palette.white.main,
+    borderLeft: '1px solid #ddd',
+    borderBottom: '1px solid #ddd',
+    padding: '0.5rem',
+    gridRow: '3/5',
+    gridColumn: '3 / -1',
+  },
+
+  actions: {
+    backgroundColor: theme.palette.white.main,
+    borderLeft: '1px solid #ddd',
+    gridRow: '5 / -1',
+    gridColumn: '3 / -1',
+
     display: 'flex',
-    flexGrow: 1,
-    height: '25%',
-    minHeight: 200,
-    borderTop: '1px solid grey',
-    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  acceptBtn: {
+    backgroundColor: '#FF5722',
+    color: 'white',
+    width: '8rem',
+    '&:hover': {
+      backgroundColor: theme.palette.offWhite.main,
+    },
   },
 });
 
@@ -116,10 +137,12 @@ class ChatRoom extends React.Component {
               to trade it for?
             </p>
           ),
+          currentUser: false,
         },
         {
           username: 'ChunkySmalls',
           text: <p>Check my wishlist bro</p>,
+          currentUser: true,
         },
         {
           username: 'theDuderino25',
@@ -129,10 +152,12 @@ class ChatRoom extends React.Component {
               coincidence that I so happen to have one posted here
             </p>
           ),
+          currentUser: false,
         },
         {
           username: 'ChunkySmalls',
           text: <p>I'll go check it out</p>,
+          currentUser: true,
         },
         {
           username: 'ChunkySmalls',
@@ -142,10 +167,12 @@ class ChatRoom extends React.Component {
               discuss the exchange deets and seal the deal.
             </p>
           ),
+          currentUser: true,
         },
         {
           username: 'theDuderino25',
           text: <p>Great, I'll send a request.</p>,
+          currentUser: false,
         },
         {
           username: 'System',
@@ -170,6 +197,10 @@ class ChatRoom extends React.Component {
       message: '',
       rating: 0.5,
     };
+  }
+
+  componentDidMount() {
+    ioConnect();
   }
 
   setMessage = (event) => {
@@ -208,24 +239,14 @@ class ChatRoom extends React.Component {
     const { otherUser: user, messages, rating } = this.state;
     const { classes } = this.props;
     return (
-      <div className="container-flexbox-chatroom">
-        <div className={classes.topRow}>
-          <div className={classes.topLeft}>
-            <Typography variant="h5">Your posted item: </Typography>
-            <Typography variant="h5">Xbox Series X</Typography>
-            <img
-              className={classes.itemImage}
-              src="https://cdn.mos.cms.futurecdn.net/iGoyV8755hauMhq55pVC2J.jpg"
-              alt="Logo"
-            />
-          </div>
-
-          <div className={classes.topMiddle}>
-            <ChatIcon className={classes.chatIcon} />
-          </div>
-          <div className={classes.topRight}>
-            <Typography variant="h5">Chatting with: </Typography>
-            <div className={classes.userDiv}>
+      <div className={classes.chatroom}>
+        <div className={classes.swapperList}>
+          <Typography variant="h4">Swappers</Typography>
+          <SwapperCard />
+        </div>
+        <div className={classes.swapper}>
+          <div>
+            <div className={classes.swapperInfo}>
               <Gravatar
                 email="a-email@example.com"
                 className={`${classes.avatar}`}
@@ -233,41 +254,63 @@ class ChatRoom extends React.Component {
               <Typography className={classes.username} variant="h6">
                 {user}
               </Typography>
-              <div className={classes.ratingDiv}>
-                <Ratings
-                  rating={rating}
-                  widgetDimensions="20px"
-                  widgetSpacings="0px"
-                >
-                  <Ratings.Widget widgetRatedColor="#FF5722" />
-                  <Ratings.Widget widgetRatedColor="#FF5722" />
-                  <Ratings.Widget widgetRatedColor="#FF5722" />
-                  <Ratings.Widget widgetRatedColor="#FF5722" />
-                  <Ratings.Widget widgetRatedColor="#FF5722" />
-                </Ratings>
-                <Typography>(69)</Typography>
-              </div>
             </div>
-            <Button className={classes.wishlistButton}>View Wishlist</Button>
+            <div className={classes.ratingDiv}>
+              <Ratings
+                rating={rating}
+                widgetDimensions="20px"
+                widgetSpacings="0px"
+              >
+                <Ratings.Widget widgetRatedColor="#FF5722" />
+                <Ratings.Widget widgetRatedColor="#FF5722" />
+                <Ratings.Widget widgetRatedColor="#FF5722" />
+                <Ratings.Widget widgetRatedColor="#FF5722" />
+                <Ratings.Widget widgetRatedColor="#FF5722" />
+              </Ratings>
+              <Typography>(69)</Typography>
+            </div>
           </div>
-        </div>
 
-        <ul>
-          {messages.length <= 7 &&
-            messages.slice().map((msg) => <Message message={msg} />)}
-          {messages.length > 7 &&
-            messages
-              .slice(messages.length - 7)
-              .map((msg) => <Message message={msg} />)}
-        </ul>
-        <form
-          id="message-form"
-          className="input"
-          onSubmit={(e) => this.submitMessage(e)}
-        >
-          <input type="text" onChange={this.setMessage} />
-          <input type="submit" value="Submit" />
-        </form>
+          <Button className={classes.wishlistBtn}>View Wishlist</Button>
+        </div>
+        <div className={classes.messages}>
+          {messages.length !== 0 &&
+            messages.map((message, index) => {
+              return (
+                <ChatBubble
+                  key={index}
+                  currentUser={message.currentUser}
+                  text={message.text}
+                />
+              );
+            })}
+        </div>
+        <div className={classes.textArea}>
+          <TextField
+            className={classes.textField}
+            id="outlined-multiline-static"
+            label="Multiline"
+            variant="outlined"
+          />
+          <Button className={classes.sendBtn}>Send</Button>
+        </div>
+        <div className={classes.swapperItem}>
+          <Typography variant="h5">Swapper Item</Typography>
+          <ItemCard
+            title="Saxophone"
+            src="https://images.unsplash.com/photo-1598367772323-3ae346826817?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80"
+          />
+        </div>
+        <div className={classes.myItem}>
+          <Typography variant="h5">My Item</Typography>
+          <ItemCard
+            title="Xbox Series X"
+            src="https://cdn.mos.cms.futurecdn.net/iGoyV8755hauMhq55pVC2J.jpg"
+          />
+        </div>
+        <div className={classes.actions}>
+          <Button className={classes.acceptBtn}>Send Swap Request</Button>
+        </div>
       </div>
     );
   }

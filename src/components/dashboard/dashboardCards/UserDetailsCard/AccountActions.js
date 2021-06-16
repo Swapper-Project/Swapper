@@ -15,32 +15,24 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  actions: {
     display: 'flex',
-    flexDirection: 'column',
-    minWidth: 200,
-    maxWidth: 274,
-    flexGrow: 1,
-    marginRigth: 25,
-    marginTop: 35,
-    minHeight: 325,
-    marginBottom: 30,
-    backgroundColor: theme.test,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '10rem',
+    width: '100%',
   },
   optionsButton: {
-    width: 206,
+    width: '15rem',
+    fontSize: '1rem',
   },
   details: {
     width: '100%',
   },
 }));
-const options = [
-  'Change primary email',
-  'Update profile information',
-  'Delete Account',
-];
+const options = ['Update profile', 'Delete Account'];
 
-const PostHubCard = (props) => {
+const AccountActions = (props) => {
   // let history = useHistory();
   const classes = useStyles();
 
@@ -51,10 +43,8 @@ const PostHubCard = (props) => {
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
     if (selectedIndex === 0) {
-      //update email
-    } else if (selectedIndex === 1) {
       props.history.push('dashboard/update');
-    } else if (selectedIndex === 2) {
+    } else if (selectedIndex === 1) {
       //delete account
     }
     //etc
@@ -78,7 +68,7 @@ const PostHubCard = (props) => {
   };
 
   return (
-    <div>
+    <div className="actions">
       <ButtonGroup
         variant="contained"
         size="large"
@@ -122,7 +112,7 @@ const PostHubCard = (props) => {
                     <MenuItem
                       key={option}
                       selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index + 1)}
+                      onClick={(event) => handleMenuItemClick(event, index)}
                     >
                       {option}
                     </MenuItem>
@@ -137,4 +127,4 @@ const PostHubCard = (props) => {
   );
 };
 
-export default connect(null, { resetCurrentPost })(withRouter(PostHubCard));
+export default connect(null, { resetCurrentPost })(withRouter(AccountActions));

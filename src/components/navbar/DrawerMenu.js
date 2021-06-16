@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import {
   handleDrawerClose,
-  setDashboardTab
+  setDashboardTab,
 } from '../../redux/actions/navActions';
 import { authModalOpen } from '../../redux/actions/authActions';
 import { withStyles } from '@material-ui/core/styles';
@@ -27,29 +27,29 @@ import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 const drawerWidth = 240;
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: '#333333'
+    backgroundColor: '#333333',
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   iconColor: {
-    color: '#FF5722'
-  }
+    color: '#FF5722',
+  },
 });
 
 class DrawerMenu extends Component {
-  tabRedirect = value => {
+  tabRedirect = (value) => {
     this.props.setDashboardTab(value);
     this.props.history.push('/dashboard');
   };
@@ -59,11 +59,11 @@ class DrawerMenu extends Component {
     return (
       <Drawer
         className={classes.drawer}
-        variant='persistent'
-        anchor='left'
+        variant="persistent"
+        anchor="left"
         open={this.props.drawerOpen}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
@@ -182,15 +182,16 @@ class DrawerMenu extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSignedIn: state.auth.isSignedIn,
-  drawerOpen: state.nav.drawerOpen
+  drawerOpen: state.nav.drawerOpen,
 });
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    { handleDrawerClose, authModalOpen, setDashboardTab }
-  )
+  connect(mapStateToProps, {
+    handleDrawerClose,
+    authModalOpen,
+    setDashboardTab,
+  })
 )(withStyles(useStyles)(DrawerMenu));

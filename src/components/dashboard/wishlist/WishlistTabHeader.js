@@ -34,7 +34,7 @@ const useStyles = (theme) => ({
     marginRight: 15,
   },
   editButton: {
-    //backgroundColor: theme.primary.main,
+    backgroundColor: theme.palette.primary.main,
     color: 'white',
     minWidth: 160,
     marginLeft: 35,

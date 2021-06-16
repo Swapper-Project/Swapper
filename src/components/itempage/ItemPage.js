@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const ItemPage = (props) => {
   useEffect(() => {
     props.setCurrentPost(props.match.params.postId);
+    console.log(props);
   }, []);
 
   const classes = useStyles();
