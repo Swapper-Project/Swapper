@@ -1,24 +1,41 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import { getUserData } from '../../../redux/actions/userActions';
 import WishlistTabRow from './WishlistTabRow';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     '& > *': {
-      marginTop: theme.spacing(2)
-    }
+      marginTop: theme.spacing(2),
+    },
   },
   wishlist: {
-    minWidth: 600
-  }
+    minWidth: 600,
+  },
 });
 
 class WishlistTabList extends Component {
   state = {
-    wishlistItems: []
+    wishlist: [],
   };
+
+  componentDidMount() {
+    this.setState({
+      wishlist: this.props.wishlist,
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.wishlist !== this.props.wishlist) {
+      console.log(update);
+      this.setState({
+        wishlist: this.props.wishlist,
+      });
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -28,38 +45,34 @@ class WishlistTabList extends Component {
         <Grid
           container
           className={classes.wishlist}
-          direction='column'
-          justify='space-evenly'
+          direction="column"
+          justify="space-evenly"
         >
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
-          <Grid item>
-            <WishlistTabRow />
-          </Grid>
+          {this.state.wishlist.length > 0 ? (
+            this.state.wishlist.map((item, index) => {
+              return (
+                <Grid key={index} item>
+                  <WishlistTabRow
+                    priorityLevel={item.level}
+                    itemName={item.name}
+                  />
+                </Grid>
+              );
+            })
+          ) : (
+            <Typography>No items in wishlist</Typography>
+          )}
         </Grid>
       </div>
     );
   }
 }
 
-// const mapStateToProps = state => ({
-//  //
-// });
+const mapStateToProps = (state) => ({
+  wishlist: state.user.wishlist,
+  userId: state.auth.userId,
+});
 
-export default connect(null)(withStyles(useStyles)(WishlistTabList));
+export default connect(mapStateToProps, { getUserData })(
+  withStyles(useStyles)(WishlistTabList)
+);
