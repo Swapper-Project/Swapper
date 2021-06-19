@@ -200,7 +200,7 @@ class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
-    ioConnect();
+    // ioConnect();
   }
 
   setMessage = (event) => {

@@ -18,3 +18,4 @@ export const DELETE_POST = 'DELETE_POST';
 export const RESET_CURRENT_POST = 'RESET_CURRENT_POST';
 export const SET_TAB = 'SET_TAB';
 export const SET_DASHBOARD_TAB = 'SET_DASHBOARD_TAB';
+export const UPDATE_WISHLIST = 'UPDATE_WISHLIST';

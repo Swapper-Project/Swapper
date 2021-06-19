@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
+import {
+  updateWishlist,
+  getUserData,
+} from '../../../redux/actions/userActions';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
+import WishlistModal from './WishlistModal';
 
 const useStyles = (theme) => ({
   root: {
@@ -45,17 +49,30 @@ const useStyles = (theme) => ({
 });
 
 class WishlistTabHeader extends Component {
-  state = { wantLevel: 61, wantColor: 'red' };
+  state = { wishlistModalOpen: false, wishlist: [] };
 
   componentDidMount() {
-    if (this.state.wantLevel < 33) {
-      this.setState({ wantColor: 'green' });
-    } else if (this.state.wantLevel < 60) {
-      this.setState({ wantColor: 'yellow' });
-    } else if (this.state.wantLevel < 80) {
-      this.setState({ wantColor: 'orange' });
-    }
+    this.setState({
+      wishlist: this.props.wishlist,
+    });
   }
+
+  handleAddItem = (item) => {
+    let wishlist = this.state.wishlist;
+    wishlist.push(item);
+    this.setState({
+      wishlist: wishlist,
+    });
+    this.props.updateWishlist(this.state.wishlist, this.props.userId);
+    this.props.getUserData(this.props.userId);
+  };
+
+  handleModalClose = () => {
+    this.setState({
+      wishlistModalOpen: false,
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -80,7 +97,9 @@ class WishlistTabHeader extends Component {
               <Button
                 className={classes.editButton}
                 onClick={() => {
-                  this.props.history.push('dashboard/addWishItem');
+                  this.setState({
+                    wishlistModalOpen: true,
+                  });
                 }}
               >
                 Add Wishlist Item
@@ -88,9 +107,23 @@ class WishlistTabHeader extends Component {
             </CardActions>
           </Card>
         </Grid>
+        <WishlistModal
+          wishlistModalOpen={this.state.wishlistModalOpen}
+          handleModalClose={this.handleModalClose}
+          handleAddItem={this.handleAddItem}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default withRouter(connect()(withStyles(useStyles)(WishlistTabHeader)));
+const mapStateToProps = (state) => ({
+  wishlist: state.user.wishlist,
+  userId: state.auth.userId,
+});
+
+WishlistTabHeader = connect(mapStateToProps, { updateWishlist, getUserData })(
+  WishlistTabHeader
+);
+
+export default withStyles(useStyles)(WishlistTabHeader);

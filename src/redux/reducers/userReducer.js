@@ -1,4 +1,4 @@
-import { GET_USER_DATA } from '../actions/types';
+import { GET_USER_DATA, UPDATE_WISHLIST } from '../actions/types';
 
 const INITIAL_STATE = {
   email: '',
@@ -7,7 +7,8 @@ const INITIAL_STATE = {
   favoriteCategories: [],
   rating: 0,
   totalRating: 0,
-  completedSwaps: 0
+  completedSwaps: 0,
+  wishlist: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,7 +22,13 @@ export default (state = INITIAL_STATE, action) => {
         favoriteCategories: action.payload.favoriteCategories,
         rating: action.payload.rating,
         totalRating: action.payload.totalRating,
-        completedSwaps: action.payload.completedSwaps
+        completedSwaps: action.payload.completedSwaps,
+        wishlist: action.payload.wishlist,
+      };
+    case UPDATE_WISHLIST:
+      return {
+        ...state,
+        wishlist: action.payload.wishlist,
       };
     default:
       return state;
