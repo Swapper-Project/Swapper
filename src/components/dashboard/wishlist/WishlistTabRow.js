@@ -41,7 +41,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WishlistTabRow = ({ priorityLevel, itemName }) => {
+const WishlistTabRow = ({
+  priorityLevel,
+  itemName,
+  index,
+  handleDeleteItem,
+}) => {
   const [semiCircleColor, setSemiCircleColor] = useState('red');
 
   useEffect(() => {
@@ -85,7 +90,7 @@ const WishlistTabRow = ({ priorityLevel, itemName }) => {
           <div>
             <IconButton
               className={classes.trashButton}
-              onClick={() => console.log('Wishitem delete pressed')}
+              onClick={() => handleDeleteItem(index)}
             >
               <DeleteForeverIcon fontSize="large" />
             </IconButton>

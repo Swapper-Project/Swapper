@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { getUserData } from '../../../redux/actions/userActions';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  getUserData,
+  updateWishlist,
+} from '../../../redux/actions/userActions';
 import WishlistTabRow from './WishlistTabRow';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -29,13 +32,20 @@ class WishlistTabList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.wishlist !== this.props.wishlist) {
-      console.log(update);
-      this.setState({
-        wishlist: this.props.wishlist,
-      });
+    if (prevProps.wishlist.length !== this.props.wishlist.length) {
+      this.props.getUserData(this.props.userId);
     }
   }
+
+  handleDeleteItem = (index) => {
+    let wishlist = this.state.wishlist;
+    wishlist.splice(index, 1);
+    this.setState({
+      wishlist: wishlist,
+    });
+    this.props.updateWishlist(this.state.wishlist, this.props.userId);
+    this.props.getUserData(this.props.userId);
+  };
 
   render() {
     const { classes } = this.props;
@@ -55,6 +65,8 @@ class WishlistTabList extends Component {
                   <WishlistTabRow
                     priorityLevel={item.level}
                     itemName={item.name}
+                    index={index}
+                    handleDeleteItem={this.handleDeleteItem}
                   />
                 </Grid>
               );
@@ -73,6 +85,6 @@ const mapStateToProps = (state) => ({
   userId: state.auth.userId,
 });
 
-export default connect(mapStateToProps, { getUserData })(
+export default connect(mapStateToProps, { getUserData, updateWishlist })(
   withStyles(useStyles)(WishlistTabList)
 );

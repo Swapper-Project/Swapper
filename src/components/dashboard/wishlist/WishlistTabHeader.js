@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { updateWishlist } from '../../../redux/actions/userActions';
+import {
+  updateWishlist,
+  getUserData,
+} from '../../../redux/actions/userActions';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -61,6 +64,7 @@ class WishlistTabHeader extends Component {
       wishlist: wishlist,
     });
     this.props.updateWishlist(this.state.wishlist, this.props.userId);
+    this.props.getUserData(this.props.userId);
   };
 
   handleModalClose = () => {
@@ -118,7 +122,7 @@ const mapStateToProps = (state) => ({
   userId: state.auth.userId,
 });
 
-WishlistTabHeader = connect(mapStateToProps, { updateWishlist })(
+WishlistTabHeader = connect(mapStateToProps, { updateWishlist, getUserData })(
   WishlistTabHeader
 );
 
